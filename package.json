@@ -1,0 +1,28 @@
+{
+  "name": "@tokenring-ai/mono",
+  "description": "TokenRing Monorepo with all community apps and packages",
+  "version": "0.2.0",
+  "devDependencies": {
+    "@tokenring-ai/writer": "workspace:*",
+    "@tokenring-ai/coder": "workspace:*",
+    "@types/bun": "^1.3.3",
+    "bun-types": "^1.3.3",
+    "husky": "^9.1.7",
+    "trufflehog": "^0.0.5",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "scripts": {
+    "coder": "bun --env app/coder/src/tr-coder.js --source ./",
+    "writer": "bun --env app/writer/src/tr-writer.js --source ./",
+    "test": "bun run test",
+    "prepare": "husky",
+    "update-all-dependencies-latest": "git submodule foreach npx npm-check-updates -u && npx npm-check-updates -u && bun install"
+  },
+  "type": "module",
+  "workspaces": [
+    "pkg/*",
+    "app/*",
+    "deps/*"
+  ]
+}
