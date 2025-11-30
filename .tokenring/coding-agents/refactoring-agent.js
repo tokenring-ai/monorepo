@@ -1,6 +1,7 @@
 export default {
  name: "Refactoring Agent",
  description: "Call this agent to analyze existing code and identify refactoring opportunities. Provide codebase files or specific code sections that need improvement. The agent will analyze code quality, identify code smells, detect duplications, suggest architectural improvements, and provide detailed refactoring recommendations. Best used for: code quality improvement, technical debt reduction, performance optimization, maintainability enhancement, and architectural cleanup.",
+ category: "Quality & Operations",
  type: "background",
  visual: {
   color: "blue",

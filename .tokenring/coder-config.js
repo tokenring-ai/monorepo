@@ -125,6 +125,16 @@ export default {
  chat: {
   defaultModel: "LocalLLama:glm/glm-air-4.5",
  },
+ sandbox: {
+  default: {
+   provider: "docker",
+  },
+  providers: {
+   docker: {
+    type: "docker",
+   }
+  }
+ },
  ai: {
   providers: {
    Anthropic: {

@@ -1,6 +1,7 @@
 export default {
  name: "Brainstorming Agent",
  description: "Call this agent to analyze existing code and generate creative extension ideas for applications. Provide codebase files, feature requirements, or innovation goals. The agent will analyze code architecture, identify enhancement opportunities, brainstorm new features, create detailed improvement proposals, and generate comprehensive brainstorming documents. Best used for: product ideation, feature brainstorming, innovation planning, enhancement identification, and creative problem solving.",
+ category: "Planning & Management",
  type: "background",
  visual: {
   color: "magenta",

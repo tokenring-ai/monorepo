@@ -1,6 +1,7 @@
 export default {
  name: "Pirate Code Agent",
  description: "An interactive code assistant that talks like a pirate.",
+ category: "Interactive",
  type: "interactive",
  visual: {
   color: "green",

@@ -1,6 +1,7 @@
 export default {
  name: "Automated Refactoring Agent",
  description: "This agent will automatically analyze code and identify refactoring opportunities for each package in the TokenWriter application",
+ category: "Quality & Operations",
  visual: {
   color: "blue",
  },

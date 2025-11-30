@@ -234,3 +234,7 @@
 	path = deps/ink
 	url = git@github.com:tokenring-ai/ink
 	branch = tall-mode
+[submodule "pkg/discord"]
+	path = pkg/discord
+	url = git@github.com:tokenring-ai/discord.git
+	branch = main

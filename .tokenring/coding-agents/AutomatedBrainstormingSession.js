@@ -1,6 +1,7 @@
 export default {
  name: "Automated Brainstorming Session",
  description: "This agent will automatically run a brainstorming session for each package in the TokenWriter application",
+ category: "Interactive",
  visual: {
   color: "green",
  },

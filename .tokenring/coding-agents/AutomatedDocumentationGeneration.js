@@ -1,6 +1,7 @@
 export default {
  name: "Documentation Updater",
  description: "This agent will automatically update the documentation for each package in the TokenWriter application",
+ category: "Design & Documentation",
  visual: {
   color: "green",
  },
