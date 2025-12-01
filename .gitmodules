@@ -238,3 +238,15 @@
 	path = pkg/discord
 	url = git@github.com:tokenring-ai/discord.git
 	branch = main
+[submodule "pkg/browser-agent-storage"]
+	path = pkg/browser-agent-storage
+	url = git@github.com:tokenring-ai/browser-agent-storage.git
+	branch = main
+[submodule "pkg/browser-file-system"]
+	path = pkg/browser-file-system
+	url = git@github.com:tokenring-ai/browser-file-system.git
+	branch = main
+[submodule "app/webterminal"]
+	path = app/webterminal
+	url = git@github.com:tokenring-ai/webterminal.git
+	branch = main
