@@ -121,7 +121,7 @@ const agents = {
  * @type {import("../src/config.types.js").CoderConfig}
  */
 export default {
- agents,
+ //agents,
  chat: {
   defaultModel: "LocalLLama:glm/glm-air-4.5",
  },
@@ -217,8 +217,14 @@ export default {
     local: {
      type: "local",
      baseDirectory: path.resolve(import.meta.dirname, "../"),
-     indexedFiles: [{path: "./"}],
-     watchedFiles: [{path: "./", include: /.(js|md|jsx|sql|txt)$/}],
+     indexedFiles: [
+      {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./src", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+     ],
+     watchedFiles: [
+      {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./src", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+     ],
     }
    }
   },
