@@ -1081,8 +1081,12 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
+        "async": "^3.2.6",
         "uuid": "^13.0.0",
         "zod": "^4.1.13",
+      },
+      "devDependencies": {
+        "@types/async": "^3.2.25",
       },
     },
     "pkg/telegram": {
