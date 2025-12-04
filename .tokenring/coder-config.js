@@ -123,7 +123,8 @@ const agents = {
 export default {
  //agents,
  chat: {
-  defaultModel: "LocalLLama:glm/glm-air-4.5",
+  //defaultModel: "LocalLLama:glm/glm-air-4.5",
+  defaultModel: "LocalLLama:minimax/minimax-m2",
  },
  sandbox: {
   default: {
