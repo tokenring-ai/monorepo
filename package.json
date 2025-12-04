@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "scripts": {
+    "build": "tsc --noEmit",
     "coder": "bun --env app/coder/src/tr-coder.js --source ./",
     "writer": "bun --env app/writer/src/tr-writer.js --source ./",
     "test": "bun run test",
@@ -23,6 +24,7 @@
   "workspaces": [
     "pkg/*",
     "app/*",
+    "frontend/*",
     "deps/*"
   ]
 }

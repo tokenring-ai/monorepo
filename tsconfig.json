@@ -20,7 +20,11 @@
  },
  "include": [
   "app/*/src/*.ts",
-  "pkg/**/*.ts"
+  "app/*/src/*.tsx",
+  "frontend/***.ts",
+  "frontend/**/*.tsx",
+  "pkg/**/*.ts",
+  "pkg/**/*.tsx"
  ],
  "exclude": [
   "node_modules",

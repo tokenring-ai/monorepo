@@ -247,6 +247,10 @@
 	url = git@github.com:tokenring-ai/browser-file-system.git
 	branch = main
 [submodule "app/webterminal"]
-	path = app/webterminal
+	path = frontend/webterminal
 	url = git@github.com:tokenring-ai/webterminal.git
+	branch = main
+[submodule "pkg/trpc-backend"]
+	path = pkg/trpc-backend
+	url = git@github.com:tokenring-ai/trpc-backend.git
 	branch = main

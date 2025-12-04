@@ -230,8 +230,8 @@ export default {
    }
   },
  },
- /*webHost: {
- },*/
+ webHost: {
+ },
  codebase: {
   resources: {
    ...dynamicRepoMapResources,
