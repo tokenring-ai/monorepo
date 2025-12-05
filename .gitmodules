@@ -194,17 +194,9 @@
 	path = pkg/telegram
 	url = git@github.com:tokenring-ai/telegram.git
 	branch = main
-[submodule "pkg/web-frontend"]
-	path = pkg/web-frontend
-	url = git@github.com:tokenring-ai/web-frontend.git
-	branch = main
 [submodule "pkg/web-host"]
 	path = pkg/web-host
 	url = git@github.com:tokenring-ai/web-host.git
-	branch = main
-[submodule "pkg/agent-api"]
-	path = pkg/agent-api
-	url = git@github.com:tokenring-ai/agent-api.git
 	branch = main
 [submodule "pkg/drizzle-storage"]
 	path = pkg/drizzle-storage
@@ -213,10 +205,6 @@
 [submodule "pkg/chat"]
 	path = pkg/chat
 	url = git@github.com:tokenring-ai/chat.git
-	branch = main
-[submodule "pkg/agent"]
-	path = pkg/agent
-	url = git@github.com:tokenring-ai/agent.git
 	branch = main
 [submodule "pkg/app"]
 	path = pkg/app
@@ -250,7 +238,11 @@
 	path = frontend/webterminal
 	url = git@github.com:tokenring-ai/webterminal.git
 	branch = main
-[submodule "pkg/trpc-backend"]
-	path = pkg/trpc-backend
-	url = git@github.com:tokenring-ai/trpc-backend.git
+[submodule "frontend/chat"]
+	path = frontend/chat
+	url = git@github.com:tokenring-ai/chat-frontend.git
+	branch = main
+[submodule "pkg/agent"]
+	path = pkg/agent
+	url = git@github.com:tokenring-ai/agent.git
 	branch = main
