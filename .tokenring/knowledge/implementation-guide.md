@@ -513,7 +513,7 @@ class PersistentStateManager {
     try {
       const checkpoint = await this.storage.loadCheckpoint(key);
       if (checkpoint) {
-        this.agent.restoreCheckpoint(checkpoint);
+        this.agent.restoreState(checkpoint.state);
         return true;
       }
       return false;

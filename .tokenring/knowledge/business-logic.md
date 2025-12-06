@@ -1468,7 +1468,7 @@ memoryService.addMemory("Context item 2", agent);
 try {
   await riskyOperation(agent);
 } catch (error) {
-  agent.restoreCheckpoint(checkpoint);
+  agent.restoreState(checkpoint.state);
 }
 ```
 

@@ -208,7 +208,7 @@ class AgentCheckpointService implements TokenRingService {
   
   async restoreAgentCheckpoint(id: string, agent: Agent): Promise<void> {
     const checkpoint = await this.checkpointProviders.getActiveItem().retrieveCheckpoint(id);
-    agent.restoreCheckpoint(checkpoint);
+    agent.restoreState(checkpoint.state);
   }
 }
 ```

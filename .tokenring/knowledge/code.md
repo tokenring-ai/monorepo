@@ -503,7 +503,7 @@ agent.mutateState(CustomState, state => {
 const checkpoint = agent.generateCheckpoint();
 
 // Restore from checkpoint
-agent.restoreCheckpoint(checkpoint);
+agent.restoreState(checkpoint.state);
 
 // Persistence across sessions
 const storage = new SQLiteAgentStateStorage();
