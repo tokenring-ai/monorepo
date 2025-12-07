@@ -246,3 +246,7 @@
 	path = pkg/agent
 	url = git@github.com:tokenring-ai/agent.git
 	branch = main
+[submodule "docs"]
+	path = docs
+	url = git@github.com:tokenring-ai/website-docs.git
+	branch = main
