@@ -38,8 +38,10 @@ jobs:
 
       - name: Publish coder to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --access public
+        run: npm publish --provenance --access public
         working-directory: ./app/coder
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   publish-writer:
     runs-on: ubuntu-latest
@@ -71,5 +73,7 @@ jobs:
 
       - name: Publish writer to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --access public
+        run: npm publish --provenance --access public
         working-directory: ./app/writer
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
