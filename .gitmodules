@@ -250,3 +250,11 @@
 	path = docs
 	url = git@github.com:tokenring-ai/website-docs.git
 	branch = main
+[submodule "pkg/scheduler"]
+	path = pkg/scheduler
+	url = git@github.com:tokenring-ai/scheduler.git
+	branch = main
+[submodule "pkg/workflow"]
+	path = pkg/workflow
+	url = git@github.com:tokenring-ai/workflow.git
+	branch = main

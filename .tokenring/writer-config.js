@@ -1,20 +1,13 @@
-import fs from "fs";
 import path from "path";
-
-const templateDirectory = path.join(import.meta.dirname, "./templates");
-const templateFiles = fs.readdirSync(templateDirectory);
-
-const templates = {};
-for (const file of templateFiles) {
- if (!file.endsWith(".js")) continue;
- const template = await import(path.join(templateDirectory, file));
- templates[file.replace(".js", "")] = template.default;
-}
 
 export default {
  websearch: {
-  defaultProvider: "serper",
+  defaultProvider: "chrome",
   providers: {
+   chrome: {
+    type: 'chrome',
+    launch: true
+   },/*
    serper: {
     type: 'serper',
     apiKey: process.env.SERPER_API_KEY,
@@ -22,7 +15,7 @@ export default {
    scraperapi: {
     type: 'scraperapi',
     apiKey: process.env.SCRAPERAPI_API_KEY,
-   },
+   },*/
   }
  },
  filesystem: {
@@ -34,6 +27,30 @@ export default {
    }
   }
  },
+ /*
+ scheduler: {
+  tasks: [
+   {
+    name: "Hello world",
+    agentType: "writer",
+    message: "/chat hello",
+    //every: "2 minutes",
+    once: true,
+    from: "09:00",
+    on: "mon tue wed thu fri"
+   },
+   {
+    name: "Hello world2",
+    agentType: "writer",
+    message: "/chat hello",
+    //every: "2 minutes",
+    once: true,
+    from: "04:08",
+    to: "04:13",
+    on: "mon tue wed thu fri"
+   }
+  ]
+ },*/
  /*blog: {
   ghost: {
    type: 'ghost',
@@ -55,7 +72,7 @@ export default {
   researchModel: "gemini-2.5-flash",
  },
  chat: {
-  defaultModel: "LocalLLama:glm/glm-air-4.5",
+  defaultModel: "LocalLLama:minimax/minimax-m2",
  },
  ai: {
   providers: {
@@ -136,5 +153,4 @@ export default {
    region: process.env.AWS_REGION,
   }
  },*/
- templates,
 };

@@ -21,7 +21,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "bin": {
         "tr-coder": "dist/tr-coder",
       },
@@ -82,7 +82,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "bin": {
         "tr-writer": "dist/tr-writer",
       },
@@ -110,6 +110,7 @@
         "@tokenring-ai/reddit": "workspace:*",
         "@tokenring-ai/research": "workspace:*",
         "@tokenring-ai/s3": "workspace:*",
+        "@tokenring-ai/scheduler": "workspace:*",
         "@tokenring-ai/scraperapi": "workspace:*",
         "@tokenring-ai/scripting": "workspace:*",
         "@tokenring-ai/serper": "workspace:*",
@@ -120,6 +121,7 @@
         "@tokenring-ai/websearch": "workspace:*",
         "@tokenring-ai/wikipedia": "workspace:*",
         "@tokenring-ai/wordpress": "workspace:*",
+        "@tokenring-ai/workflow": "workspace:*",
         "@types/bun": "^1.3.3",
         "bun-types": "^1.3.3",
         "chalk": "^5.6.2",
@@ -127,8 +129,6 @@
         "husky": "^9.1.7",
         "jsdom": "^27.2.0",
         "node-gyp": "^12.1.0",
-        "trufflehog": "^0.0.5",
-        "ts": "^0.2.2",
         "typescript": "^5.9.3",
         "vitest": "^4.0.14",
         "zod": "^4.1.13",
@@ -1053,6 +1053,15 @@
         "zod": "^4.1.13",
       },
     },
+    "pkg/scheduler": {
+      "name": "@tokenring-ai/scheduler",
+      "version": "0.2.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "0.2.0",
+        "@tokenring-ai/app": "0.2.0",
+        "zod": "^4.1.13",
+      },
+    },
     "pkg/scraperapi": {
       "name": "@tokenring-ai/scraperapi",
       "version": "0.2.0",
@@ -1241,6 +1250,15 @@
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.14",
         "vitest": "^4.0.14",
+      },
+    },
+    "pkg/workflow": {
+      "name": "@tokenring-ai/workflow",
+      "version": "0.2.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "0.2.0",
+        "@tokenring-ai/app": "0.2.0",
+        "zod": "^4.1.13",
       },
     },
   },
@@ -2259,6 +2277,8 @@
 
     "@tokenring-ai/sandbox": ["@tokenring-ai/sandbox@workspace:pkg/sandbox"],
 
+    "@tokenring-ai/scheduler": ["@tokenring-ai/scheduler@workspace:pkg/scheduler"],
+
     "@tokenring-ai/scraperapi": ["@tokenring-ai/scraperapi@workspace:pkg/scraperapi"],
 
     "@tokenring-ai/scripting": ["@tokenring-ai/scripting@workspace:pkg/scripting"],
@@ -2288,6 +2308,8 @@
     "@tokenring-ai/wikipedia": ["@tokenring-ai/wikipedia@workspace:pkg/wikipedia"],
 
     "@tokenring-ai/wordpress": ["@tokenring-ai/wordpress@workspace:pkg/wordpress"],
+
+    "@tokenring-ai/workflow": ["@tokenring-ai/workflow@workspace:pkg/workflow"],
 
     "@tokenring-ai/writer": ["@tokenring-ai/writer@workspace:app/writer"],
 
