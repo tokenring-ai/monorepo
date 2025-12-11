@@ -7,11 +7,13 @@
     "@tokenring-ai/coder": "workspace:*",
     "@tokenring-ai/chat-frontend": "workspace:*",
     "@tokenring-ai/web-terminal": "workspace:*",
-    "@types/bun": "^1.3.3",
-    "bun-types": "^1.3.3",
+    "@types/bun": "^1.3.4",
+    "bun-types": "^1.3.4",
     "husky": "^9.1.7",
     "trufflehog": "^0.0.5",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "syncpack": "^14.0.0-alpha.32",
+    "vitest": "^4.0.15"
   },
   "license": "MIT",
   "scripts": {
@@ -20,16 +22,17 @@
     "writer": "bun --env app/writer/src/tr-writer.js --source ./",
     "test": "bun run test",
     "prepare": "husky",
-    "update-all-dependencies-latest": "git submodule foreach npx npm-check-updates -u && npx npm-check-updates -u && bun install"
+    "update-all-dependencies-latest": "npx syncpack@alpha update"
   },
   "type": "module",
   "workspaces": [
     "pkg/*",
     "app/*",
     "frontend/*",
-    "deps/*"
+    "deps/*",
+    "docs"
   ],
   "dependencies": {
-    "vitest": "^4.0.15"
+    "vite-plugin-singlefile": "^2.3.0"
   }
 }

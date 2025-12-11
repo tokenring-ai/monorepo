@@ -7,8 +7,11 @@ permissions:
   id-token: write  # Required for OIDC
   contents: read
 
+env:
+  REGISTRY: ghcr.io
+
 jobs:
-  publish-coder:
+  build:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,10 +28,18 @@ jobs:
       
       - name: Install dependencies
         run: bun install
+
+      - name: Build chat frontend
+        run: bun run build
+        working-directory: ./frontend/chat
       
       - name: Build coder package
         run: bun run build
         working-directory: ./app/coder
+
+      - name: Build writer package
+        run: bun run build
+        working-directory: ./app/writer
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
@@ -43,37 +54,66 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  publish-writer:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-      
-      - name: Install dependencies
-        run: bun install
-      
-      - name: Build writer package
-        run: bun run build
-        working-directory: ./app/writer
-
-      - name: Setup Node.js for npm publishing
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-
       - name: Publish writer to NPM
         if: startsWith(github.ref, 'refs/tags/v')
         run: npm publish --provenance --access public
         working-directory: ./app/writer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Coder
+        id: meta-coder
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/coder
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Coder Docker image
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app/coder
+          file: ./app/coder/docker/Dockerfile
+          push: true
+          tags: ${{ steps.meta-coder.outputs.tags }}
+          labels: ${{ steps.meta-coder.outputs.labels }}
+          cache-from: type=gha,scope=coder
+          cache-to: type=gha,mode=max,scope=coder
+
+      - name: Extract metadata for Writer
+        id: meta-writer
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/writer
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Writer Docker image
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: docker/build-push-action@v5
+        with:
+          context: ./app/writer
+          file: ./app/writer/docker/Dockerfile
+          push: true
+          tags: ${{ steps.meta-writer.outputs.tags }}
+          labels: ${{ steps.meta-writer.outputs.labels }}
+          cache-from: type=gha,scope=writer
+          cache-to: type=gha,mode=max,scope=writer
