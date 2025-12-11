@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/mono",
   "description": "TokenRing Monorepo with all community apps and packages",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "devDependencies": {
     "@tokenring-ai/writer": "workspace:*",
     "@tokenring-ai/coder": "workspace:*",
