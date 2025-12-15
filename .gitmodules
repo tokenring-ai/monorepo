@@ -258,3 +258,7 @@
 	path = pkg/workflow
 	url = git@github.com:tokenring-ai/workflow.git
 	branch = main
+[submodule "pkg/thinking"]
+	path = pkg/thinking
+	url = git@github.com:tokenring-ai/thinking.git
+	branch = main
