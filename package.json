@@ -1,17 +1,17 @@
 {
   "name": "@tokenring-ai/mono",
   "description": "TokenRing Monorepo with all community apps and packages",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "devDependencies": {
     "@tokenring-ai/writer": "workspace:*",
     "@tokenring-ai/coder": "workspace:*",
     "@tokenring-ai/chat-frontend": "workspace:*",
     "@tokenring-ai/web-terminal": "workspace:*",
-    "@types/bun": "^1.3.4",
-    "bun-types": "^1.3.4",
+    "@types/bun": "catalog:",
+    "bun-types": "catalog:",
     "husky": "^9.1.7",
     "trufflehog": "^0.0.5",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "syncpack": "^14.0.0-alpha.32",
     "vitest": "^4.0.15"
   },
@@ -25,13 +25,25 @@
     "update-all-dependencies-latest": "npx syncpack@alpha update"
   },
   "type": "module",
-  "workspaces": [
-    "pkg/*",
-    "app/*",
-    "frontend/*",
-    "deps/*",
-    "docs"
-  ],
+  "workspaces": {
+    "packages": [
+      "pkg/*",
+      "app/*",
+      "frontend/*",
+      "deps/*",
+      "docs"
+    ],
+    "catalog": {
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.7",
+      "@types/bun": "1.3.4",
+      "bun-types": "1.3.4",
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "typescript": "5.9.3",
+      "zod": "4.2.1"
+    }
+  },
   "dependencies": {
     "vite-plugin-singlefile": "^2.3.0"
   }

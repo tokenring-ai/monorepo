@@ -33,7 +33,7 @@ export default {
    {
     name: "Hello world",
     agentType: "writer",
-    message: "/chat hello",
+    message: "/chat send hello",
     //every: "2 minutes",
     once: true,
     from: "09:00",
@@ -42,7 +42,7 @@ export default {
    {
     name: "Hello world2",
     agentType: "writer",
-    message: "/chat hello",
+    message: "/chat send hello",
     //every: "2 minutes",
     once: true,
     from: "04:08",
