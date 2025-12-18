@@ -1,0 +1,24 @@
+# ---This file is auto-generated, see /scripts/generate-package-files.pl
+
+/awscliv2.sig
+build
+/.claude/
+coverage
+*.db
+dist
+.DS_Store
+.env
+.env.development.local
+.env.local
+.env.production.local
+.env.test.local
+/.idea/
+keys
+.next/
+node_modules
+*.log
+*.log*
+out/
+*.pem
+*.sqlite
+/.zencoder/
