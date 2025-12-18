@@ -103,7 +103,7 @@ export default {
   start(app: TokenRingApp): void {
     // Initialize active providers, start services
   }
-} as TokenRingPlugin
+} satisfies TokenRingPlugin
 ```
 
 ### 2. Service Registry Pattern

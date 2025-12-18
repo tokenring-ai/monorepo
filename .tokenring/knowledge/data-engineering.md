@@ -708,7 +708,7 @@ export default {
     const config = app.getConfigSlice("checkpoint", CheckpointPackageConfigSchema);
     app.requireService(AgentCheckpointService).setActiveProviderName(config.defaultProvider);
   }
-} as TokenRingPlugin;
+} satisfies TokenRingPlugin;
 ```
 
 This knowledge repository will be updated as new data engineering patterns and systems are discovered in the TokenRing ecosystem.

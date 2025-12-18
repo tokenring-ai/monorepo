@@ -23,7 +23,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.4",
+      "version": "0.2.6",
       "bin": {
         "tr-coder": "dist/tr-coder",
       },
@@ -67,6 +67,7 @@
         "@tokenring-ai/testing": "workspace:*",
         "@tokenring-ai/thinking": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
+        "@tokenring-ai/vault": "workspace:*",
         "@tokenring-ai/web-host": "workspace:*",
         "@tokenring-ai/websearch": "workspace:*",
         "@types/bun": "catalog:",
@@ -84,7 +85,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.4",
+      "version": "0.2.6",
       "bin": {
         "tr-writer": "dist/tr-writer",
       },
@@ -120,6 +121,7 @@
         "@tokenring-ai/template": "workspace:*",
         "@tokenring-ai/thinking": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
+        "@tokenring-ai/vault": "workspace:*",
         "@tokenring-ai/web-host": "workspace:*",
         "@tokenring-ai/websearch": "workspace:*",
         "@tokenring-ai/wikipedia": "workspace:*",
