@@ -1,12 +1,7 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import fs from "fs";
 import path from "path";
-import AutomatedBrainstormingSession from "./coding-agents/AutomatedBrainstormingSession.js";
-import AutomatedDocumentationGeneration from "./coding-agents/AutomatedDocumentationGeneration.js";
-import AutomatedRefactoringSession from "./coding-agents/AutomatedRefactoringSession.js";
-import PirateCoder from "./coding-agents/PirateCoder.js";
-import brainstormingAgent from "./coding-agents/brainstorming-agent.js";
-import refactorAgent from "./coding-agents/refactoring-agent.js";
+import {workflows} from "./workflows/index.js";
 
 function getSubdirectories(srcPath) {
  if (!fs.existsSync(srcPath)) return [];
@@ -92,7 +87,7 @@ function makeTestingEntry(pkgRoot, dir, resources) {
  }
 }
 
-const packageRoots = ["pkg"];
+const packageRoots = ["pkg", "app", "frontend"];
 let dynamicCodebaseResources = {};
 let dynamicRepoMapResources = {};
 let dynamicTestingResources = {};
@@ -108,20 +103,11 @@ for (const pkgRoot of packageRoots) {
 }
 
 
-const agents = {
- AutomatedBrainstormingSession,
- AutomatedDocumentationGeneration,
- AutomatedRefactoringSession,
- PirateCoder,
- refactorAgent,
- brainstormingAgent,
-};
-
 /**
  * @type {import("../src/config.types.js").CoderConfig}
  */
 export default {
- //agents,
+ workflows,
  chat: {
   //defaultModel: "LocalLLama:glm/glm-air-4.5",
   defaultModel: "LocalLLama:minimax/minimax-m2",
@@ -220,11 +206,13 @@ export default {
      baseDirectory: path.resolve(import.meta.dirname, "../"),
      indexedFiles: [
       {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./src", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
      ],
      watchedFiles: [
       {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./src", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+      {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
      ],
     }
    }
@@ -234,13 +222,6 @@ export default {
   resources: {
    ...dynamicRepoMapResources,
    ...dynamicCodebaseResources,
-   "fileTree/tr-coder": {
-    type: "fileTree",
-    description: `Coder App File Tree`,
-    items: [
-     {path: `./`, include: /\.(txt|js|jsx|md|json)$/, exclude: /\/pkg\//},
-    ],
-   },
   },
  },
  testing: {
