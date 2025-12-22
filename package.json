@@ -13,7 +13,7 @@
     "trufflehog": "^0.0.5",
     "typescript": "catalog:",
     "syncpack": "^14.0.0-alpha.32",
-    "vitest": "^4.0.15"
+    "vitest": "catalog:"
   },
   "license": "MIT",
   "scripts": {
@@ -41,6 +41,7 @@
       "react": "19.2.3",
       "react-dom": "19.2.3",
       "typescript": "5.9.3",
+      "vitest": "^4.0.15",
       "zod": "4.2.1"
     }
   },

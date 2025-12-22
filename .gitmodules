@@ -262,3 +262,7 @@
 	path = pkg/thinking
 	url = git@github.com:tokenring-ai/thinking.git
 	branch = main
+[submodule "pkg/image-generation"]
+	path = pkg/image-generation
+	url = git@github.com:tokenring-ai/image-generation.git
+	branch = main
