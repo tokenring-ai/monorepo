@@ -53,40 +53,6 @@ function makeWholeFileEntry(pkgRoot, dir, resources) {
  };
 }
 
-function makeTestingEntry(pkgRoot, dir, resources) {
- const packageFile = path.join(pkgRoot, dir, "package.json");
- try {
-  if (!fs.existsSync(packageFile)) return null;
-
-  const packageJson = JSON.parse(fs.readFileSync(packageFile));
-
-  const scripts = packageJson.scripts;
-  if (scripts?.test) {
-   const name = `testing/${dir}/npm-test`;
-   resources[name] = {
-    type: "shell-testing",
-    name,
-    description: `Runs NPM Test`,
-    command: "npm run test",
-    workingDirectory: path.join(pkgRoot, dir),
-   };
-  }
-  if (scripts?.lint) {
-   const name = `testing/${dir}/lint`;
-   resources[name] = {
-    type: "shell-testing",
-    name,
-    description: "Verify & fix formatting and lint rules",
-    command: "npm run eslint",
-    workingDirectory: path.join(pkgRoot, dir),
-   };
-  }
- } catch (error) {
-  console.error(`Error while reading ${packageFile}`, error);
-  return null;
- }
-}
-
 const packageRoots = ["pkg", "app", "frontend"];
 let dynamicCodebaseResources = {};
 let dynamicRepoMapResources = {};
@@ -98,7 +64,6 @@ for (const pkgRoot of packageRoots) {
   makeFileTreeEntry(pkgRoot, dir, dynamicCodebaseResources);
   makeRepoMapEntry(pkgRoot, dir, dynamicRepoMapResources);
   makeWholeFileEntry(pkgRoot, dir, dynamicCodebaseResources);
-  makeTestingEntry(pkgRoot, dir, dynamicTestingResources);
  }
 }
 
@@ -225,17 +190,12 @@ export default {
   },
  },
  testing: {
-  default: {
-   resources: ["testing*"],
-  },
+  maxAutoRepairs: 5,
   resources: {
-   ...dynamicTestingResources,
-   "testing/all/tsc": {
-    type: "shell-testing",
-    name: "testing/all/tsc",
-    description: `Runs tsc on the repository`,
-    command:
-     "npx tsc --noEmit",
+   tsc: {
+    type: "shell",
+    name: "Typescript Check",
+    command: "npx tsc --noEmit",
     workingDirectory: "./",
    },
   },
