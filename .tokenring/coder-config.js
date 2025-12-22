@@ -74,6 +74,7 @@ for (const pkgRoot of packageRoots) {
 export default {
  workflows,
  chat: {
+  autoCompact: true,
   //defaultModel: "LocalLLama:glm/glm-air-4.5",
   defaultModel: "LocalLLama:minimax/minimax-m2",
  },
