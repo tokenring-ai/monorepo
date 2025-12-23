@@ -19,7 +19,7 @@ An AI-powered coding assistant with a comprehensive 45-package ecosystem for loc
 - Audio processing and transcription
 - Web search and browser automation
 
-[📖 Full Coder Documentation](app/coder/README.md)
+[📖 Full Coder Documentation](https://github.com/tokenring-ai/coder)
 
 ### TokenRing Writer
 A unified platform for writing and managing news articles and blog posts. Leverages AI to assist with writing, editing, research, and publishing workflows.
@@ -32,7 +32,7 @@ A unified platform for writing and managing news articles and blog posts. Levera
 - Research capabilities with web search and Wikipedia
 - Multi-model AI support
 
-[📖 Full Writer Documentation](app/writer/README.md)
+[📖 Full Writer Documentation](https://github.com/tokenring-ai/writer)
 
 ## 🚀 Quick Start
 
