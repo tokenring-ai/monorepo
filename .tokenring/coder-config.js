@@ -76,7 +76,8 @@ export default {
  chat: {
   autoCompact: true,
   //defaultModel: "LocalLLama:glm/glm-air-4.5",
-  defaultModel: "LocalLLama:minimax/minimax-m2",
+  //defaultModel: "LocalLLama:minimax/minimax-m2",
+  defaultModel: "LocalLLama:glm/glm-4.6V",
  },
  sandbox: {
   default: {
