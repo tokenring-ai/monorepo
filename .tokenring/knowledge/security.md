@@ -155,7 +155,7 @@ This file maintains knowledge about security vulnerabilities, controls, and best
 - Container security label validation
 - Isolation verification
 
-#### 7. Enhanced Shell Command Security (`pkg/filesystem/tools/runShellCommand.ts`)
+#### 7. Enhanced Shell Command Security (`pkg/filesystem/tools/bash.ts`)
 **Comprehensive Security Features:**
 - Multi-pattern dangerous command filtering
 - Working directory validation and sanitization

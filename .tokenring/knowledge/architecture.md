@@ -266,7 +266,7 @@ The architecture has evolved from simple agent tools to a comprehensive ecosyste
 - **Ignore Filters**: Automatic `.gitignore` and `.aiignore` pattern application
 
 **Tool System**:
-- **Standardized Tools**: file/modify, file/search, file/patch, terminal/runShellCommand
+- **Standardized Tools**: file_write, file_search, file_patch, terminal_bash
 - **Zod Validation**: Runtime type checking for all tool inputs
 - **Batch Processing**: `/foreach` commands for glob-based file operations
 

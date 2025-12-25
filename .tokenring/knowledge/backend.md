@@ -601,7 +601,7 @@ class FileSystemService implements TokenRingService {
 **Tool Integration**:
 ```typescript
 const fileModify = new TokenRingTool({
-  name: 'file/modify',
+  name: 'file_write',
   inputSchema: z.object({
     path: z.string(),
     action: z.enum(['write', 'append', 'delete', 'rename', 'adjust']),
