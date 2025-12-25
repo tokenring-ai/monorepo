@@ -151,7 +151,7 @@ Each plugin documentation should follow this structure:
 5. **Usage Examples**: Practical code examples
 6. **Configuration**: Configuration options and schemas
 7. **Integration**: How the plugin integrates with other packages
-8**Development**: Testing, build instructions, and licensing
+8. **Development**: Testing, build instructions, and licensing
 
 ### Code Examples
 - Use TypeScript syntax with proper imports

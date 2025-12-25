@@ -7,7 +7,7 @@ export default {
   `/list @packages = getPackageDirectories()`,
   `/for $pkg in @packages {
     /eval /agent run documentationEngineer Search for all the files in $pkg/, and methodically update the packages README to match the current code in the package;
-    /eval /agent run documentationEngineer Search for all the files in $pkg/ and docs/docs/plugins/*.md, and methodically update or create documentation in docs/docs/plugins/ to match the current functionality of the package (plugin)
+    /eval /agent run documentationEngineer Search for all the files in $pkg/, and methodically update or create documentation in docs/docs/plugins/ to match the current functionality of the package (plugin)
    }`,
    `/agent run documentationEngineer Search for all the files in app/coder/*, and methodically update the app/coder/README.md to match the current code in the package`,
    `/agent run documentationEngineer Search for all the files in app/writer/*, and methodically update the app/writer/README.md to match the current code in the package`,
