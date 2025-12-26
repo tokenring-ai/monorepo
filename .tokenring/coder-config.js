@@ -2,13 +2,17 @@
 import fs from "fs";
 import path from "path";
 import {workflows} from "./workflows/index.js";
+import {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
+
+const rootDir = path.resolve(import.meta.dirname, "../");
 
 function getSubdirectories(srcPath) {
- if (!fs.existsSync(srcPath)) return [];
- return fs
- .readdirSync(srcPath)
- .filter((f) => fs.statSync(path.join(srcPath, f)).isDirectory())
- .map((f) => f);
+  const filePath = path.join(rootDir, srcPath);
+  if (!fs.existsSync(filePath)) return [];
+  return fs
+  .readdirSync(filePath)
+  .filter((f) => fs.statSync(path.join(filePath, f)).isDirectory())
+  .map((f) => f);
 }
 
 function makeFileTreeEntry(pkgRoot, dir, resources) {
@@ -56,7 +60,6 @@ function makeWholeFileEntry(pkgRoot, dir, resources) {
 const packageRoots = ["pkg", "app", "frontend"];
 let dynamicCodebaseResources = {};
 let dynamicRepoMapResources = {};
-let dynamicTestingResources = {};
 
 for (const pkgRoot of packageRoots) {
  const dirs = getSubdirectories(pkgRoot);
@@ -72,140 +75,141 @@ for (const pkgRoot of packageRoots) {
  * @type {import("../src/config.types.js").CoderConfig}
  */
 export default {
- workflows,
- chat: {
-  autoCompact: true,
-  //defaultModel: "LocalLLama:glm/glm-air-4.5",
-  //defaultModel: "LocalLLama:minimax/minimax-m2",
-  defaultModel: "LocalLLama:glm/glm-4.6V",
- },
- sandbox: {
-  default: {
-   provider: "docker",
+  workflows,
+  chat: {
+    autoCompact: true,
+    //defaultModel: "LocalLLama:glm/glm-air-4.5",
+    //defaultModel: "LocalLLama:minimax/minimax-m2",
+    defaultModel: "LocalLLama:glm/glm-4.6V",
   },
-  providers: {
-   docker: {
-    type: "docker",
-   }
-  }
- },
- ai: {
-  providers: {
-   Anthropic: {
-    provider: "anthropic",
-    apiKey: process.env.ANTHROPIC_API_KEY,
-   },
-   Azure: {
-    provider: "azure",
-    apiKey: process.env.AZURE_API_KEY,
-    baseURL: process.env.AZURE_API_ENDPOINT,
-   },
-   Cerebras: {
-    provider: "cerebras",
-    apiKey: process.env.CEREBRAS_API_KEY,
-   },
-   DeepSeek: {
-    provider: "deepseek",
-    apiKey: process.env.DEEPSEEK_API_KEY,
-   },
-   Google: {
-    provider: "google",
-    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-   },
-   Groq: {
-    provider: "groq",
-    apiKey: process.env.GROQ_API_KEY,
-   },
-   LLama: {
-    provider: "openaiCompatible",
-    apiKey: process.env.LLAMA_API_KEY,
-    baseURL: 'https://api.llama.com/compat/v1',
-   },
-   OpenAI: {
-    provider: "openai",
-    apiKey: process.env.OPENAI_API_KEY
-   },
-   LlamaCPP: {
-    provider: "openaiCompatible",
-    baseURL: "http://192.168.15.20:11434",
-    apiKey: "sk-ABCD1234567890",
-   },
-   LocalLLama: {
-    provider: "openaiCompatible",
-    baseURL: "http://192.168.15.25:11434/v1",
-    apiKey: "sk-ABCD1234567890"
-   },
-   OpenRouter: {
-    provider: "openrouter",
-    apiKey: process.env.OPENROUTER_API_KEY
-   },
-   Perplexity: {
-    provider: "perplexity",
-    apiKey: process.env.PERPLEXITY_API_KEY,
-   },
-   Qwen: {
-    provider: "openaiCompatible",
-    apiKey: process.env.DASHSCOPE_API_KEY,
-    baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'
-   },
-   xAi: {
-    provider: "xai",
-    apiKey: process.env.XAI_API_KEY,
-   },
-  },
-  websearch: {
-   serper: {
-    type: "serper",
-    apiKey: process.env.SERPER_API_KEY,
-   },
-   scraperapi: {
-    type: "scraperapi",
-    apiKey: process.env.SCRAPERAPI_API_KEY,
-   },
-  },
-  filesystem: {
-   default: {
-    selectedFiles: ["AGENTS.md"],
-   },
-   providers: {
-    local: {
-     type: "local",
-     baseDirectory: path.resolve(import.meta.dirname, "../"),
-     indexedFiles: [
-      {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-     ],
-     watchedFiles: [
-      {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-      {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-     ],
+  sandbox: {
+    default: {
+      provider: "docker",
+    },
+    providers: {
+      docker: {
+        type: "docker",
+      }
     }
-   }
   },
- },
- codebase: {
-  resources: {
-   ...dynamicRepoMapResources,
-   ...dynamicCodebaseResources,
+  ai: {
+    providers: {
+      Anthropic: {
+        provider: "anthropic",
+        apiKey: process.env.ANTHROPIC_API_KEY,
+      },
+      Azure: {
+        provider: "azure",
+        apiKey: process.env.AZURE_API_KEY,
+        baseURL: process.env.AZURE_API_ENDPOINT,
+      },
+      Cerebras: {
+        provider: "cerebras",
+        apiKey: process.env.CEREBRAS_API_KEY,
+      },
+      DeepSeek: {
+        provider: "deepseek",
+        apiKey: process.env.DEEPSEEK_API_KEY,
+      },
+      Google: {
+        provider: "google",
+        apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+      },
+      Groq: {
+        provider: "groq",
+        apiKey: process.env.GROQ_API_KEY,
+      },
+      LLama: {
+        provider: "openaiCompatible",
+        apiKey: process.env.LLAMA_API_KEY,
+        baseURL: 'https://api.llama.com/compat/v1',
+      },
+      OpenAI: {
+        provider: "openai",
+        apiKey: process.env.OPENAI_API_KEY
+      },
+      LlamaCPP: {
+        provider: "openaiCompatible",
+        baseURL: "http://192.168.15.20:11434",
+        apiKey: "sk-ABCD1234567890",
+      },
+      LocalLLama: {
+        provider: "openaiCompatible",
+        baseURL: "http://192.168.15.25:11434/v1",
+        apiKey: "sk-ABCD1234567890"
+      },
+      OpenRouter: {
+        provider: "openrouter",
+        apiKey: process.env.OPENROUTER_API_KEY
+      },
+      Perplexity: {
+        provider: "perplexity",
+        apiKey: process.env.PERPLEXITY_API_KEY,
+      },
+      Qwen: {
+        provider: "openaiCompatible",
+        apiKey: process.env.DASHSCOPE_API_KEY,
+        baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'
+      },
+      xAi: {
+        provider: "xai",
+        apiKey: process.env.XAI_API_KEY,
+      },
+    },
   },
- },
- testing: {
-  maxAutoRepairs: 5,
-  resources: {
-   tsc: {
-    type: "shell",
-    name: "Typescript Check",
-    command: "npx tsc --noEmit",
-    workingDirectory: "./",
-   },
-   vitest: {
-    type: "shell",
-    name: "Vitest Testing",
-    command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok' | sed -n 1,500p",
-    workingDirectory: "./",
-   },
+  /*websearch: {
+    defaultProvider: "serper",
+    providers: {
+      serper: {
+        type: "serper",
+        apiKey: process.env.SERPER_API_KEY,
+      },
+      scraperapi: {
+        type: "scraperapi",
+        apiKey: process.env.SCRAPERAPI_API_KEY,
+      },
+    }
+  },*/
+  filesystem: {
+    defaultProvider: "local",
+    providers: {
+      local: {
+        type: "local",
+        baseDirectory: path.resolve(import.meta.dirname, "../"),
+        indexedFiles: [
+          {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+          {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+          {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+        ],
+        watchedFiles: [
+          {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+          {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+          {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
+        ],
+      }
+    }
   },
- },
+  codebase: {
+    resources: {
+      ...dynamicRepoMapResources,
+      ...dynamicCodebaseResources,
+    },
+  },
+  testing: {
+    maxAutoRepairs: 5,
+    resources: {
+      tsc: {
+        type: "shell",
+        name: "Typescript Check",
+        command: "npx tsc --noEmit",
+        workingDirectory: "./",
+      },
+      vitest: {
+        type: "shell",
+        name: "Vitest Testing",
+        command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok' | sed -n 1,500p",
+        workingDirectory: "./",
+      },
+    },
+  },
 };

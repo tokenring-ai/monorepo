@@ -79,7 +79,7 @@
         "node-gyp": "^12.1.0",
         "trufflehog": "^0.0.5",
         "typescript": "catalog:",
-        "vitest": "^4.0.15",
+        "vitest": "catalog:",
         "zod": "catalog:",
       },
     },
@@ -136,7 +136,7 @@
         "jsdom": "^27.3.0",
         "node-gyp": "^12.1.0",
         "typescript": "catalog:",
-        "vitest": "^4.0.15",
+        "vitest": "catalog:",
         "zod": "catalog:",
       },
     },
@@ -271,6 +271,7 @@
         "tailwindcss": "^4.1.18",
         "typescript": "catalog:",
         "vite": "7.3.0",
+        "vitest": "catalog:",
       },
     },
     "frontend/webterminal": {
@@ -320,6 +321,7 @@
         "typescript": "catalog:",
         "vite": "7.3.0",
         "vite-plugin-node-polyfills": "^0.24.0",
+        "vitest": "catalog:",
       },
     },
     "pkg/agent": {
@@ -337,6 +339,7 @@
       },
       "devDependencies": {
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/ai-client": {
@@ -367,7 +370,7 @@
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
         "typescript": "catalog:",
-        "vitest": "^4.0.15",
+        "vitest": "catalog:",
       },
     },
     "pkg/app": {
@@ -377,6 +380,10 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/audio": {
@@ -389,6 +396,10 @@
         "@tokenring-ai/chat": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/aws": {
@@ -403,6 +414,10 @@
         "@tokenring-ai/filesystem": "0.2.0",
         "node-fetch": "^3.3.2",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/blog": {
@@ -420,6 +435,10 @@
         "uuid": "^13.0.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/browser-agent-storage": {
       "name": "@tokenring-ai/browser-agent-storage",
@@ -430,6 +449,10 @@
         "@tokenring-ai/checkpoint": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/browser-file-system": {
       "name": "@tokenring-ai/browser-file-system",
@@ -437,6 +460,10 @@
       "dependencies": {
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/filesystem": "0.2.0",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/cdn": {
@@ -449,6 +476,10 @@
         "@tokenring-ai/utility": "0.2.0",
         "uuid": "^13.0.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/chat": {
@@ -467,7 +498,7 @@
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
         "typescript": "catalog:",
-        "vitest": "^4.0.15",
+        "vitest": "catalog:",
       },
     },
     "pkg/checkpoint": {
@@ -483,6 +514,7 @@
       },
       "devDependencies": {
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/chrome": {
@@ -500,6 +532,7 @@
       "devDependencies": {
         "@types/turndown": "^5.0.6",
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/cli": {
@@ -522,7 +555,7 @@
       "devDependencies": {
         "@types/react": "catalog:",
         "typescript": "catalog:",
-        "vitest": "^4.0.15",
+        "vitest": "catalog:",
       },
     },
     "pkg/cli-ink": {
@@ -551,6 +584,7 @@
       "devDependencies": {
         "@types/react": "catalog:",
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/cloudquote": {
@@ -564,6 +598,10 @@
         "date-fns-tz": "^3.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/code-watch": {
       "name": "@tokenring-ai/code-watch",
@@ -575,6 +613,10 @@
         "@tokenring-ai/filesystem": "0.2.0",
         "ignore": "^7.0.5",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/codebase": {
@@ -589,6 +631,10 @@
         "code-chopper": "^0.1.6",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/database": {
       "name": "@tokenring-ai/database",
@@ -602,6 +648,8 @@
       },
       "devDependencies": {
         "bun-types": "catalog:",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/discord": {
@@ -613,6 +661,10 @@
         "@tokenring-ai/chat": "0.2.0",
         "discord.js": "^14.25.1",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/docker": {
@@ -628,6 +680,10 @@
         "execa": "^9.6.1",
         "glob-gitignore": "^1.0.15",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/drizzle-storage": {
@@ -646,7 +702,8 @@
         "bun-types": "catalog:",
         "drizzle-kit": "^0.31.8",
         "testcontainers": "^11.10.0",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/feedback": {
@@ -671,6 +728,7 @@
       "devDependencies": {
         "@types/express": "^5.0.6",
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/file-index": {
@@ -696,6 +754,8 @@
       },
       "devDependencies": {
         "@types/fs-extra": "^11.0.4",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/filesystem": {
@@ -715,7 +775,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/ghost-io": {
@@ -739,7 +800,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/git": {
@@ -756,6 +818,10 @@
         "execa": "^9.6.1",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/image-generation": {
       "name": "@tokenring-ai/image-generation",
@@ -769,6 +835,10 @@
         "exiftool-vendored": "^28.8.0",
         "uuid": "^13.0.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/ink": {
@@ -849,6 +919,10 @@
         "@tokenring-ai/chat": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/javascript": {
       "name": "@tokenring-ai/javascript",
@@ -863,6 +937,10 @@
         "jiti": "^2.6.1",
         "jscodeshift": "^17.3.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/kubernetes": {
@@ -880,7 +958,8 @@
         "zod": "catalog:",
       },
       "devDependencies": {
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/linux-audio": {
@@ -897,12 +976,15 @@
         "wav": "^1.0.2",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/local-filesystem": {
       "name": "@tokenring-ai/local-filesystem",
       "version": "0.2.0",
       "dependencies": {
-        "@ai-sdk/mcp": "^0.0.12",
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
@@ -916,6 +998,8 @@
       },
       "devDependencies": {
         "@types/fs-extra": "^11.0.4",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/mcp": {
@@ -930,6 +1014,10 @@
         "ai": "^5.0.113",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/memory": {
       "name": "@tokenring-ai/memory",
@@ -942,6 +1030,10 @@
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/mysql": {
       "name": "@tokenring-ai/mysql",
@@ -950,6 +1042,10 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/database": "0.2.0",
         "mysql2": "^3.15.3",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/newsrpm": {
@@ -967,7 +1063,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/queue": {
@@ -983,6 +1080,7 @@
       },
       "devDependencies": {
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/reddit": {
@@ -998,7 +1096,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/research": {
@@ -1012,6 +1111,10 @@
         "@tokenring-ai/scripting": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/s3": {
       "name": "@tokenring-ai/s3",
@@ -1021,6 +1124,10 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
       "peerDependencies": {
         "@tokenring-ai/cdn": "0.2.0",
@@ -1037,6 +1144,10 @@
         "@tokenring-ai/docker": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/scheduler": {
       "name": "@tokenring-ai/scheduler",
@@ -1045,6 +1156,10 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/scraperapi": {
@@ -1058,6 +1173,10 @@
         "@tokenring-ai/websearch": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/scripting": {
       "name": "@tokenring-ai/scripting",
@@ -1068,6 +1187,10 @@
         "@tokenring-ai/chat": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/serper": {
@@ -1082,7 +1205,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/slack": {
@@ -1095,6 +1219,10 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/tasks": {
@@ -1110,6 +1238,7 @@
         "zod": "catalog:",
       },
       "devDependencies": {
+        "typescript": "catalog:",
         "vitest": "catalog:",
       },
     },
@@ -1125,6 +1254,8 @@
       },
       "devDependencies": {
         "@types/node-telegram-bot-api": "^0.64.13",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/template": {
@@ -1137,6 +1268,10 @@
         "@tokenring-ai/chat": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/testing": {
@@ -1154,6 +1289,7 @@
       },
       "devDependencies": {
         "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/thinking": {
@@ -1165,12 +1301,20 @@
         "@tokenring-ai/chat": "0.2.0",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/utility": {
       "name": "@tokenring-ai/utility",
       "version": "0.2.0",
       "dependencies": {
         "@tokenring-ai/agent": "0.2.0",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/vault": {
@@ -1186,6 +1330,7 @@
         "fs-extra": "^11.3.2",
       },
       "devDependencies": {
+        "typescript": "catalog:",
         "vitest": "catalog:",
       },
     },
@@ -1201,6 +1346,10 @@
         "fastify": "^5.6.2",
         "zod": "catalog:",
       },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
     },
     "pkg/websearch": {
       "name": "@tokenring-ai/websearch",
@@ -1212,6 +1361,10 @@
         "@tokenring-ai/scripting": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/wikipedia": {
@@ -1226,7 +1379,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/wordpress": {
@@ -1247,7 +1401,8 @@
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^4.0.15",
-        "vitest": "^4.0.15",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
     "pkg/workflow": {
@@ -1257,6 +1412,10 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "zod": "catalog:",
+      },
+      "devDependencies": {
+        "typescript": "catalog:",
+        "vitest": "catalog:",
       },
     },
   },
