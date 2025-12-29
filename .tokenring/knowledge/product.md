@@ -221,6 +221,46 @@ interface ContextProvider {
 }
 ```
 
+### 5. JavaScript Tool Definition Pattern
+```typescript
+interface TokenRingToolDefinition<TInputSchema> {
+  name: string;
+  description: string;
+  inputSchema: TInputSchema;
+  execute: (input: z.infer<TInputSchema>, agent: Agent) => Promise<Output>;
+}
+```
+
+### 6. Utility Package Pattern
+```typescript
+// object/pick.ts
+export default function pick<T extends object, K extends keyof T>(
+  obj: T,
+  keys: K[]
+): Pick<T, K> {
+  return keys.reduce((acc, key) => {
+    if (Object.hasOwn(obj, key)) {
+      acc[key] = obj[key];
+    }
+    return acc;
+  }, {} as Pick<T, K>);
+}
+```
+
+### 7. Registry Pattern
+```typescript
+// registry/KeyedRegistry.ts
+export default class KeyedRegistry<T = any> {
+  protected items: Record<string, T> = {};
+  private subscribers: Map<string, ((item: T) => void)[]> = new Map();
+
+  register = (name: string, resource: T) => {
+    this.items[name] = resource;
+    // Notify subscribers
+  };
+}
+```
+
 ## Application-Specific Analysis
 
 ### TokenRing Coder Product Requirements
@@ -235,7 +275,7 @@ interface ContextProvider {
 #### Feature Organization
 - **45-Package Ecosystem**: Modular, pluggable architecture
 - **Multi-Agent Coordination**: Specialized agents for different development tasks
-- **Development Tools**: Git, testing, code intelligence, debugging
+- **Development Tools**: Git, testing, javascript tooling, code intelligence
 - **Cloud Integration**: AWS, Docker, Kubernetes support
 - **Communication**: Slack, Telegram integration for team coordination
 
