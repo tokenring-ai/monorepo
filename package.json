@@ -18,8 +18,8 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --noEmit",
-    "coder": "bun --env app/coder/src/tr-coder.js --source ./",
-    "writer": "bun --env app/writer/src/tr-writer.js --source ./",
+    "coder": "bun --env app/coder/src/tr-coder.js",
+    "writer": "bun --env app/writer/src/tr-writer.js",
     "test": "bun run test",
     "prepare": "husky",
     "update-all-dependencies-latest": "npx syncpack@alpha update"

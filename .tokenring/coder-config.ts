@@ -1,12 +1,13 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
+import {configSchema} from "@tokenring-ai/coder/src/plugins";
 import fs from "fs";
 import path from "path";
+import {z} from "zod";
 import {workflows} from "./workflows/index.js";
-import {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
 
 const rootDir = path.resolve(import.meta.dirname, "../");
 
-function getSubdirectories(srcPath) {
+function getSubdirectories(srcPath: string) {
   const filePath = path.join(rootDir, srcPath);
   if (!fs.existsSync(filePath)) return [];
   return fs
@@ -15,7 +16,7 @@ function getSubdirectories(srcPath) {
   .map((f) => f);
 }
 
-function makeFileTreeEntry(pkgRoot, dir, resources) {
+function makeFileTreeEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
  const name = `fileTree/${dir}`;
  resources[name] = {
   type: "fileTree",
@@ -29,7 +30,7 @@ function makeFileTreeEntry(pkgRoot, dir, resources) {
  };
 }
 
-function makeRepoMapEntry(pkgRoot, dir, resources) {
+function makeRepoMapEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
  const name = `repoMap/${dir}`;
  resources[name] = {
   type: "repoMap",
@@ -43,7 +44,7 @@ function makeRepoMapEntry(pkgRoot, dir, resources) {
  };
 }
 
-function makeWholeFileEntry(pkgRoot, dir, resources) {
+function makeWholeFileEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
  const name = `wholeFile/${dir}`;
  resources[name] = {
   type: "wholeFile",
@@ -70,15 +71,10 @@ for (const pkgRoot of packageRoots) {
  }
 }
 
-
-/**
- * @type {import("../src/config.types.js").CoderConfig}
- */
 export default {
   workflows,
   chat: {
-    autoCompact: true,
-    defaultModel: "LocalLLama:*",
+    defaultModels: ["llamacpp:*"],
   },
   sandbox: {
     default: {
@@ -91,6 +87,7 @@ export default {
     }
   },
   ai: {
+    /*
     providers: {
       Anthropic: {
         provider: "anthropic",
@@ -153,7 +150,7 @@ export default {
         provider: "xai",
         apiKey: process.env.XAI_API_KEY,
       },
-    },
+    },*/
   },
   /*websearch: {
     defaultProvider: "serper",
@@ -210,4 +207,4 @@ export default {
       },
     },
   },
-};
+} satisfies Partial<z.input<typeof configSchema>>;

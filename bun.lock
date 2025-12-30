@@ -20,7 +20,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.6",
+      "version": "0.2.7",
       "bin": {
         "tr-coder": "dist/tr-coder",
       },
@@ -82,7 +82,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.6",
+      "version": "0.2.7",
       "bin": {
         "tr-writer": "dist/tr-writer",
       },
@@ -226,14 +226,14 @@
         "@mdx-js/react": "^3.1.1",
         "clsx": "^2.1.1",
         "prism-react-renderer": "^2.4.1",
-        "react": "catalog:",
-        "react-dom": "catalog:",
+        "react": "^19.2.3",
+        "react-dom": "19.2.3",
       },
       "devDependencies": {
         "@docusaurus/module-type-aliases": "3.9.2",
         "@docusaurus/tsconfig": "3.9.2",
         "@docusaurus/types": "3.9.2",
-        "typescript": "catalog:",
+        "typescript": "^5.9.3",
       },
     },
     "frontend/chat": {
@@ -347,6 +347,7 @@
         "@ai-sdk/azure": "^3.0.1",
         "@ai-sdk/cerebras": "^2.0.2",
         "@ai-sdk/deepseek": "^2.0.1",
+        "@ai-sdk/elevenlabs": "^2.0.1",
         "@ai-sdk/fal": "^2.0.1",
         "@ai-sdk/google": "^3.0.1",
         "@ai-sdk/groq": "^3.0.1",
@@ -1437,6 +1438,8 @@
     "@ai-sdk/cerebras": ["@ai-sdk/cerebras@2.0.2", "", { "dependencies": { "@ai-sdk/openai-compatible": "2.0.1", "@ai-sdk/provider": "3.0.0", "@ai-sdk/provider-utils": "4.0.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-PimfPWYpoQ0XOahLjby3HdI31fAl3aLt1UadFNMaFapA0OcHhgA1P3lcah8qpBTEoHbMDuJei6lZ27cSmZRCRg=="],
 
     "@ai-sdk/deepseek": ["@ai-sdk/deepseek@2.0.1", "", { "dependencies": { "@ai-sdk/provider": "3.0.0", "@ai-sdk/provider-utils": "4.0.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-CFEP9QjOUwLvK9zCuXS/LUWoLZouAVgJ0+ITscyIS2KtmJYlUPGmpleCthyrl1CqpPEEQiMcF3DKKVootrdveQ=="],
+
+    "@ai-sdk/elevenlabs": ["@ai-sdk/elevenlabs@2.0.1", "", { "dependencies": { "@ai-sdk/provider": "3.0.0", "@ai-sdk/provider-utils": "4.0.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-SDaE752rBibUX90JaQxWW8GgfHaOCNYpdoZb9grVawOBpGQOLUCJ49LOcENHywYKf7utfmKE7qJVBNYDIQHdLg=="],
 
     "@ai-sdk/fal": ["@ai-sdk/fal@2.0.1", "", { "dependencies": { "@ai-sdk/provider": "3.0.0", "@ai-sdk/provider-utils": "4.0.1" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-HwKVY1uwGoTp2JCuxHyjsGV5fujy2m86J0lLqV8AbKwa72ZQTk5m8QypBW3fm6qIlmqIEUloOvcQjG/TBUSoVg=="],
 
