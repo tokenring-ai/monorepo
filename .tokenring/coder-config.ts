@@ -74,7 +74,7 @@ for (const pkgRoot of packageRoots) {
 export default {
   workflows,
   chat: {
-    defaultModels: ["llamacpp:*"],
+    defaultModels: ['zai:glm-4.7'],
   },
   sandbox: {
     default: {
