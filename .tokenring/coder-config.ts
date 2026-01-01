@@ -3,7 +3,7 @@ import {configSchema} from "@tokenring-ai/coder/src/plugins";
 import fs from "fs";
 import path from "path";
 import {z} from "zod";
-import {workflows} from "./workflows/index.js";
+import {workflows} from "./workflows";
 
 const rootDir = path.resolve(import.meta.dirname, "../");
 
@@ -74,10 +74,10 @@ for (const pkgRoot of packageRoots) {
 export default {
   workflows,
   chat: {
-    defaultModels: ['zai:glm-4.7'],
+    defaultModels: ['llamacpp:*', 'zai:glm-4.7'],
   },
   sandbox: {
-    default: {
+    agentDefaults: {
       provider: "docker",
     },
     providers: {
@@ -166,7 +166,9 @@ export default {
     }
   },*/
   filesystem: {
-    defaultProvider: "local",
+    agentDefaults: {
+      provider: "local",
+    },
     providers: {
       local: {
         type: "local",
