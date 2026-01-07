@@ -266,3 +266,7 @@
 	path = pkg/image-generation
 	url = git@github.com:tokenring-ai/image-generation.git
 	branch = main
+[submodule "frontend/electron"]
+	path = frontend/electron
+	url = git@github.com:tokenring-ai/electron-frontend.git
+	branch = main

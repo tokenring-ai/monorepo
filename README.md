@@ -1,12 +1,21 @@
 # TokenRing AI Monorepo
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://typescriptlang.org)
+[![Bun](https://img.shields.io/badge/Bun-1.0+-black?logo=bun)](https://bun.sh)
+
+<img src="assets/logo.png" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
+
 **A comprehensive AI-powered development and content creation ecosystem**
 
 TokenRing AI is a modular TypeScript monorepo hosting two flagship applications—**TokenRing Coder** and **TokenRing Writer**—built on a foundation of 50+ specialized packages. The ecosystem provides AI-assisted coding, content creation, and workflow automation through a unified agent-based architecture.
 
-## 🎯 Applications
+---
+
+## Applications
 
 ### TokenRing Coder
+
 An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
 
 **Key Features:**
@@ -19,9 +28,10 @@ An AI-powered coding assistant with a comprehensive 45-package ecosystem for loc
 - Audio processing and transcription
 - Web search and browser automation
 
-[📖 Full Coder Documentation](https://github.com/tokenring-ai/coder)
+[Full Coder Documentation](https://github.com/tokenring-ai/coder)
 
 ### TokenRing Writer
+
 A unified platform for writing and managing news articles and blog posts. Leverages AI to assist with writing, editing, research, and publishing workflows.
 
 **Key Features:**
@@ -32,11 +42,14 @@ A unified platform for writing and managing news articles and blog posts. Levera
 - Research capabilities with web search and Wikipedia
 - Multi-model AI support
 
-[📖 Full Writer Documentation](https://github.com/tokenring-ai/writer)
+[Full Writer Documentation](https://github.com/tokenring-ai/writer)
 
-## 🚀 Quick Start
+---
+
+## Quick Start
 
 ### Prerequisites
+
 - [Bun](https://bun.sh) runtime (v1.0+)
 - Git
 - API keys for AI providers (OpenAI, Anthropic, etc.)
@@ -58,6 +71,7 @@ bun install
 ### Running Applications
 
 #### TokenRing Coder
+
 ```bash
 # Run with npx (no installation)
 npx @tokenring-ai/coder --source ./your-project --initialize
@@ -71,6 +85,7 @@ docker run -ti --rm -v ./your-project:/repo:rw ghcr.io/tokenring-ai/tokenring-co
 ```
 
 #### TokenRing Writer
+
 ```bash
 # Run with npx (no installation)
 npx @tokenring-ai/writer --source ./your-content --initialize
@@ -83,119 +98,132 @@ docker pull ghcr.io/tokenring-ai/writer:latest
 docker run -ti --rm -v ./your-content:/repo:rw ghcr.io/tokenring-ai/writer:latest
 ```
 
-## 📦 Package Ecosystem
+---
+
+## Package Ecosystem
 
 The monorepo contains 50+ specialized packages organized into functional categories:
 
 ### Core Foundation (5 packages)
-- **[@tokenring-ai/app](pkg/app)** - Base application framework with service management
-- **[@tokenring-ai/agent](pkg/agent)** - Central orchestrator for AI agents with tools and commands
-- **[@tokenring-ai/ai-client](pkg/ai-client)** - Unified AI client for chat/embeddings/images
-- **[@tokenring-ai/chat](pkg/chat)** - AI chat configuration and tool management
-- **[@tokenring-ai/utility](pkg/utility)** - Shared utilities (cache, logging, shell escape)
 
-### Storage & Database (7 packages)
-- **[@tokenring-ai/database](pkg/database)** - Abstract database layer with SQL execution
-- **[@tokenring-ai/mysql](pkg/mysql)** - MySQL integration with connection pooling
-- **[@tokenring-ai/drizzle-storage](pkg/drizzle-storage)** - Multi-database ORM (SQLite, MySQL, PostgreSQL)
-- **[@tokenring-ai/checkpoint](pkg/checkpoint)** - Agent state persistence
-- **[@tokenring-ai/queue](pkg/queue)** - Task queuing with checkpoint preservation
-- **[@tokenring-ai/s3](pkg/s3)** - AWS S3 filesystem and CDN
-- **[@tokenring-ai/cdn](pkg/cdn)** - Abstract CDN service
+- [@tokenring-ai/app](https://github.com/tokenring-ai/app) - Base application framework with service management
+- [@tokenring-ai/agent](https://github.com/tokenring-ai/agent) - Central orchestrator for AI agents with tools and commands
+- [@tokenring-ai/ai-client](https://github.com/tokenring-ai/ai-client) - Unified AI client for chat/embeddings/images
+- [@tokenring-ai/chat](https://github.com/tokenring-ai/chat) - AI chat configuration and tool management
+- [@tokenring-ai/utility](https://github.com/tokenring-ai/utility) - Shared utilities (cache, logging, shell escape)
+
+### Storage and Database (7 packages)
+
+- [@tokenring-ai/database](https://github.com/tokenring-ai/database) - Abstract database layer with SQL execution
+- [@tokenring-ai/mysql](https://github.com/tokenring-ai/mysql) - MySQL integration with connection pooling
+- [@tokenring-ai/drizzle-storage](https://github.com/tokenring-ai/drizzle-storage) - Multi-database ORM (SQLite, MySQL, PostgreSQL)
+- [@tokenring-ai/checkpoint](https://github.com/tokenring-ai/checkpoint) - Agent state persistence
+- [@tokenring-ai/queue](https://github.com/tokenring-ai/queue) - Task queuing with checkpoint preservation
+- [@tokenring-ai/s3](https://github.com/tokenring-ai/s3) - AWS S3 filesystem and CDN
+- [@tokenring-ai/cdn](https://github.com/tokenring-ai/cdn) - Abstract CDN service
 
 ### Development Tools (10 packages)
-- **[@tokenring-ai/testing](pkg/testing)** - Agent testing framework with auto-repair
-- **[@tokenring-ai/git](pkg/git)** - Git operations with auto-commit
-- **[@tokenring-ai/javascript](pkg/javascript)** - ESLint, package management, script execution
-- **[@tokenring-ai/codebase](pkg/codebase)** - Codebase context injection
-- **[@tokenring-ai/code-watch](pkg/code-watch)** - AI comment-triggered modifications
-- **[@tokenring-ai/file-index](pkg/file-index)** - Semantic file search with Tree-sitter
-- **[@tokenring-ai/iterables](pkg/iterables)** - Batch processing with /foreach command
-- **[@tokenring-ai/scripting](pkg/scripting)** - Scripting language with variables and functions
-- **[@tokenring-ai/tasks](pkg/tasks)** - Multi-agent workflow orchestration
-- **[@tokenring-ai/memory](pkg/memory)** - Short-term memory and attention storage
 
-### Web & External Services (11 packages)
-- **[@tokenring-ai/websearch](pkg/websearch)** - Abstract web search interface
-- **[@tokenring-ai/serper](pkg/serper)** - Google search via Serper.dev
-- **[@tokenring-ai/scraperapi](pkg/scraperapi)** - Web scraping and SERP results
-- **[@tokenring-ai/chrome](pkg/chrome)** - Puppeteer browser automation
-- **[@tokenring-ai/wikipedia](pkg/wikipedia)** - Wikipedia API integration
-- **[@tokenring-ai/aws](pkg/aws)** - AWS STS/S3 clients with authentication
-- **[@tokenring-ai/docker](pkg/docker)** - Docker container management
-- **[@tokenring-ai/kubernetes](pkg/kubernetes)** - Kubernetes resource discovery
-- **[@tokenring-ai/sandbox](pkg/sandbox)** - Abstract sandbox interface
-- **[@tokenring-ai/mcp](pkg/mcp)** - Model Context Protocol client
-- **[@tokenring-ai/research](pkg/research)** - Research tools and workflows
+- [@tokenring-ai/testing](https://github.com/tokenring-ai/testing) - Agent testing framework with auto-repair
+- [@tokenring-ai/git](https://github.com/tokenring-ai/git) - Git operations with auto-commit
+- [@tokenring-ai/javascript](https://github.com/tokenring-ai/javascript) - ESLint, package management, script execution
+- [@tokenring-ai/codebase](https://github.com/tokenring-ai/codebase) - Codebase context injection
+- [@tokenring-ai/code-watch](https://github.com/tokenring-ai/code-watch) - AI comment-triggered modifications
+- [@tokenring-ai/file-index](https://github.com/tokenring-ai/file-index) - Semantic file search with Tree-sitter
+- [@tokenring-ai/iterables](https://github.com/tokenring-ai/iterables) - Batch processing with /foreach command
+- [@tokenring-ai/scripting](https://github.com/tokenring-ai/scripting) - Scripting language with variables and functions
+- [@tokenring-ai/tasks](https://github.com/tokenring-ai/tasks) - Multi-agent workflow orchestration
+- [@tokenring-ai/memory](https://github.com/tokenring-ai/memory) - Short-term memory and attention storage
 
-### Communication & Publishing (8 packages)
-- **[@tokenring-ai/slack](pkg/slack)** - Slack bot integration
-- **[@tokenring-ai/telegram](pkg/telegram)** - Telegram bot integration
-- **[@tokenring-ai/feedback](pkg/feedback)** - Human feedback tools
-- **[@tokenring-ai/blog](pkg/blog)** - Blog abstraction layer
-- **[@tokenring-ai/ghost-io](pkg/ghost-io)** - Ghost.io publishing integration
-- **[@tokenring-ai/wordpress](pkg/wordpress)** - WordPress publishing integration
-- **[@tokenring-ai/newsrpm](pkg/newsrpm)** - NewsRPM article management
-- **[@tokenring-ai/reddit](pkg/reddit)** - Reddit integration
+### Web and External Services (11 packages)
 
-### Audio & Media (2 packages)
-- **[@tokenring-ai/audio](pkg/audio)** - Abstract audio framework
-- **[@tokenring-ai/linux-audio](pkg/linux-audio)** - Linux audio implementation with naudiodon2
+- [@tokenring-ai/websearch](https://github.com/tokenring-ai/websearch) - Abstract web search interface
+- [@tokenring-ai/serper](https://github.com/tokenring-ai/serper) - Google search via Serper.dev
+- [@tokenring-ai/scraperapi](https://github.com/tokenring-ai/scraperapi) - Web scraping and SERP results
+- [@tokenring-ai/chrome](https://github.com/tokenring-ai/chrome) - Puppeteer browser automation
+- [@tokenring-ai/wikipedia](https://github.com/tokenring-ai/wikipedia) - Wikipedia API integration
+- [@tokenring-ai/aws](https://github.com/tokenring-ai/aws) - AWS STS/S3 clients with authentication
+- [@tokenring-ai/docker](https://github.com/tokenring-ai/docker) - Docker container management
+- [@tokenring-ai/kubernetes](https://github.com/tokenring-ai/kubernetes) - Kubernetes resource discovery
+- [@tokenring-ai/sandbox](https://github.com/tokenring-ai/sandbox) - Abstract sandbox interface
+- [@tokenring-ai/mcp](https://github.com/tokenring-ai/mcp) - Model Context Protocol client
+- [@tokenring-ai/research](https://github.com/tokenring-ai/research) - Research tools and workflows
 
-### UI & Frontend (5 packages)
-- **[@tokenring-ai/cli](pkg/cli)** - REPL service with interactive prompts
-- **[@tokenring-ai/cli-ink](pkg/cli-ink)** - React Ink-based CLI interface
-- **[@tokenring-ai/web-host](pkg/web-host)** - Fastify-based web server
-- **[@tokenring-ai/web-frontend](pkg/web-frontend)** - React frontend with CLI-style interface
-- **[@tokenring-ai/agent-api](pkg/agent-api)** - WebSocket API for real-time communication
+### Communication and Publishing (8 packages)
 
-### Filesystem & Storage (2 packages)
-- **[@tokenring-ai/filesystem](pkg/filesystem)** - Abstract filesystem interface
-- **[@tokenring-ai/local-filesystem](pkg/local-filesystem)** - Local disk filesystem implementation
+- [@tokenring-ai/slack](https://github.com/tokenring-ai/slack) - Slack bot integration
+- [@tokenring-ai/telegram](https://github.com/tokenring-ai/telegram) - Telegram bot integration
+- [@tokenring-ai/feedback](https://github.com/tokenring-ai/feedback) - Human feedback tools
+- [@tokenring-ai/blog](https://github.com/tokenring-ai/blog) - Blog abstraction layer
+- [@tokenring-ai/ghost-io](https://github.com/tokenring-ai/ghost-io) - Ghost.io publishing integration
+- [@tokenring-ai/wordpress](https://github.com/tokenring-ai/wordpress) - WordPress publishing integration
+- [@tokenring-ai/newsrpm](https://github.com/tokenring-ai/newsrpm) - NewsRPM article management
+- [@tokenring-ai/reddit](https://github.com/tokenring-ai/reddit) - Reddit integration
 
-### Utilities & Infrastructure (5 packages)
-- **[@tokenring-ai/vault](pkg/vault)** - Credential storage service
-- **[@tokenring-ai/template](pkg/template)** - Template processing
-- **[@tokenring-ai/cloudquote](pkg/cloudquote)** - Financial data tools
-- **[@tokenring-ai/utility](pkg/utility)** - Shared utilities
+### Audio and Media (2 packages)
 
-[📋 Complete Package Index](PACKAGES.md) | [🔗 Dependency Graph](DEPENDENCIES.md)
+- [@tokenring-ai/audio](https://github.com/tokenring-ai/audio) - Abstract audio framework
+- [@tokenring-ai/linux-audio](https://github.com/tokenring-ai/linux-audio) - Linux audio implementation with naudiodon2
 
-## 🏗️ Architecture
+### UI and Frontend (5 packages)
+
+- [@tokenring-ai/cli](https://github.com/tokenring-ai/cli) - REPL service with interactive prompts
+- [@tokenring-ai/cli-ink](https://github.com/tokenring-ai/cli-ink) - React Ink-based CLI interface
+- [@tokenring-ai/web-host](https://github.com/tokenring-ai/web-host) - FastFastify-based web server
+- [@tokenring-ai/web-frontend](https://github.com/tokenring-ai/web-frontend) - React frontend with CLI-style interface
+- [@tokenring-ai/agent-api](https://github.com/tokenring-ai/agent-api) - WebSocket API for real-time communication
+
+### Filesystem and Storage (2 packages)
+
+- [@tokenring-ai/filesystem](https://github.com/tokenring-ai/filesystem) - Abstract filesystem interface
+- [@tokenring-ai/local-filesystem](https://github.com/tokenring-ai/local-filesystem) - Local disk filesystem implementation
+
+### Utilities and Infrastructure (5 packages)
+
+- [@tokenring-ai/vault](https://github.com/tokenring-ai/vault) - Credential storage service
+- [@tokenring-ai/template](https://github.com/tokenring-ai/template) - Template processing
+- [@tokenring-ai/cloudquote](https://github.com/tokenring-ai/cloudquote) - Financial data tools
+- [@tokenring-ai/utility](https://github.com/tokenring-ai/utility) - Shared utilities
+
+[Complete Package Index](PACKAGES.md) | [Dependency Graph](DEPENDENCIES.md)
+
+---
+
+## Architecture
 
 The TokenRing ecosystem follows a modular, agent-centric architecture:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Applications Layer                       │
-│  ┌──────────────────────┐    ┌──────────────────────┐      │
-│  │  TokenRing Coder     │    │  TokenRing Writer    │      │
-│  │  (Development AI)    │    │  (Content Creation)  │      │
-│  └──────────────────────┘    └──────────────────────┘      │
-└─────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────────────────────────────────────┐
-│                      Agent Layer                             │
-│  ┌──────────────────────────────────────────────────────┐  │
-│  │  Agent Team (Multi-Agent Orchestration)              │  │
-│  │  • Team Leader  • Frontend  • Backend  • DevOps      │  │
-│  │  • Writer  • Editor  • Researcher  • Publisher       │  │
-│  └──────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────────────────────────────────────┐
-│                      Core Services                           │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │ AI Client│  │Filesystem│  │ Database │  │  Memory  │   │
-│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-└─────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────────────────────────────────────┐
-│                   Integration Layer                          │
-│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐   │
-│  │ Git  │ │Docker│ │ AWS  │ │Slack │ │Search│ │ MCP  │   │
-│  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘ └──────┘   │
-└─────────────────────────────────────────────────────────────┘
++----------------------------------------------------------------+
+|                      Applications Layer                        |
+|  +----------------------+    +----------------------+          |
+|  |  TokenRing Coder     |    |  TokenRing Writer    |          |
+|  |  (Development AI)    |    |  (Content Creation)  |          |
+|  +----------------------+    +----------------------+          |
++----------------------------------------------------------------+
+                              |
++----------------------------------------------------------------+
+|                        Agent Layer                             |
+|  +----------------------------------------------------------+  |
+|  |  Agent Team (Multi-Agent Orchestration)                  |  |
+|  |  - Team Leader  - Frontend  - Backend  - DevOps          |  |
+|  |  - Writer  - Editor  - Researcher  - Publisher           |  |
+|  +----------------------------------------------------------+  |
++----------------------------------------------------------------+
+                              |
++----------------------------------------------------------------+
+|                         Core Services                          |
+|  +----------+  +----------+  +----------+  +----------+        |
+|  | AI Client|  |Filesystem|  | Database |  |  Memory  |        |
+|  +----------+  +----------+  +----------+  +----------+        |
++----------------------------------------------------------------+
+                              |
++----------------------------------------------------------------+
+|                      Integration Layer                         |
+|  +------+  +------+  +------+  +------+  +------+  +------+    |
+|  | Git  |  |Docker|  | AWS  |  |Slack |  |Search|  | MCP  |    |
+|  +------+  +------+  +------+  +------+  +------+  +------+    |
++----------------------------------------------------------------+
 ```
 
 ### Key Design Principles
@@ -206,25 +234,28 @@ The TokenRing ecosystem follows a modular, agent-centric architecture:
 4. **Type-Safe**: Full TypeScript with Zod validation
 5. **Event-Driven**: EventEmitter-based communication between components
 
-## 🛠️ Development
+---
+
+## Development
 
 ### Project Structure
 
 ```
 tokenring/
-├── app/                    # Applications
-│   ├── coder/             # TokenRing Coder
-│   └── writer/            # TokenRing Writer
-├── pkg/                   # Packages
-│   ├── agent/            # Core agent system
-│   ├── ai-client/        # AI integration
-│   ├── filesystem/       # File operations
-│   └── ...               # 50+ packages
-├── deps/                  # External dependencies
-├── docker/               # Docker configurations
-├── PACKAGES.md           # Package index
-├── DEPENDENCIES.md       # Dependency graph
-└── package.json          # Monorepo configuration
+|-- app/                    # Applications
+|   |-- coder/             # TokenRing Coder
+|   |-- writer/            # TokenRing Writer
+|-- pkg/                   # Packages
+|   |-- agent/            # Core agent system
+|   |-- ai-client/        # AI integration
+|   |-- filesystem/       # File operations
+|   |-- ...               # 50+ packages
+|-- deps/                  # External dependencies
+|-- docker/               # Docker configurations
+|-- assets/               # Project assets (logo, etc.)
+|-- PACKAGES.md           # Package index
+|-- DEPENDENCIES.md       # Dependency graph
+|-- package.json          # Monorepo configuration
 ```
 
 ### Building
@@ -259,7 +290,7 @@ cat > pkg/my-package/package.json << EOF
   "version": "0.1.0",
   "type": "module",
   "exports": {
-    "./*": "./*.ts"
+    ".": "./index.ts"
   },
   "dependencies": {
     "@tokenring-ai/agent": "workspace:*"
@@ -316,7 +347,9 @@ cd pkg/agent && bun test
 bun test --coverage
 ```
 
-## 🐳 Docker
+---
+
+## Docker
 
 Both applications are available as Docker images:
 
@@ -360,11 +393,14 @@ services:
       - OPENAI_API_KEY
 ```
 
-## ⚙️ Configuration
+---
+
+## Configuration
 
 Both applications use `.tokenring/` directory for configuration:
 
 ### Coder Configuration (`.tokenring/coder-config.mjs`)
+
 ```javascript
 export default {
   defaults: {
@@ -385,6 +421,7 @@ export default {
 ```
 
 ### Writer Configuration (`.tokenring/writer-config.js`)
+
 ```javascript
 export default {
   defaults: {
@@ -400,9 +437,12 @@ export default {
 };
 ```
 
-## 🤖 Available Agents
+---
+
+## Available Agents
 
 ### Coder Agents
+
 - **teamLeader** - Orchestrates full-stack projects
 - **fullStackDeveloper** - Implements complete features
 - **frontendDesign** - React/Vue components and UI
@@ -412,20 +452,25 @@ export default {
 - **securityReview** - Security assessments
 
 ### Writer Agents
+
 - **contentWriter** - Creates engaging articles and blog posts
 - **managingEditor** - Coordinates content creation and assignments
 - **researcher** - Gathers information and sources
 - **publisher** - Manages publishing workflows
 
-## 📚 Documentation
+---
 
-- [Coder Documentation](app/coder/README.md) - Complete guide to TokenRing Coder
-- [Writer Documentation](app/writer/README.md) - Complete guide to TokenRing Writer
+## Documentation
+
+- [Coder Documentation](https://github.com/tokenring-ai/coder) - Complete guide to TokenRing Coder
+- [Writer Documentation](https://github.com/tokenring-ai/app/writer) - Complete guide to TokenRing Writer
 - [Package Index](PACKAGES.md) - Detailed package documentation
 - [Dependency Graph](DEPENDENCIES.md) - Package dependencies and relationships
-- [API Documentation](docs/) - API references and guides
+- [API Documentation](https://docs.tokenring.ai) - API references and guides
 
-## 🤝 Contributing
+---
+
+## Contributing
 
 We welcome contributions! Here's how to get started:
 
@@ -446,35 +491,45 @@ We welcome contributions! Here's how to get started:
 - Keep packages focused and modular
 - Respect semantic versioning
 
-## 📄 License
+---
+
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🆘 Support
+---
+
+## Support
 
 - **Issues**: Report bugs on [GitHub Issues](https://github.com/tokenring-ai/tokenring/issues)
 - **Discussions**: Join conversations in [GitHub Discussions](https://github.com/tokenring-ai/tokenring/discussions)
 - **Documentation**: Comprehensive guides in the `docs/` directory
 - **Package READMEs**: Detailed docs in each `pkg/*/README.md`
 
-## 🔗 Links
+---
 
-- [GitHub Repository](https://github.com/tokenring-ai/tokenring)
+## Related Links
+
+- [GitHub Repository](https://github.com/tokenring-ai/monorepo)
 - [NPM Organization](https://www.npmjs.com/org/tokenring-ai)
 - [Docker Images](https://github.com/orgs/tokenring-ai/packages)
-- [Website](https://tokenring.ai) (coming soon)
 
-## 🌟 Features Highlights
+---
+
+## Features Highlights
 
 ### Multi-Provider AI Support
-- OpenAI (GPT-4, GPT-3.5)
-- Anthropic (Claude 3)
-- Google (Gemini)
-- Groq (Llama, Mixtral)
+
+- OpenAI (GPT-5.2, GPT Image)
+- Anthropic (Claude Opus/Sonnet 4.5)
+- Google (Gemini 3)
+- Groq
 - Cerebras
 - DeepSeek
+- Many more...
 
 ### Development Capabilities
+
 - Code editing and refactoring
 - Automated testing with auto-repair
 - Git operations with smart commits
@@ -484,6 +539,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 - Browser automation
 
 ### Content Creation
+
 - AI-assisted writing and editing
 - Research and fact-checking
 - Multi-platform publishing
@@ -491,6 +547,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 - SEO optimization
 
 ### Infrastructure
+
 - Local and cloud file systems
 - AWS S3 integration
 - Docker containerization
@@ -499,8 +556,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Ready to supercharge your development and content creation with AI?**
-
-Get started with TokenRing Coder or TokenRing Writer today! 🚀
-
-*Built with ❤️ by the TokenRing AI team*
+Built with TypeScript and Bun by the TokenRing AI team.

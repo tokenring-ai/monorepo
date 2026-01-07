@@ -30,3 +30,4 @@ build
 /.claude/
 /dist-ts/
 /design/
+/.run/
