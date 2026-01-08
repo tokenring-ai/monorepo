@@ -6,69 +6,149 @@ This guide provides concrete code examples and implementation patterns for worki
 
 ## Table of Contents
 
-1. [Creating Custom Packages](#creating-custom-packages)
-2. [Building Agent Teams](#building-agent-teams)
+1. [Plugin Architecture Overview](#plugin-architecture-overview)
+2. [Creating Custom Packages](#creating-custom-packages)
 3. [Implementing Services](#implementing-services)
 4. [Creating Tools](#creating-tools)
 5. [Developing Commands](#developing-commands)
-6. [State Management Patterns](#state-management-patterns)
-7. [Testing Implementations](#testing-implementations)
-8. [Integration Examples](#integration-examples)
-9. [Workflow Automation](#workflow-automation)
-10. [Error Handling Patterns](#error-handling-patterns)
+6. [Implementing Context Handlers](#implementing-context-handlers)
+7. [State Management Patterns](#state-management-patterns)
+8. [Configuration and Schema Validation](#configuration-and-schema-validation)
+9. [Integration Patterns](#integration-patterns)
+10. [Testing Implementations](#testing-implementations)
+11. [Error Handling Patterns](#error-handling-patterns)
+
+## Plugin Architecture Overview
+
+The TokenRing AI ecosystem uses a **plugin-based architecture** where each package is a self-contained plugin that registers its capabilities with the main application.
+
+### Plugin Structure
+
+```typescript
+// pkg/my-package/plugin.ts
+import {TokenRingPlugin} from "@tokenring-ai/app";
+import packageJSON from "./package.json" with {type: "json"};
+import {z} from "zod";
+
+const packageConfigSchema = z.object({
+  myPackage: z.object({
+    option1: z.string().optional(),
+    option2: z.number().default(10),
+  }).optional(),
+});
+
+export default {
+  name: packageJSON.name,
+  version: packageJSON.version,
+  description: packageJSON.description,
+  install(app, config) {
+    // Plugin installation logic
+  },
+  config: packageConfigSchema
+} satisfies TokenRingPlugin<typeof packageConfigSchema>;
+```
+
+### Plugin Installation Flow
+
+```typescript
+// Plugin installation happens in this order:
+install(app, config) {
+  // 1. Wait for service dependencies
+  app.waitForService(ServiceName, (service) => {
+    // 2. Register components with services
+  });
+  
+  // 3. Add service instances
+  app.addServices(new MyService());
+  
+  // 4. Register RPC resources
+  app.waitForService(WebHostService, (webHostService) => {
+    webHostService.registerResource("My RPC endpoint", new JsonRpcResource(app, myRPC));
+  });
+}
+```
 
 ## Creating Custom Packages
 
-### Basic Package Structure
+### Package Structure
+
+```
+pkg/my-package/
+├── plugin.ts           # Main plugin entry point
+├── index.ts            # Public exports
+├── package.json        # Package metadata
+├── tools.ts            # Tool definitions
+├── commands.ts         # Chat command definitions
+├── contextHandlers.ts  # Context provider definitions
+├── MyService.ts        # Service implementation
+└── schema.ts           # Zod schema definitions
+```
+
+### Basic Package Example
 
 ```typescript
-// pkg/my-package/index.ts
-import { TokenRingPackage } from '@tokenring-ai/agent';
+// pkg/my-package/plugin.ts
+import {AgentCommandService} from "@tokenring-ai/agent";
+import {TokenRingPlugin} from "@tokenring-ai/app";
+import {ChatService} from "@tokenring-ai/chat";
+import {ScriptingService} from "@tokenring-ai/scripting";
+import {ScriptingThis} from "@tokenring-ai/scripting/ScriptingService";
+import {WebHostService} from "@tokenring-ai/web-host";
+import JsonRpcResource from "@tokenring-ai/web-host/JsonRpcResource";
+import {z} from "zod";
 
-export const myPackage = new TokenRingPackage({
-  name: 'my-package',
-  version: '0.1.0',
-  description: 'Custom TokenRing package',
-  tools: [
-    {
-      name: 'my-tool',
-      description: 'Custom tool for specific functionality',
-      inputSchema: {
-        param1: z.string(),
-        param2: z.number().optional()
-      },
-      execute: async (input, agent) => {
-        // Tool implementation
-        return { result: `Processed ${input.param1}` };
-      }
-    }
-  ],
-  commands: [
-    {
-      name: 'my-command',
-      description: 'Custom command for interactive use',
-      execute: async (remainder, agent) => {
-        // Command implementation
-        await agent.events.chatOutput(`Executed: ${remainder}`);
-      },
-      help: () => 'Usage: /my-command <args>'
-    }
-  ],
-  services: [
-    {
-      name: 'my-service',
-      description: 'Custom service',
-      start: async (agentTeam) => {
-        // Service startup logic
-      },
-      attach: async (agent) => {
-        // Agent attachment logic
-      }
-    }
-  ]
+import chatCommands from "./commands.ts";
+import contextHandlers from "./contextHandlers.ts";
+import MyService from "./MyService.ts";
+import packageJSON from "./package.json" with {type: "json"};
+import myRPC from "./rpc/myRPC.ts";
+import {MyConfigSchema} from "./schema.ts";
+import tools from "./tools.ts";
+
+const packageConfigSchema = z.object({
+  myPackage: MyConfigSchema.optional(),
 });
 
-export default myPackage;
+export default {
+  name: packageJSON.name,
+  version: packageJSON.version,
+  description: packageJSON.description,
+  install(app, config) {
+    if (config.myPackage) {
+      // Register scripting functions
+      app.waitForService(ScriptingService, (scriptingService: ScriptingService) => {
+        scriptingService.registerFunction("myFunction", {
+          type: 'native',
+          params: ['param1', 'param2'],
+          async execute(this: ScriptingThis, param1: string, param2: number): Promise<string> {
+            await this.agent.requireServiceByType(MyService).doSomething(param1, param2, this.agent);
+            return `Result: ${param1}`;
+          }
+        });
+      });
+
+      // Register tools and context handlers
+      app.waitForService(ChatService, (chatService: ChatService) => {
+        chatService.addTools(packageJSON.name, tools);
+        chatService.registerContextHandlers(contextHandlers);
+      });
+
+      // Register chat commands
+      app.waitForService(AgentCommandService, (agentCommandService: AgentCommandService) =>
+        agentCommandService.addAgentCommands(chatCommands)
+      );
+
+      // Add services
+      app.addServices(new MyService(config.myPackage));
+
+      // Register RPC endpoint
+      app.waitForService(WebHostService, (webHostService: WebHostService) => {
+        webHostService.registerResource("My RPC endpoint", new JsonRpcResource(app, myRPC));
+      });
+    }
+  },
+  config: packageConfigSchema
+} satisfies TokenRingPlugin<typeof packageConfigSchema>;
 ```
 
 ### Package Configuration
@@ -84,851 +164,492 @@ export default myPackage;
   },
   "dependencies": {
     "@tokenring-ai/agent": "^0.2.0",
-    "@tokenring-ai/utility": "^0.2.0",
+    "@tokenring-ai/app": "^0.2.0",
+    "@tokenring-ai/chat": "^0.2.0",
+    "@tokenring-ai/scripting": "^0.2.0",
+    "@tokenring-ai/web-host": "^0.2.0",
     "zod": "^4.1.13"
   }
 }
 ```
 
-## Building Agent Teams
-
-### Basic Team Setup
+### Index File
 
 ```typescript
-import { AgentTeam } from '@tokenring-ai/agent';
-import { FileSystemService } from '@tokenring-ai/filesystem';
-import { AIService } from '@tokenring-ai/ai-client';
-
-async function setupAgentTeam(): Promise<AgentTeam> {
-  const team = new AgentTeam();
-  
-  // Add core services
-  const fsService = new FileSystemService({
-    defaultSelectedFiles: ['src/index.ts']
-  });
-  team.addService(fsService);
-  
-  // Register packages
-  await team.addPackages([
-    require('@tokenring-ai/git').default,
-    require('@tokenring-ai/testing').default,
-    require('@tokenring-ai/javascript').default
-  ]);
-  
-  return team;
-}
-```
-
-### Multi-Agent Workflow
-
-```typescript
-async function coordinateDevelopment(agentTeam: AgentTeam, task: string) {
-  // Create specialized agents
-  const architectAgent = await agentTeam.createAgent('systemArchitect');
-  const frontendAgent = await agentTeam.createAgent('frontendDesign');
-  const backendAgent = await agentTeam.createAgent('backendDesign');
-  const testAgent = await agentTeam.createAgent('testEngineer');
-  
-  // Coordinate workflow
-  await architectAgent.handleInput({ 
-    message: `Design architecture for: ${task}` 
-  });
-  
-  await backendAgent.handleInput({ 
-    message: `Implement backend for: ${task}` 
-  });
-  
-  await frontendAgent.handleInput({ 
-    message: `Build frontend for: ${task}` 
-  });
-  
-  await testAgent.handleInput({ 
-    message: `Test the implementation` 
-  });
-  
-  // Cleanup
-  await agentTeam.deleteAgent(architectAgent);
-  await agentTeam.deleteAgent(frontendAgent);
-  await agentTeam.deleteAgent(backendAgent);
-  await agentTeam.deleteAgent(testAgent);
-}
+// pkg/my-package/index.ts
+export { default as MyService } from "./MyService.ts";
+export { default } from "./plugin.ts";
 ```
 
 ## Implementing Services
 
-### Custom Service Implementation
+### Service Implementation
 
 ```typescript
-import { TokenRingService } from '@tokenring-ai/agent';
-import { z } from 'zod';
+// pkg/my-package/MyService.ts
+import Agent from "@tokenring-ai/agent/Agent";
+import {TokenRingService} from "@tokenring-ai/app/types";
+import {z} from "zod";
+import {MyServiceConfigSchema} from "./schema.ts";
 
-export class DatabaseService implements TokenRingService {
-  name = "database-service";
-  description = "Custom database operations";
+export default class MyService implements TokenRingService {
+  name = "MyService";
+  description = "Custom service for my package";
   
-  private connections = new Map<string, any>();
-  
-  async start(agentTeam: AgentTeam): Promise<void> {
-    // Initialize service
-    console.log('Database service starting...');
+  constructor(private options: z.output<typeof MyServiceConfigSchema>) {}
+
+  attach(agent: Agent): void {
+    // Initialize agent-specific state
+    agent.initializeState(MyServiceState, {});
   }
   
-  async stop(agentTeam: AgentTeam): Promise<void> {
-    // Cleanup connections
-    this.connections.clear();
-  }
-  
-  async attach(agent: Agent): Promise<void> {
-    // Register with agent
-    agent.events.chatOutput('Database service attached');
-  }
-  
-  async detach(agent: Agent): Promise<void> {
-    // Cleanup agent-specific resources
-  }
-  
-  async getContextItems(agent: Agent): AsyncGenerator<ContextItem> {
-    // Provide context to agents
-    yield {
-      content: 'Database service context',
-      metadata: { source: 'database-service' }
-    };
-  }
-  
-  // Custom methods
-  async query(sql: string, params: any[] = []): Promise<any> {
-    // Implement query logic
-    return { rows: [], count: 0 };
+  async doSomething(param1: string, param2: number, agent: Agent): Promise<void> {
+    // Service implementation
+    const state = agent.getState(MyServiceState);
+    // ... perform operations
   }
 }
 ```
 
-### Service Integration Pattern
+### Service State Slice
 
 ```typescript
-class ServiceIntegration {
-  constructor(
-    private agentTeam: AgentTeam,
-    private agent: Agent
-  ) {}
+// pkg/my-package/state/myServiceState.ts
+export interface MyServiceState {
+  data: Map<string, any>;
+  lastUpdated: number | null;
+}
+
+export class MyServiceState implements MyServiceState {
+  name = 'myService';
+  data = new Map<string, any>();
+  lastUpdated: number | null = null;
   
-  async getRequiredService<T extends TokenRingService>(
-    serviceType: new () => T
-  ): Promise<T> {
-    return this.agent.requireServiceByType(serviceType);
+  reset(what: ResetWhat[]): void {
+    if (what.includes('chat')) {
+      this.data.clear();
+    }
   }
   
-  async validateServiceDependencies(): Promise<boolean> {
-    const required = [
-      FileSystemService,
-      AIService,
-      GitService
-    ];
-    
-    for (const ServiceClass of required) {
-      try {
-        await this.agent.requireServiceByType(ServiceClass);
-      } catch (error) {
-        console.error(`Missing required service: ${ServiceClass.name}`);
-        return false;
-      }
-    }
-    
-    return true;
+  serialize(): object {
+    return {
+      data: Object.fromEntries(this.data),
+      lastUpdated: this.lastUpdated,
+    };
+  }
+  
+  deserialize(obj: any): void {
+    this.data = new Map(Object.entries(obj.data || {}));
+    this.lastUpdated = obj.lastUpdated || null;
   }
 }
 ```
 
 ## Creating Tools
 
-### File Processing Tool
+### Tool Definition
 
 ```typescript
-const fileProcessorTool = {
-  name: "file-processor",
-  description: "Process files with custom logic",
-  inputSchema: {
-    files: z.array(z.string()),
-    operation: z.enum(['analyze', 'transform', 'validate']),
-    options: z.record(z.any()).optional()
-  },
-  execute: async (input, agent) => {
-    const fsService = agent.requireServiceByType(FileSystemService);
-    const results = [];
-    
-    for (const file of input.files) {
-      try {
-        const content = await fsService.getFile(file);
-        let result;
-        
-        switch (input.operation) {
-          case 'analyze':
-            result = await analyzeFile(content, input.options);
-            break;
-          case 'transform':
-            result = await transformFile(content, input.options);
-            break;
-          case 'validate':
-            result = await validateFile(content, input.options);
-            break;
-        }
-        
-        results.push({ file, success: true, result });
-      } catch (error) {
-        results.push({ 
-          file, 
-          success: false, 
-          error: error.message 
-        });
-      }
+// pkg/my-package/tools/myTool.ts
+import {z} from "zod";
+
+const myToolSchema = z.object({
+  action: z.enum(['create', 'read', 'update', 'delete']),
+  path: z.string(),
+  content: z.string().optional(),
+});
+
+const myTool = {
+  description: "Perform CRUD operations on my resource",
+  inputSchema: myToolSchema,
+  execute: async (input: z.infer<typeof myToolSchema>, agent: Agent) => {
+    // Tool implementation
+    switch (input.action) {
+      case 'create':
+        return { success: true, message: `Created ${input.path}` };
+      case 'read':
+        return { content: "file content", path: input.path };
+      case 'update':
+        return { success: true, message: `Updated ${input.path}` };
+      case 'delete':
+        return { success: true, message: `Deleted ${input.path}` };
     }
-    
-    return { results };
   }
 };
 
-// Usage
-await agent.tools.fileProcessor.execute({
-  files: ['src/main.ts', 'src/utils.ts'],
-  operation: 'analyze',
-  options: { complexity: true, dependencies: true }
-}, agent);
+export default myTool;
 ```
 
-### API Integration Tool
+### Tools Index
 
 ```typescript
-const apiIntegrationTool = {
-  name: "api-integration",
-  description: "Integrate with external APIs",
-  inputSchema: {
-    endpoint: z.string(),
-    method: z.enum(['GET', 'POST', 'PUT', 'DELETE']),
-    headers: z.record(z.string()).optional(),
-    body: z.any().optional(),
-    timeout: z.number().optional()
-  },
-  execute: async (input, agent) => {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), input.timeout || 30000);
-    
-    try {
-      const response = await fetch(input.endpoint, {
-        method: input.method,
-        headers: input.headers,
-        body: input.body ? JSON.stringify(input.body) : undefined,
-        signal: controller.signal
-      });
-      
-      const data = await response.json();
-      
-      return {
-        status: response.status,
-        headers: Object.fromEntries(response.headers.entries()),
-        data
-      };
-    } catch (error) {
-      return {
-        error: error.message,
-        status: 'failed'
-      };
-    } finally {
-      clearTimeout(timeoutId);
-    }
-  }
+// pkg/my-package/tools.ts
+import myTool from "./tools/myTool.ts";
+import anotherTool from "./tools/anotherTool.ts";
+
+export default {
+  myTool,
+  anotherTool,
 };
 ```
 
 ## Developing Commands
 
-### Interactive Command Implementation
+### Command Implementation
 
 ```typescript
-const customCommand = {
-  description: "Custom interactive command",
+// pkg/my-package/commands/myCommand.ts
+const myCommand = {
+  description: "My custom command",
   execute: async (remainder: string, agent: Agent) => {
     const args = remainder.split(' ').filter(Boolean);
     const subcommand = args[0];
     
     switch (subcommand) {
-      case 'list':
-        return await listItems(agent, args.slice(1));
-      case 'create':
-        return await createItem(agent, args.slice(1));
-      case 'delete':
-        return await deleteItem(agent, args.slice(1));
-      case 'help':
-        return await showHelp(agent);
+      case 'action1':
+        await handleAction1(args.slice(1), agent);
+        break;
+      case 'action2':
+        await handleAction2(args.slice(1), agent);
+        break;
       default:
         await agent.events.chatOutput(
-          "Unknown command. Use /custom help for usage information."
+          "Unknown command. Use /my-command help for usage."
         );
     }
   },
   help: () => [
-    "Custom Command - Manage custom items",
+    "My Command - Description of what this command does",
     "",
     "Usage:",
-    "  /custom list [filter]     - List items",
-    "  /custom create <name>     - Create new item",
-    "  /custom delete <name>     - Delete item",
-    "  /custom help              - Show this help",
-    "",
-    "Examples:",
-    "  /custom list all",
-    "  /custom create my-item",
-    "  /custom delete old-item"
+    "  /my-command action1 <args>   - Description of action1",
+    "  /my-command action2 <args>   - Description of action2",
+    "  /my-command help             - Show this help",
   ]
 };
 
-async function listItems(agent: Agent, args: string[]) {
-  const filter = args[0] || 'all';
+async function handleAction1(args: string[], agent: Agent): Promise<void> {
   // Implementation
-  await agent.events.chatOutput(`Listing items with filter: ${filter}`);
+  await agent.events.chatOutput(`Action 1 executed with: ${args.join(' ')}`);
 }
 
-async function createItem(agent: Agent, args: string[]) {
-  const name = args[0];
-  if (!name) {
-    await agent.events.chatOutput("Please provide a name for the item.");
-    return;
-  }
-  // Implementation
-  await agent.events.chatOutput(`Created item: ${name}`);
-}
+export default myCommand;
 ```
 
-### Command with Interactive Input
+### Commands Index
 
 ```typescript
-const setupCommand = {
-  description: "Interactive setup command",
-  execute: async (remainder: string, agent: Agent) => {
-    const config = await agent.askHuman({
-      type: 'ask',
-      message: 'Enter configuration (JSON format):',
-      required: true
-    });
-    
-    try {
-      const parsed = JSON.parse(config);
-      await setupWithConfig(parsed, agent);
-      await agent.events.chatOutput('Setup completed successfully!');
-    } catch (error) {
-      await agent.events.chatOutput(`Invalid JSON: ${error.message}`);
-    }
-  },
-  help: () => "Interactive setup - will prompt for configuration"
+// pkg/my-package/commands.ts
+import myCommand from "./commands/myCommand.ts";
+import anotherCommand from "./commands/anotherCommand.ts";
+
+export default {
+  myCommand,
+  anotherCommand,
 };
+```
+
+## Implementing Context Handlers
+
+### Context Handler Implementation
+
+```typescript
+// pkg/my-package/contextHandlers/myHandler.ts
+import {ContextItem} from "@tokenring-ai/chat/schema";
+
+const myHandler = {
+  description: "Provides context about my resource",
+  getContextItems: async function*(agent: Agent): AsyncGenerator<ContextItem> {
+    const state = agent.getState(MyServiceState);
+    
+    for (const [key, value] of state.data) {
+      yield {
+        content: `Resource ${key}: ${JSON.stringify(value)}`,
+        metadata: {
+          source: 'my-handler',
+          key,
+          timestamp: state.lastUpdated,
+        }
+      };
+    }
+  }
+};
+
+export default myHandler;
+```
+
+### Context Handlers Index
+
+```typescript
+// pkg/my-package/contextHandlers.ts
+import myHandler from "./contextHandlers/myHandler.ts";
+import anotherHandler from "./contextHandlers/anotherHandler.ts";
+
+export default {
+  'my-handler': myHandler,
+  'another-handler': anotherHandler,
+} as Record<string, ContextHandler>;
 ```
 
 ## State Management Patterns
 
-### Complex State Slice
+### State Slice Pattern
 
 ```typescript
-class ProjectState implements StateSlice {
-  name = 'project';
-  projectConfig: ProjectConfig = { files: [], dependencies: [] };
-  buildHistory: BuildRecord[] = [];
-  currentTask?: TaskInfo;
+import {StateSlice, ResetWhat} from "@tokenring-ai/agent";
+
+export interface MyState {
+  items: Map<string, Item>;
+  selectedItems: Set<string>;
+  filter: string | null;
+}
+
+export class MyState implements MyState {
+  name = 'myState';
+  items = new Map<string, Item>();
+  selectedItems = new Set<string>();
+  filter: string | null = null;
   
   reset(what: ResetWhat[]): void {
     if (what.includes('chat')) {
-      this.currentTask = undefined;
+      this.selectedItems.clear();
+      this.filter = null;
     }
     if (what.includes('memory')) {
-      this.buildHistory = [];
+      this.items.clear();
     }
   }
   
   serialize(): object {
     return {
-      projectConfig: this.projectConfig,
-      buildHistory: this.buildHistory,
-      currentTask: this.currentTask
+      items: Object.fromEntries(this.items),
+      selectedItems: Array.from(this.selectedItems),
+      filter: this.filter,
     };
   }
   
   deserialize(obj: any): void {
-    this.projectConfig = obj.projectConfig || { files: [], dependencies: [] };
-    this.buildHistory = obj.buildHistory || [];
-    this.currentTask = obj.currentTask;
-  }
-}
-
-// Usage in agent
-class ProjectManager {
-  constructor(private agent: Agent) {}
-  
-  async initializeProject(config: ProjectConfig) {
-    this.agent.initializeState(ProjectState, {});
-    this.agent.mutateState(ProjectState, state => {
-      state.projectConfig = config;
-    });
-  }
-  
-  async startTask(task: TaskInfo) {
-    this.agent.mutateState(ProjectState, state => {
-      state.currentTask = task;
-      state.buildHistory.push({
-        timestamp: Date.now(),
-        task: task.name,
-        status: 'started'
-      });
-    });
-  }
-  
-  async completeTask(success: boolean, result: any) {
-    this.agent.mutateState(ProjectState, state => {
-      if (state.currentTask) {
-        state.buildHistory.push({
-          timestamp: Date.now(),
-          task: state.currentTask.name,
-          status: success ? 'completed' : 'failed',
-          result
-        });
-        state.currentTask = undefined;
-      }
-    });
+    this.items = new Map(Object.entries(obj.items || {}));
+    this.selectedItems = new Set(obj.selectedItems || []);
+    this.filter = obj.filter || null;
   }
 }
 ```
 
-### Persistent State Management
+### State Mutation Pattern
 
 ```typescript
-class PersistentStateManager {
-  constructor(
-    private agent: Agent,
-    private storage: AgentCheckpointStorage
-  ) {}
+// In service implementation
+async function updateItem(id: string, updates: Partial<Item>, agent: Agent): Promise<void> {
+  agent.mutateState(MyState, (state: MyState) => {
+    const existing = state.items.get(id);
+    if (existing) {
+      state.items.set(id, { ...existing, ...updates });
+    }
+  });
+}
+
+async function selectItem(id: string, agent: Agent): Promise<void> {
+  agent.mutateState(MyState, (state: MyState) => {
+    state.selectedItems.add(id);
+  });
+}
+
+// Get state snapshot
+const state = agent.getState(MyState);
+```
+
+## Configuration and Schema Validation
+
+### Zod Schema Definition
+
+```typescript
+// pkg/my-package/schema.ts
+import z from "zod";
+
+export const MyConfigSchema = z.object({
+  enabled: z.boolean().default(true),
+  maxItems: z.number().min(1).max(100).default(50),
+  options: z.object({
+    option1: z.string().default("default"),
+    option2: z.number().default(0),
+  }).default({}),
+}).default({});
+
+export const MyAgentConfigSchema = z.object({
+  mode: z.enum(['read', 'write', 'both']).default('both'),
+  autoSelect: z.boolean().default(false),
+}).default({});
+```
+
+### Package Config Schema
+
+```typescript
+// In plugin.ts
+const packageConfigSchema = z.object({
+  myPackage: MyConfigSchema.optional(),
+});
+```
+
+### Config Usage
+
+```typescript
+// In service
+constructor(private options: z.output<typeof MyConfigSchema>) {
+  // Options are validated and typed
+  this.maxItems = options.maxItems;
+}
+```
+
+## Integration Patterns
+
+### Multi-Service Integration
+
+```typescript
+async function integrateServices(agent: Agent): Promise<void> {
+  const fsService = agent.requireServiceByType(FileSystemService);
+  const aiService = agent.requireServiceByType(AIService);
+  const myService = agent.requireServiceByType(MyService);
   
-  async saveState(key: string): Promise<void> {
-    const checkpoint = this.agent.generateCheckpoint();
-    await this.storage.saveCheckpoint(key, checkpoint);
+  // Use services together
+  const fileContent = await fsService.readTextFile("data.json", agent);
+  const analyzed = await aiService.analyze(fileContent, agent);
+  await myService.process(analyzed, agent);
+}
+```
+
+### RPC Integration
+
+```typescript
+// pkg/my-package/rpc/myRPC.ts
+const myRPC = {
+  myMethod: {
+    description: "RPC method description",
+    params: z.object({
+      param1: z.string(),
+      param2: z.number().optional(),
+    }),
+    execute: async (params: { param1: string; param2?: number }, app: App) => {
+      const agent = app.getCurrentAgent();
+      return await agent.requireServiceByType(MyService).handleRPC(params, agent);
+    }
   }
+};
+
+export default myRPC;
+```
+
+### Plugin Installation Pattern
+
+```typescript
+// Complete installation pattern
+install(app, config) {
+  if (!config.myPackage) return;
   
-  async loadState(key: string): Promise<boolean> {
-    try {
-      const checkpoint = await this.storage.loadCheckpoint(key);
-      if (checkpoint) {
-        this.agent.restoreState(checkpoint.state);
-        return true;
+  // 1. Wait for ScriptingService
+  app.waitForService(ScriptingService, (scriptingService) => {
+    scriptingService.registerFunction("myFunction", {
+      type: 'native',
+      params: ['param1', 'param2'],
+      execute: async function(this: ScriptingThis, param1: string, param2: number) {
+        return await this.agent.requireServiceByType(MyService).process(param1, param2, this.agent);
       }
-      return false;
-    } catch (error) {
-      console.error('Failed to load state:', error);
-      return false;
-    }
-  }
-  
-  async switchProject(projectKey: string): Promise<void> {
-    // Save current state
-    await this.saveState(`current-${Date.now()}`);
-    
-    // Load project state
-    const loaded = await this.loadState(projectKey);
-    if (!loaded) {
-      throw new Error(`Project state not found: ${projectKey}`);
-    }
-  }
+    });
+  });
+
+  // 2. Wait for ChatService
+  app.waitForService(ChatService, (chatService) => {
+    chatService.addTools(packageJSON.name, tools);
+    chatService.registerContextHandlers(contextHandlers);
+  });
+
+  // 3. Wait for AgentCommandService
+  app.waitForService(AgentCommandService, (agentCommandService) =>
+    agentCommandService.addAgentCommands(chatCommands)
+  );
+
+  // 4. Add service instances
+  app.addServices(new MyService(config.myPackage));
+
+  // 5. Wait for WebHostService
+  app.waitForService(WebHostService, (webHostService) => {
+    webHostService.registerResource("My RPC endpoint", new JsonRpcResource(app, myRPC));
+  });
 }
 ```
 
 ## Testing Implementations
 
-### Custom Testing Resource
+### Service Testing
 
 ```typescript
-class APITestingResource implements TestingResource {
-  name = "api-tests";
-  description = "API endpoint testing";
+describe("MyService", () => {
+  let service: MyService;
+  let mockAgent: MockAgent;
   
-  private latestResult?: TestResult;
+  beforeEach(() => {
+    service = new MyService({ maxItems: 10 });
+    mockAgent = createMockAgent();
+  });
   
-  async runTest(agent: Agent): Promise<TestResult> {
-    const startTime = new Date();
-    
-    try {
-      const results = await this.runAPITests(agent);
-      
-      return {
-        startedAt: startTime,
-        finishedAt: new Date(),
-        passed: results.every(r => r.passed),
-        output: JSON.stringify(results, null, 2)
-      };
-    } catch (error) {
-      return {
-        startedAt: startTime,
-        finishedAt: new Date(),
-        passed: false,
-        error: error.message
-      };
-    }
-  }
+  it("should initialize state correctly", () => {
+    service.attach(mockAgent);
+    expect(mockAgent.getState(MyState)).toBeDefined();
+  });
   
-  private async runAPITests(agent: Agent): Promise<APIResult[]> {
-    const endpoints = await this.getTestEndpoints(agent);
-    const results = [];
-    
-    for (const endpoint of endpoints) {
-      try {
-        const response = await fetch(endpoint.url);
-        const passed = this.validateResponse(response, endpoint.expected);
-        results.push({ endpoint: endpoint.name, passed });
-      } catch (error) {
-        results.push({ endpoint: endpoint.name, passed: false });
-      }
-    }
-    
-    return results;
-  }
-}
+  it("should process items within limits", async () => {
+    const result = await service.process("test-item", mockAgent);
+    expect(result).toBeDefined();
+  });
+});
 ```
 
-### Integration Testing Pattern
+### Integration Testing
 
 ```typescript
-class IntegrationTester {
-  constructor(
-    private agent: Agent,
-    private fsService: FileSystemService,
-    private testService: TestingService
-  ) {}
-  
-  async testFileOperations(): Promise<TestResult> {
-    const testFile = 'test-integration.txt';
-    const testContent = 'Integration test content';
+describe("MyPackage Integration", () => {
+  it("should install and work correctly", async () => {
+    const app = createTestApp();
+    const plugin = await import("./plugin.ts");
     
-    try {
-      // Write file
-      await this.fsService.writeFile(testFile, testContent);
-      
-      // Read file
-      const readContent = await this.fsService.getFile(testFile);
-      
-      // Verify
-      const passed = readContent === testContent;
-      
-      // Cleanup
-      await this.fsService.deleteFile(testFile);
-      
-      return {
-        startedAt: new Date(),
-        finishedAt: new Date(),
-        passed,
-        output: passed ? 'File operations working correctly' : 'Content mismatch'
-      };
-    } catch (error) {
-      return {
-        startedAt: new Date(),
-        finishedAt: new Date(),
-        passed: false,
-        error: error.message
-      };
-    }
-  }
-  
-  async runFullTestSuite(): Promise<Record<string, TestResult>> {
-    const tests = [
-      () => this.testFileOperations(),
-      () => this.testGitOperations(),
-      () => this.testAIIntegration()
-    ];
+    plugin.default.install(app, { myPackage: { maxItems: 10 } });
     
-    const results = {};
+    const agent = app.createAgent();
+    const myService = agent.requireServiceByType(MyService);
     
-    for (const test of tests) {
-      const result = await test();
-      results[test.name] = result;
-    }
-    
-    return results;
-  }
-}
-```
-
-## Integration Examples
-
-### Multi-Service Integration
-
-```typescript
-class DevelopmentWorkflow {
-  constructor(private agent: Agent) {
-    this.fsService = this.agent.requireServiceByType(FileSystemService);
-    this.aiService = this.agent.requireServiceByType(AIService);
-    this.gitService = this.agent.requireServiceByType(GitService);
-    this.testService = this.agent.requireServiceByType(TestingService);
-  }
-  
-  async implementFeature(feature: string): Promise<void> {
-    // 1. Analyze requirements using AI
-    const analysis = await this.aiService.generateObject({
-      prompt: `Analyze the following feature request: ${feature}`,
-      schema: FeatureAnalysisSchema
-    }, this.agent);
-    
-    // 2. Generate implementation plan
-    const plan = await this.createImplementationPlan(analysis);
-    
-    // 3. Implement files
-    for (const file of plan.files) {
-      await this.fsService.writeFile(file.path, file.content);
-    }
-    
-    // 4. Run tests
-    const testResults = await this.testService.runTests({}, this.agent);
-    
-    // 5. Commit if tests pass
-    if (Object.values(testResults).every(r => r.passed)) {
-      await this.gitService.commit(`Implement ${feature}`, this.agent);
-    }
-  }
-}
-```
-
-### External API Integration
-
-```typescript
-class ExternalServiceIntegration {
-  constructor(
-    private agent: Agent,
-    private apiClient: APIClient
-  ) {}
-  
-  async processWithExternalService(data: any): Promise<ProcessedResult> {
-    // 1. Validate input
-    const validated = await this.validateInput(data);
-    
-    // 2. Process with external service
-    const result = await this.apiClient.process(validated);
-    
-    // 3. Store result in local system
-    await this.storeResult(result);
-    
-    // 4. Notify agent
-    await this.agent.events.chatOutput(
-      `External processing completed: ${result.summary}`
-    );
-    
-    return result;
-  }
-  
-  private async validateInput(data: any): Promise<ValidatedData> {
-    // Validation logic
-    return { valid: true, data };
-  }
-  
-  private async storeResult(result: ProcessedResult): Promise<void> {
-    // Storage logic
-  }
-}
-```
-
-## Workflow Automation
-
-### Automated Testing Pipeline
-
-```typescript
-class AutomatedTestPipeline {
-  constructor(private agent: Agent) {}
-  
-  async runFullPipeline(): Promise<PipelineResult> {
-    const results = {
-      codeAnalysis: null,
-      unitTests: null,
-      integrationTests: null,
-      securityScan: null,
-      performanceTest: null
-    };
-    
-    try {
-      // 1. Code analysis
-      results.codeAnalysis = await this.runCodeAnalysis();
-      
-      // 2. Unit tests
-      results.unitTests = await this.runUnitTests();
-      
-      // 3. Integration tests
-      results.integrationTests = await this.runIntegrationTests();
-      
-      // 4. Security scan
-      results.securityScan = await this.runSecurityScan();
-      
-      // 5. Performance test
-      results.performanceTest = await this.runPerformanceTest();
-      
-      // 6. Generate report
-      const report = await this.generateReport(results);
-      
-      // 7. Auto-repair if needed
-      if (!this.allTestsPassed(results)) {
-        await this.autoRepair(results);
-      }
-      
-      return { results, report, success: this.allTestsPassed(results) };
-      
-    } catch (error) {
-      return { results, error: error.message, success: false };
-    }
-  }
-  
-  private async autoRepair(results: PipelineResults): Promise<void> {
-    const repairAgent = await this.agent.createSubAgent('codeRepair');
-    await repairAgent.handleInput({
-      message: `Auto-repair needed. Test results: ${JSON.stringify(results)}`
-    });
-  }
-}
-```
-
-### Task Orchestration
-
-```typescript
-class TaskOrchestrator {
-  constructor(private agentTeam: AgentTeam) {}
-  
-  async executeComplexTask(task: ComplexTask): Promise<TaskResult> {
-    const subtasks = this.decomposeTask(task);
-    const results = [];
-    
-    for (const subtask of subtasks) {
-      try {
-        const agent = await this.agentTeam.createAgent(subtask.agentType);
-        await agent.initialize();
-        
-        const result = await this.executeSubtask(subtask, agent);
-        results.push(result);
-        
-        await this.agentTeam.deleteAgent(agent);
-      } catch (error) {
-        results.push({ 
-          subtask: subtask.name, 
-          success: false, 
-          error: error.message 
-        });
-      }
-    }
-    
-    return this.compileResults(task, results);
-  }
-  
-  private decomposeTask(task: ComplexTask): Subtask[] {
-    // Task decomposition logic
-    return [];
-  }
-  
-  private async executeSubtask(subtask: Subtask, agent: Agent): Promise<SubtaskResult> {
-    // Subtask execution logic
-    return { success: true, result: 'completed' };
-  }
-}
+    expect(myService).toBeDefined();
+  });
+});
 ```
 
 ## Error Handling Patterns
 
-### Comprehensive Error Handling
+### Service Error Handling
 
 ```typescript
-class RobustOperation {
-  constructor(private agent: Agent) {}
-  
-  async executeWithRetry<T>(
-    operation: () => Promise<T>,
-    maxRetries: number = 3,
-    retryDelay: number = 1000
-  ): Promise<T> {
-    let lastError: Error;
-    
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        return await operation();
-      } catch (error) {
-        lastError = error;
-        
-        if (attempt < maxRetries) {
-          await this.agent.events.systemMessage({
-            message: `Operation failed (attempt ${attempt}/${maxRetries}): ${error.message}`,
-            level: 'warning'
-          });
-          
-          await this.sleep(retryDelay * attempt);
-        }
-      }
-    }
-    
-    throw new Error(`Operation failed after ${maxRetries} attempts: ${lastError.message}`);
-  }
-  
-  async handleGracefulFailure(operation: () => Promise<void>): Promise<void> {
+class MyService implements TokenRingService {
+  async riskyOperation(param: string, agent: Agent): Promise<Result> {
     try {
-      await operation();
+      // Perform operation
+      return await this.performOperation(param, agent);
     } catch (error) {
-      await this.agent.events.systemMessage({
-        message: `Operation failed: ${error.message}`,
-        level: 'error'
-      });
-      
-      // Attempt recovery
-      await this.attemptRecovery(error);
-      
-      // Notify user
-      await this.agent.events.chatOutput(
-        `Operation encountered an error. Check logs for details.`
-      );
+      await agent.events.chatOutput(`Error: ${error.message}`);
+      throw error;
     }
-  }
-  
-  private async attemptRecovery(error: Error): Promise<void> {
-    // Recovery logic
-  }
-  
-  private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }
 ```
 
-### Validation and Error Reporting
+### Validation Error Handling
 
 ```typescript
-class ValidationService {
-  static validateInput<T>(
-    input: any,
-    schema: z.ZodSchema<T>
-  ): { success: boolean; data?: T; error?: string } {
-    try {
-      const validated = schema.parse(input);
-      return { success: true, data: validated };
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessages = error.errors.map(err => 
-          `${err.path.join('.')}: ${err.message}`
-        );
-        return { 
-          success: false, 
-          error: `Validation failed: ${errorMessages.join(', ')}` 
-        };
-      }
-      return { success: false, error: error.message };
-    }
+function validateInput(input: unknown, schema: z.ZodSchema): input is z.infer<typeof schema> {
+  const result = schema.safeParse(input);
+  if (!result.success) {
+    const errors = result.error.errors.map(e => `${e.path.join('.')}: ${e.message}`);
+    throw new Error(`Validation failed: ${errors.join(', ')}`);
   }
-  
-  static async reportValidationErrors(
-    agent: Agent,
-    validationResult: ValidationResult
-  ): Promise<void> {
-    await agent.events.chatOutput(
-      `❌ Validation Error: ${validationResult.error}`
-    );
-    
-    await agent.events.systemMessage({
-      message: `Validation failed for user input: ${validationResult.error}`,
-      level: 'error'
-    });
-  }
+  return true;
 }
 ```
 
@@ -936,11 +657,13 @@ class ValidationService {
 
 This implementation guide provides practical patterns and examples for working with the TokenRing AI ecosystem. Key takeaways:
 
-1. **Consistent Patterns**: Use the established patterns for services, tools, and commands
-2. **Type Safety**: Leverage TypeScript and Zod for robust validation
-3. **Error Handling**: Implement comprehensive error handling and recovery
-4. **Testing**: Create comprehensive test suites for all components
-5. **State Management**: Use state slices for clean state management
-6. **Event-Driven**: Leverage the event system for responsive interactions
+1. **Plugin Architecture**: Use the `install(app, config)` pattern for all packages
+2. **Service Pattern**: Implement `TokenRingService` with proper `attach()` method
+3. **Tool Pattern**: Export tools as a module with named exports
+4. **Command Pattern**: Export commands with `description`, `execute`, and `help`
+5. **Context Handler Pattern**: Implement `getContextItems` as async generator
+6. **State Management**: Use state slices with `serialize()` and `deserialize()`
+7. **Configuration**: Use Zod schemas for type-safe configuration validation
+8. **Integration**: Use `app.waitForService()` for service dependencies
 
 These patterns ensure maintainable, reliable, and extensible code within the TokenRing AI ecosystem.
