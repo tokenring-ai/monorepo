@@ -35,11 +35,11 @@ jobs:
         working-directory: ./frontend/chat
       
       - name: Build coder package
-        run: bun run build
+        run: bun run prepack
         working-directory: ./app/coder
 
       - name: Build writer package
-        run: bun run build
+        run: bun run prepack
         working-directory: ./app/writer
 
       - name: Setup Node.js for npm publishing
