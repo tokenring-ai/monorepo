@@ -270,3 +270,11 @@
 	path = frontend/electron
 	url = git@github.com:tokenring-ai/electron-frontend.git
 	branch = main
+[submodule "pkg/polymarket"]
+	path = pkg/polymarket
+	url = git@github.com:tokenring-ai/polymarket.git
+	branch = main
+[submodule "pkg/kalshi"]
+	path = pkg/kalshi
+	url = git@github.com:tokenring-ai/kalshi.git
+	branch = main
