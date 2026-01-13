@@ -3,8 +3,10 @@ import path from "path";
 import {z} from "zod";
 
 export default {
- websearch: {
-  defaultProvider: "chrome",
+  websearch: {
+   agentDefaults: {
+     provider: "chrome"
+   },
   providers: {
    chrome: {
     type: 'chrome',
@@ -21,7 +23,9 @@ export default {
   }
  },
  filesystem: {
-  defaultProvider: "local",
+   agentDefaults: {
+     provider: "local",
+   },
   providers: {
    local: {
     type: "local",
@@ -29,17 +33,17 @@ export default {
    }
   }
  },
- /*
- scheduler: {
+
+/* scheduler: {
   tasks: [
    {
     name: "Hello world",
     agentType: "writer",
     message: "/chat send hello",
     //every: "2 minutes",
-    once: true,
+   once: true,
     from: "09:00",
-    on: "mon tue wed thu fri"
+   on: "mon tue wed thu fri"
    },
    {
     name: "Hello world2",
@@ -62,9 +66,9 @@ export default {
   },
  },*/
  wikipedia: {
-  baseUrl: "https://en.wikipedia.org"
+   baseUrl: "https://en.wikipedia.org"
  },
- /*newsrpm: {
+  /*newsrpm: {
   apiKey: process.env.NEWSRPM_API_KEY,
  },
  cloudquote: {

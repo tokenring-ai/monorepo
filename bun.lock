@@ -24,7 +24,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.8",
+      "version": "0.2.10",
       "bin": {
         "tr-coder": "dist/tr-coder",
       },
@@ -86,7 +86,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.8",
+      "version": "0.2.10",
       "bin": {
         "tr-writer": "dist/tr-writer",
       },
@@ -1203,6 +1203,7 @@
       "dependencies": {
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
+        "moment-timezone": "^0.6.0",
         "zod": "catalog:",
       },
       "devDependencies": {
@@ -5154,6 +5155,10 @@
     "mkdirp": ["mkdirp@1.0.4", "", { "bin": { "mkdirp": "bin/cmd.js" } }, "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="],
 
     "mkdirp-classic": ["mkdirp-classic@0.5.3", "", {}, "sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A=="],
+
+    "moment": ["moment@2.30.1", "", {}, "sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how=="],
+
+    "moment-timezone": ["moment-timezone@0.6.0", "", { "dependencies": { "moment": "^2.29.4" } }, "sha512-ldA5lRNm3iJCWZcBCab4pnNL3HSZYXVb/3TYr75/1WCTWYuTqYUb5f/S384pncYjJ88lbO8Z4uPDvmoluHJc8Q=="],
 
     "monaco-editor": ["monaco-editor@0.55.1", "", { "dependencies": { "dompurify": "3.2.7", "marked": "14.0.0" } }, "sha512-jz4x+TJNFHwHtwuV9vA9rMujcZRb0CEilTEwG2rRSpe/A7Jdkuj8xPKttCgOh+v/lkHy7HsZ64oj+q3xoAFl9A=="],
 
