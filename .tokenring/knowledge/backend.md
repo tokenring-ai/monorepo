@@ -1035,7 +1035,7 @@ const processWorkflow = async (agent: Agent) => {
       await agent.handleInput(item.input)
       queueService.setCurrentItem(null, agent)
     } catch (error) {
-      agent.errorLine(`Failed to process item: ${error.message}`)
+      agent.errorMessage(`Failed to process item: ${error.message}`)
       // Restore to checkpoint if needed
       const checkpoint = queueService.getInitialCheckpoint(agent)
       if (checkpoint) {
@@ -1181,7 +1181,7 @@ try {
   const result = await executeQuery(sql)
   return result
 } catch (error) {
-  agent.errorLine(`Database error: ${error.message}`)
+  agent.errorMessage(`Database error: ${error.message}`)
   return null // Return null instead of throwing
 }
 ```
@@ -1192,13 +1192,13 @@ try {
 try {
   await processWorkflow(agent)
 } catch (error) {
-  agent.errorLine(`Workflow failed: ${error.message}`)
+  agent.errorMessage(`Workflow failed: ${error.message}`)
   
   // Restore to last known good state
   const lastCheckpoint = this.getLatestCheckpoint(agent)
   if (lastCheckpoint) {
     await agent.restoreCheckpoint(lastCheckpoint)
-    agent.infoLine('Restored to last checkpoint')
+    agent.infoMessage('Restored to last checkpoint')
   }
 }
 ```
@@ -1340,10 +1340,10 @@ class Agent {
 ### 1. Logging Patterns
 ```typescript
 // Structured logging with different levels
-agent.infoLine(`Queue size: ${queueService.size(agent)}`)
-agent.errorLine(`Failed to process task: ${error.message}`)
+agent.infoMessage(`Queue size: ${queueService.size(agent)}`)
+agent.errorMessage(`Failed to process task: ${error.message}`)
 agent.successLine(`Task completed successfully`)
-agent.warningLine(`Using deprecated feature`)
+agent.warningMessage(`Using deprecated feature`)
 ```
 
 ### 2. State Inspection
@@ -1363,15 +1363,15 @@ console.log(`Available checkpoints: ${checkpoints.length}`)
 const start = Date.now()
 await processTask(task)
 const duration = Date.now() - start
-agent.infoLine(`Task completed in ${duration}ms`)
+agent.infoMessage(`Task completed in ${duration}ms`)
 
 // Memory usage tracking
 const memoryUsage = process.memoryUsage()
-agent.infoLine(`Memory usage: ${Math.round(memoryUsage.heapUsed / 1024 / 1024)}MB`)
+agent.infoMessage(`Memory usage: ${Math.round(memoryUsage.heapUsed / 1024 / 1024)}MB`)
 
 // Provider usage tracking
 const usage = await aiClient.getUsage()
-agent.infoLine(`Tokens used: ${usage.totalTokens}, Cost: $${usage.totalCost}`)
+agent.infoMessage(`Tokens used: ${usage.totalTokens}, Cost: $${usage.totalCost}`)
 ```
 
 ### 4. Health Monitoring

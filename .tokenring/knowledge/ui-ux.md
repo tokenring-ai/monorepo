@@ -1475,9 +1475,9 @@ const inputSchema = z.object({
 
 **Progress Feedback Patterns**:
 ```typescript
-agent.infoLine(`[${name}] Starting container(s): ${containerList.join(", ")}...`);
-agent.infoLine(`[${name}] Executing: ${cmd}`);
-agent.infoLine(`[${name}] Successfully started container(s): ${containerList.join(", ")}`);
+agent.infoMessage(`[${name}] Starting container(s): ${containerList.join(", ")}...`);
+agent.infoMessage(`[${name}] Executing: ${cmd}`);
+agent.infoMessage(`[${name}] Successfully started container(s): ${containerList.join(", ")}`);
 ```
 
 #### Error Handling and User Feedback
