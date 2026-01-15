@@ -1,8 +1,13 @@
 import {configSchema} from "@tokenring-ai/writer/src/plugins";
 import path from "path";
 import {z} from "zod";
+import scheduleTester from "./agents/schedule-tester.js";
 
 export default {
+  agents: {
+    scheduleTester
+  },
+  scheduler: {},
   websearch: {
    agentDefaults: {
      provider: "chrome"
@@ -33,8 +38,8 @@ export default {
    }
   }
  },
-
-/* scheduler: {
+/*
+scheduler: {
   tasks: [
    {
     name: "Hello world",
