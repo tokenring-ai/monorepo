@@ -278,3 +278,7 @@
 	path = pkg/kalshi
 	url = git@github.com:tokenring-ai/kalshi.git
 	branch = main
+[submodule "pkg/rpc"]
+	path = pkg/rpc
+	url = git@github.com:tokenring-ai/rpc.git
+	branch = main

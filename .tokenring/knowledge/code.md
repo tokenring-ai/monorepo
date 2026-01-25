@@ -15,7 +15,8 @@ The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+
 7. [Integration Patterns](#integration-patterns)
 8. [Context Management](#context-management)
 9. [State Management](#state-management)
-10. [Development Guidelines](#development-guidelines)
+10. [Frontend Applications](#frontend-applications)
+11. [Development Guidelines](#development-guidelines)
 
 ## Monorepo Structure
 
@@ -34,6 +35,9 @@ tokenring/
 │   ├── queue/            # Task queuing with checkpoints
 │   ├── memory/           # Short-term memory storage
 │   └── [40+ more packages]
+├── frontend/              # Frontend applications
+│   ├── chat/             # Web-based chat interface for agent interaction
+│   └── electron/         # Electron-based desktop application
 ├── design/               # Architecture design documents
 ├── deps/                 # External dependencies
 ├── docker/              # Docker configurations
@@ -251,6 +255,27 @@ agent.sendHumanResponse(sequence, response);
 - **@tokenring-ai/cli-ink**: React Ink-based CLI interface
 - **@tokenring-ai/web-host**: Fastify-based web server
 
+## Frontend Applications
+
+### Chat Frontend
+
+Located at `frontend/chat/`, this is a React-based web interface for interacting with AI agents.
+
+#### Architecture
+
+**Key Technologies:**
+- React with TypeScript
+- React Router for navigation
+- Framer Motion for animations
+- react-icons for icons
+- React Markdown for content rendering
+
+**RPC Communication:**
+The frontend communicates with the backend via an RPC client defined in `frontend/chat/src/rpc.ts`:
+- `agentRPCClient`: Agent management and interaction
+- `workflowRPCClient`: Workflow spawning and control
+- Custom hooks for data fetching: `useAgent`, `useAgentList`, `useAgentEventState`, etc.
+
 ## Integration Patterns
 
 ### Service Integration
@@ -389,6 +414,8 @@ agent.mutateState(CustomState, state => {
 - **Tools**: `{Action}` format (e.g., `commitTool`, `rollbackTool`)
 - **Commands**: Lowercase with forward slash prefix (e.g., `/git`, `/test`)
 - **Agents**: CamelCase descriptive names (e.g., `teamLeader`, `contentWriter`)
+- **Frontend Components**: PascalCase (e.g., `ChatPage`, `Sidebar`)
+- **Frontend Hooks**: `use` prefix (e.g., `useAgent`, `useAgentEventState`)
 
 ### Testing Strategy
 - Unit tests for individual components
@@ -433,6 +460,7 @@ The ecosystem is agent-centric: `@tokenring-ai/agent` is the hub, registering to
 ### UI Flow
 - `@tokenring-ai/cli` runs REPL with `@tokenring-ai/inquirer-*` prompts
 - `@tokenring-ai/feedback` for human reviews
+- Frontend communicates via RPC to backend agents
 
 ### Workflow Automation
 - `@tokenring-ai/scripting` enables reusable command sequences

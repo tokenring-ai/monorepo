@@ -17,21 +17,17 @@ export default {
     autoStart: true,
     tasks: {
       "helloWorldTask": {
-        agentType: "writer",
-        message: "/chat send hello",
+        message: "hello",
         //every: "2 minutes",
-        once: true,
-        from: "09:00",
-        on: "mon tue wed thu fri"
+        after: "09:00",
+        weekdays: "mon tue wed thu fri"
       },
       "helloWorldTask2": {
-        agentType: "writer",
-        message: "/chat send hello",
+        message: "hello",
         //every: "2 minutes",
-        once: true,
-        from: "04:08",
-        to: "04:13",
-        on: "mon tue wed thu fri"
+        after: "04:08",
+        before: "04:13",
+        weekdays: "mon tue wed thu fri"
       },
     }
   },

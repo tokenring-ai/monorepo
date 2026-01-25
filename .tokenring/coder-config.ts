@@ -193,7 +193,9 @@ export default {
     },
   },
   testing: {
-    maxAutoRepairs: 5,
+    agentDefaults: {
+      maxAutoRepairs: 5,
+    },
     resources: {
       tsc: {
         type: "shell",
