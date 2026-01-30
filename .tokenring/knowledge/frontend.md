@@ -2,6 +2,28 @@
 
 This file maintains knowledge about frontend components, UI patterns, and client-side functionality in the TokenRing project.
 
+## 📚 Style Guide Reference
+
+For detailed visual and interactive design standards, see the **[Chat Frontend Style Guide](./style-guide-chat-frontend.md)**.
+
+The style guide includes:
+- Complete color palette with hex codes
+- Typography specifications
+- Spacing and sizing scales
+- Component patterns (buttons, inputs, cards, etc.)
+- Animation and transition guidelines
+- Accessibility best practices
+- Responsive design patterns
+- Common utility patterns
+
+**Quick Links:**
+- [Color Palette](./style-guide-chat-frontend.md#color-palette)
+- [Component Patterns](./style-guide-chat-frontend.md#component-patterns)
+- [Accessibility](./style-guide-chat-frontend.md#accessibility)
+- [Responsive Design](./style-guide-chat-frontend.md#responsive-design)
+
+---
+
 ## Discovered Frontend Systems
 
 ### Web Frontend Architecture (@tokenring-ai/web-frontend)
@@ -455,3 +477,7 @@ className="... disabled:opacity-50 disabled:cursor-not-allowed"
 // Hover state
 className="... hover:bg-zinc-900/30 transition-colors"
 ```
+
+**For detailed component patterns, button styles, input fields, cards, and animations, see the [Chat Frontend Style Guide](./style-guide-chat-frontend.md).**
+
+END FILE ATTACHMENT

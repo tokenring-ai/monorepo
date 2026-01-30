@@ -74,10 +74,6 @@
 	path = pkg/kubernetes
 	url = git@github.com:tokenring-ai/kubernetes
 	branch = main
-[submodule "pkg/local-filesystem"]
-	path = pkg/local-filesystem
-	url = git@github.com:tokenring-ai/local-filesystem
-	branch = main
 [submodule "pkg/memory"]
 	path = pkg/memory
 	url = git@github.com:tokenring-ai/memory
@@ -281,4 +277,12 @@
 [submodule "pkg/rpc"]
 	path = pkg/rpc
 	url = git@github.com:tokenring-ai/rpc.git
+	branch = main
+[submodule "pkg/terminal"]
+	path = pkg/terminal
+	url = git@github.com:tokenring-ai/terminal.git
+	branch = main
+[submodule "pkg/posix-system"]
+	path = pkg/posix-system
+	url = git@github.com:tokenring-ai/posix-system.git
 	branch = main

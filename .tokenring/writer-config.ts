@@ -33,8 +33,8 @@ export default {
    },
   providers: {
    local: {
-    type: "local",
-    baseDirectory: path.resolve(import.meta.dirname,"../")
+    type: "posix",
+    workingDirectory: path.resolve(import.meta.dirname,"../")
    }
   }
  },
