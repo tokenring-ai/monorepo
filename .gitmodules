@@ -90,14 +90,6 @@
 	path = pkg/utility
 	url = git@github.com:tokenring-ai/utility.git
 	branch = main
-[submodule "deps/inquirer-tree-selector"]
-	path = deps/inquirer-tree-selector
-	url = git@github.com:tokenring-ai/inquirer-tree-selector.git
-	branch = main
-[submodule "deps/inquirer-command-prompt"]
-	path = deps/inquirer-command-prompt
-	url = git@github.com:tokenring-ai/inquirer-command-prompt.git
-	branch = main
 [submodule "pkg/serper"]
 	path = pkg/serper
 	url = git@github.com:tokenring-ai/serper.git
