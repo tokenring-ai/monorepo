@@ -3,16 +3,14 @@
   "description": "TokenRing Monorepo with all community apps and packages",
   "version": "0.2.12",
   "devDependencies": {
-    "@tokenring-ai/writer": "workspace:*",
-    "@tokenring-ai/coder": "workspace:*",
     "@tokenring-ai/chat-frontend": "workspace:*",
+    "@tokenring-ai/coder": "workspace:*",
     "@tokenring-ai/web-terminal": "workspace:*",
+    "@tokenring-ai/writer": "workspace:*",
     "@types/bun": "^1.3.8",
     "bun-types": "^1.3.8",
     "husky": "^9.1.7",
-    "trufflehog": "^0.0.5",
     "typescript": "^5.9.3",
-    "syncpack": "^14.0.0-alpha.40",
     "vitest": "^4.0.18"
   },
   "license": "MIT",
