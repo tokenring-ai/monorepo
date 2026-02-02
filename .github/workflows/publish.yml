@@ -152,13 +152,27 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Publish platform packages to NPM
+      - name: Publish coder-darwin-arm64
         if: startsWith(github.ref, 'refs/tags/v')
-        run: |
-          cd app/coder/packages/npm/coder-darwin-arm64 && npm publish --provenance --access public --tag next
-          cd ../coder-linux-x64 && npm publish --provenance --access public --tag next
-          cd ../../../writer/packages/npm/writer-darwin-arm64 && npm publish --provenance --access public --tag next
-          cd ../writer-linux-x64 && npm publish --provenance --access public --tag next
+        run: cd app/coder/packages/npm/coder-darwin-arm64 && npm publish --provenance --access public --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish coder-linux-x64
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: cd app/coder/packages/npm/coder-linux-x64 && npm publish --provenance --access public --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish writer-darwin-arm64
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: cd app/writer/packages/npm/writer-darwin-arm64 && npm publish --provenance --access public --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish writer-linux-x64
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: cd app/writer/packages/npm/writer-linux-x64 && npm publish --provenance --access public --tag next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
