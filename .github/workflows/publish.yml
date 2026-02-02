@@ -30,8 +30,16 @@ jobs:
         run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-macos-arm64
         working-directory: ./app/coder
 
+      - name: Check that coder can start
+        run: ./coder-macos-arm64 -h
+        working-directory: ./app/coder
+
       - name: Build writer binary
         run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-macos-arm64
+        working-directory: ./app/writer
+
+      - name: Check that writer can start
+        run: ./writer-macos-arm64 -h
         working-directory: ./app/writer
 
       - name: Upload coder binary
