@@ -72,11 +72,11 @@ jobs:
           path: ./frontend/chat/dist
       
       - name: Build coder binary
-        run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-linux-x64
+        run: bun build --compile ./src/tr-coder.ts --outfile coder-linux-x64
         working-directory: ./app/coder
 
       - name: Build writer binary
-        run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-linux-x64
+        run: bun build --compile ./src/tr-writer.ts --outfile writer-linux-x64
         working-directory: ./app/writer
 
       - name: Upload coder binary
@@ -91,7 +91,7 @@ jobs:
           name: writer-linux-x64
           path: ./app/writer/writer-linux-x64
 
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
     needs: [build-macos-arm64, build-linux-x64]
     permissions:
@@ -102,7 +102,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: true
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
@@ -114,7 +114,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: chat-frontend
-          path: ./frontend/chat
+          path: ./artifacts/chat-frontend
       
       - name: Download coder binaries
         uses: actions/download-artifact@v4
@@ -137,10 +137,14 @@ jobs:
           cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer-darwin-arm64/
           cp artifacts/writer-linux-x64 app/writer/packages/npm/writer-linux-x64/
           chmod +x app/coder/packages/npm/*/coder-* app/writer/packages/npm/*/writer-*
-          cp -r frontend/chat app/coder/packages/npm/coder-darwin-arm64/frontend/
-          cp -r frontend/chat app/coder/packages/npm/coder-linux-x64/frontend/
-          cp -r frontend/chat app/writer/packages/npm/writer-darwin-arm64/frontend/
-          cp -r frontend/chat app/writer/packages/npm/writer-linux-x64/frontend/
+          mkdir -p app/coder/packages/npm/coder-darwin-arm64/frontend/chat
+          mkdir -p app/coder/packages/npm/coder-linux-x64/frontend/chat
+          mkdir -p app/writer/packages/npm/writer-darwin-arm64/frontend/chat
+          mkdir -p app/writer/packages/npm/writer-linux-x64/frontend/chat
+          cp -r artifacts/chat-frontend app/coder/packages/npm/coder-darwin-arm64/frontend/chat
+          cp -r artifacts/chat-frontend app/coder/packages/npm/coder-linux-x64/frontend/chat
+          cp -r artifacts/chat-frontend app/writer/packages/npm/writer-darwin-arm64/frontend/chat
+          cp -r artifacts/chat-frontend app/writer/packages/npm/writer-linux-x64/frontend/chat
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
@@ -171,6 +175,48 @@ jobs:
         working-directory: ./app/writer/packages/npm/writer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-docker:
+    runs-on: ubuntu-latest
+    needs: [ build-macos-arm64, build-linux-x64 ]
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Download chat frontend
+        uses: actions/download-artifact@v4
+        with:
+          name: chat-frontend
+          path: ./artifacts/chat-frontend
+
+      - name: Download coder binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coder-linux-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download writer binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: writer-linux-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Prepare Docker builds
+        run: |
+          mkdir -p app/coder/dist/frontend app/writer/dist/frontend
+          cp artifacts/coder-linux-x64 app/coder/dist/tr-coder
+          cp artifacts/writer-linux-x64 app/writer/dist/tr-writer
+          cp -r artifacts/chat-frontend app/coder/dist/frontend/chat
+          cp -r artifacts/chat-frontend app/writer/dist/frontend/chat
+          chmod +x app/coder/dist/tr-coder app/writer/dist/tr-writer
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
