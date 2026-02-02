@@ -11,12 +11,43 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-  build:
+  build-macos-arm64:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 1.3.5
+      
+      - name: Install dependencies
+        run: bun install
+      
+      - name: Build coder binary
+        run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-macos-arm64
+        working-directory: ./app/coder
+
+      - name: Build writer binary
+        run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-macos-arm64
+        working-directory: ./app/writer
+
+      - name: Upload coder binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: coder-macos-arm64
+          path: ./app/coder/coder-macos-arm64
+
+      - name: Upload writer binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-macos-arm64
+          path: ./app/writer/writer-macos-arm64
+
+  build-linux-x64:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -34,13 +65,44 @@ jobs:
         run: bun run build
         working-directory: ./frontend/chat
       
-      - name: Build coder package
-        run: bun run prepack
+      - name: Upload chat frontend
+        uses: actions/upload-artifact@v4
+        with:
+          name: chat-frontend
+          path: ./frontend/chat/dist
+      
+      - name: Build coder binary
+        run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-linux-x64
         working-directory: ./app/coder
 
-      - name: Build writer package
-        run: bun run prepack
+      - name: Build writer binary
+        run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-linux-x64
         working-directory: ./app/writer
+
+      - name: Upload coder binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: coder-linux-x64
+          path: ./app/coder/coder-linux-x64
+
+      - name: Upload writer binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-linux-x64
+          path: ./app/writer/writer-linux-x64
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build-macos-arm64, build-linux-x64]
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
@@ -48,17 +110,65 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Download chat frontend
+        uses: actions/download-artifact@v4
+        with:
+          name: chat-frontend
+          path: ./frontend/chat
+      
+      - name: Download coder binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: coder-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download writer binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: writer-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Prepare platform packages
+        run: |
+          cp artifacts/coder-macos-arm64 app/coder/packages/npm/coder-darwin-arm64/
+          cp artifacts/coder-linux-x64 app/coder/packages/npm/coder-linux-x64/
+          cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer-darwin-arm64/
+          cp artifacts/writer-linux-x64 app/writer/packages/npm/writer-linux-x64/
+          chmod +x app/coder/packages/npm/*/coder-* app/writer/packages/npm/*/writer-*
+          cp -r frontend/chat app/coder/packages/npm/coder-darwin-arm64/frontend/
+          cp -r frontend/chat app/coder/packages/npm/coder-linux-x64/frontend/
+          cp -r frontend/chat app/writer/packages/npm/writer-darwin-arm64/frontend/
+          cp -r frontend/chat app/writer/packages/npm/writer-linux-x64/frontend/
+
+      - name: Setup Node.js for npm publishing
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish platform packages to NPM
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          cd app/coder/packages/npm/coder-darwin-arm64 && npm publish --provenance --access public --tag next
+          cd ../coder-linux-x64 && npm publish --provenance --access public --tag next
+          cd ../../../writer/packages/npm/writer-darwin-arm64 && npm publish --provenance --access public --tag next
+          cd ../writer-linux-x64 && npm publish --provenance --access public --tag next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish coder to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --provenance --access public
-        working-directory: ./app/coder
+        run: npm publish --provenance --access public --tag next
+        working-directory: ./app/coder/packages/npm/coder
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish writer to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --provenance --access public
-        working-directory: ./app/writer
+        run: npm publish --provenance --access public --tag next
+        working-directory: ./app/writer/packages/npm/writer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
