@@ -83,8 +83,16 @@ jobs:
         run: bun build --compile ./src/tr-coder.ts --outfile coder-linux-x64
         working-directory: ./app/coder
 
+      - name: Check that coder can start
+        run: ./coder-linux-x64 -h
+        working-directory: ./app/coder
+
       - name: Build writer binary
         run: bun build --compile ./src/tr-writer.ts --outfile writer-linux-x64
+        working-directory: ./app/writer
+
+      - name: Check that writer can start
+        run: ./writer-linux-x64 -h
         working-directory: ./app/writer
 
       - name: Upload coder binary
@@ -141,6 +149,7 @@ jobs:
       - name: Prepare platform packages
         run: |
           cp artifacts/coder-macos-arm64 app/coder/packages/npm/coder-darwin-arm64/
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder-darwin-arm64/
           cp artifacts/coder-linux-x64 app/coder/packages/npm/coder-linux-x64/
           cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer-darwin-arm64/
           cp artifacts/writer-linux-x64 app/writer/packages/npm/writer-linux-x64/

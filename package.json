@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "@types/mime-types": "^3.0.1",
-    "mime-types": "^3.0.2"
+    "mime-types": "^3.0.2",
+    "naudiodon2": "^2.5.0"
   }
 }
