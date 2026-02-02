@@ -141,10 +141,10 @@ jobs:
           mkdir -p app/coder/packages/npm/coder-linux-x64/frontend/chat
           mkdir -p app/writer/packages/npm/writer-darwin-arm64/frontend/chat
           mkdir -p app/writer/packages/npm/writer-linux-x64/frontend/chat
-          cp -r artifacts/chat-frontend app/coder/packages/npm/coder-darwin-arm64/frontend/chat
-          cp -r artifacts/chat-frontend app/coder/packages/npm/coder-linux-x64/frontend/chat
-          cp -r artifacts/chat-frontend app/writer/packages/npm/writer-darwin-arm64/frontend/chat
-          cp -r artifacts/chat-frontend app/writer/packages/npm/writer-linux-x64/frontend/chat
+          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder-darwin-arm64/frontend/chat
+          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder-linux-x64/frontend/chat
+          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer-darwin-arm64/frontend/chat
+          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer-linux-x64/frontend/chat
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
