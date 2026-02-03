@@ -27,7 +27,7 @@ jobs:
         run: bun install
       
       - name: Build coder binary
-        run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-macos-arm64
+        run: bun build --compile ./src/tr-coder.ts --outfile coder-macos-arm64
         working-directory: ./app/coder
 
       - name: Copy portaudio lib to coder directory
@@ -38,7 +38,7 @@ jobs:
           ./coder-macos-arm64 -h
 
       - name: Build writer binary
-        run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-macos-arm64
+        run: bun build --compile ./src/tr-writer.ts --outfile writer-macos-arm64
         working-directory: ./app/writer
 
       - name: Copy portaudio lib to writer directory
