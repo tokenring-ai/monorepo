@@ -205,6 +205,42 @@ jobs:
         working-directory: ./app/writer/packages/npm/writer
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  verify-npm-publish:
+    needs: [ publish-npm ]
+    if: startsWith(github.ref, 'refs/tags/v')
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: linux-x64
+          - os: macos-latest
+            arch: darwin-arm64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Wait for npm registry propagation
+        run: sleep 30
+
+      - name: Test coder platform-specific package
+        run: npx @tokenring-ai/coder-${{ matrix.arch }}@${{ steps.version.outputs.version }} -h
+
+      - name: Test writer platform-specific package
+        run: npx @tokenring-ai/writer-${{ matrix.arch }}@${{ steps.version.outputs.version }} -h
+
+      - name: Test coder auto-select package
+        run: npx @tokenring-ai/coder@${{ steps.version.outputs.version }} -h
+
+      - name: Test writer auto-select package
+        run: npx @tokenring-ai/writer@${{ steps.version.outputs.version }} -h
 
   publish-docker:
     runs-on: ubuntu-latest
