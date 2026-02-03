@@ -31,16 +31,14 @@ jobs:
         working-directory: ./app/coder
 
       - name: Check that coder can start
-        run: ./coder-macos-arm64 -h
-        working-directory: ./app/coder
+        run: DYLD_LIBRARY_PATH=./deps/naudiodon3/portaudio/bin/ ./app/coder/coder-macos-arm64 -h
 
       - name: Build writer binary
         run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-macos-arm64
         working-directory: ./app/writer
 
       - name: Check that writer can start
-        run: ./writer-macos-arm64 -h
-        working-directory: ./app/writer
+        run: DYLD_LIBRARY_PATH=./deps/naudiodon3/portaudio/bin/ ./app/writer/writer-macos-arm64 -h
 
       - name: Upload coder binary
         uses: actions/upload-artifact@v4
@@ -152,6 +150,7 @@ jobs:
           cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder-darwin-arm64/
           cp artifacts/coder-linux-x64 app/coder/packages/npm/coder-linux-x64/
           cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer-darwin-arm64/
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer-darwin-arm64/
           cp artifacts/writer-linux-x64 app/writer/packages/npm/writer-linux-x64/
           chmod +x app/coder/packages/npm/*/coder-* app/writer/packages/npm/*/writer-*
           mkdir -p app/coder/packages/npm/coder-darwin-arm64/frontend/chat
