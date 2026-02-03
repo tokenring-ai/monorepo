@@ -30,15 +30,23 @@ jobs:
         run: bun build --compile --minify --sourcemap ./src/tr-coder.ts --outfile coder-macos-arm64
         working-directory: ./app/coder
 
-      - name: Check that coder can start
-        run: DYLD_LIBRARY_PATH=./deps/naudiodon3/portaudio/bin/ ./app/coder/coder-macos-arm64 -h
+      - name: Copy portaudio lib to coder directory
+        run: |
+          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/coder
+          cd app/coder
+          install_name_tool -add_rpath "@loader_path" coder-macos-arm64
+          ./coder-macos-arm64 -h
 
       - name: Build writer binary
         run: bun build --compile --minify --sourcemap ./src/tr-writer.ts --outfile writer-macos-arm64
         working-directory: ./app/writer
 
-      - name: Check that writer can start
-        run: DYLD_LIBRARY_PATH=./deps/naudiodon3/portaudio/bin/ ./app/writer/writer-macos-arm64 -h
+      - name: Copy portaudio lib to writer directory
+        run: |
+          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/writer
+          cd app/writer
+          install_name_tool -add_rpath "@loader_path" writer-macos-arm64
+          ./writer-macos-arm64 -h
 
       - name: Upload coder binary
         uses: actions/upload-artifact@v4
