@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/monorepo",
   "description": "TokenRing Monorepo with all community apps and packages",
-  "version": "0.2.21",
+  "version": "0.2.22",
   "devDependencies": {
     "@tokenring-ai/chat-frontend": "workspace:*",
     "@tokenring-ai/coder": "workspace:*",
