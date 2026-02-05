@@ -158,7 +158,7 @@ jobs:
           cp artifacts/writer-* app/writer/packages/npm/writer/
           cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder/
           cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer/
-          chmod +x app/coder/packages/npm/coder* app/writer/packages/npm/writer*
+          chmod +x app/coder/packages/npm/coder/coder* app/writer/packages/npm/writer/writer*
           mkdir -p app/coder/packages/npm/coder/frontend/chat
           mkdir -p app/writer/packages/npm/writer/frontend/chat
           cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder/frontend/chat
