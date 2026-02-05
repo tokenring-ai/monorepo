@@ -154,51 +154,21 @@ jobs:
 
       - name: Prepare platform packages
         run: |
-          cp artifacts/coder-macos-arm64 app/coder/packages/npm/coder-darwin-arm64/
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder-darwin-arm64/
-          cp artifacts/coder-linux-x64 app/coder/packages/npm/coder-linux-x64/
-          cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer-darwin-arm64/
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer-darwin-arm64/
-          cp artifacts/writer-linux-x64 app/writer/packages/npm/writer-linux-x64/
-          chmod +x app/coder/packages/npm/*/coder-* app/writer/packages/npm/*/writer-*
-          mkdir -p app/coder/packages/npm/coder-darwin-arm64/frontend/chat
-          mkdir -p app/coder/packages/npm/coder-linux-x64/frontend/chat
-          mkdir -p app/writer/packages/npm/writer-darwin-arm64/frontend/chat
-          mkdir -p app/writer/packages/npm/writer-linux-x64/frontend/chat
-          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder-darwin-arm64/frontend/chat
-          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder-linux-x64/frontend/chat
-          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer-darwin-arm64/frontend/chat
-          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer-linux-x64/frontend/chat
+          cp artifacts/coder-* app/coder/packages/npm/coder/
+          cp artifacts/writer-* app/writer/packages/npm/writer/
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder/
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/writer/
+          chmod +x app/coder/packages/npm/*/coder app/writer/packages/npm/*/writer
+          mkdir -p app/coder/packages/npm/coder/frontend/chat
+          mkdir -p app/writer/packages/npm/writer/frontend/chat
+          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder/frontend/chat
+          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer/frontend/chat
 
       - name: Setup Node.js for npm publishing
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Publish coder-darwin-arm64
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: cd app/coder/packages/npm/coder-darwin-arm64 && npm publish --provenance --access public --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish coder-linux-x64
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: cd app/coder/packages/npm/coder-linux-x64 && npm publish --provenance --access public --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish writer-darwin-arm64
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: cd app/writer/packages/npm/writer-darwin-arm64 && npm publish --provenance --access public --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish writer-linux-x64
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: cd app/writer/packages/npm/writer-linux-x64 && npm publish --provenance --access public --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish coder to NPM
         if: startsWith(github.ref, 'refs/tags/v')
@@ -238,16 +208,10 @@ jobs:
       - name: Wait for npm registry propagation
         run: sleep 30
 
-      - name: Test coder platform-specific package
-        run: npx @tokenring-ai/coder-${{ matrix.arch }}@${{ steps.version.outputs.version }} -h
-
-      - name: Test writer platform-specific package
-        run: npx @tokenring-ai/writer-${{ matrix.arch }}@${{ steps.version.outputs.version }} -h
-
-      - name: Test coder auto-select package
+      - name: Test coder package
         run: npx @tokenring-ai/coder@${{ steps.version.outputs.version }} -h
 
-      - name: Test writer auto-select package
+      - name: Test writer package
         run: npx @tokenring-ai/writer@${{ steps.version.outputs.version }} -h
 
   publish-docker:
