@@ -1,7 +1,6 @@
 import type { AgentConfig } from '@tokenring-ai/agent/schema';
-import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
-import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
-import {SchedulerAgentConfig} from "@tokenring-ai/scheduler/schema";
+import type {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import type {SchedulerAgentConfig} from "@tokenring-ai/scheduler/schema";
 
 export default {
   name: "Scheduling agent",
