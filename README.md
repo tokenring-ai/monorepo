@@ -3,46 +3,14 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://typescriptlang.org)
 [![Bun](https://img.shields.io/badge/Bun-1.0+-black?logo=bun)](https://bun.sh)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tokenring-ai/tokenring/main.yml?branch=main)](https://github.com/tokenring-ai/tokenring/actions)
+[![Open Issues](https://img.shields.io/github/issues/tokenring-ai/tokenring)](https://github.com/tokenring-ai/tokenring/issues)
 
 <img src="assets/logo.png" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
 
 **A comprehensive AI-powered development and content creation ecosystem**
 
 TokenRing AI is a modular TypeScript monorepo hosting two flagship applications—**TokenRing Coder** and **TokenRing Writer**—built on a foundation of 50+ specialized packages. The ecosystem provides AI-assisted coding, content creation, and workflow automation through a unified agent-based architecture.
-
----
-
-## Applications
-
-### TokenRing Coder
-
-An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
-
-**Key Features:**
-- Multiple AI providers (OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek)
-- Multi-agent orchestration with specialized roles (frontend, backend, DevOps, testing)
-- Code intelligence with Tree-sitter integration
-- Git operations with auto-commit
-- Docker and Kubernetes integration
-- Database support (MySQL, SQLite, PostgreSQL)
-- Audio processing and transcription
-- Web search and browser automation
-
-[Full Coder Documentation](https://github.com/tokenring-ai/coder)
-
-### TokenRing Writer
-
-A unified platform for writing and managing news articles and blog posts. Leverages AI to assist with writing, editing, research, and publishing workflows.
-
-**Key Features:**
-- Specialized content creation agents (writer, editor, researcher, publisher)
-- Interactive chat interface for content assistance
-- Persistent content history in SQLite
-- Publishing integration with Ghost.io, WordPress, and more
-- Research capabilities with web search and Wikipedia
-- Multi-model AI support
-
-[Full Writer Documentation](https://github.com/tokenring-ai/writer)
 
 ---
 
@@ -97,6 +65,40 @@ bun run writer
 docker pull ghcr.io/tokenring-ai/writer:latest
 docker run -ti --rm -v ./your-content:/repo:rw ghcr.io/tokenring-ai/writer:latest
 ```
+
+---
+
+## Applications
+
+### TokenRing Coder
+
+An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
+
+**Key Features:**
+- Multiple AI providers (OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek)
+- Multi-agent orchestration with specialized roles (frontend, backend, DevOps, testing)
+- Code intelligence with Tree-sitter integration
+- Git operations with auto-commit
+- Docker and Kubernetes integration
+- Database support (MySQL, SQLite, PostgreSQL)
+- Audio processing and transcription
+- Web search and browser automation
+
+[Full Coder Documentation](https://github.com/tokenring-ai/coder)
+
+### TokenRing Writer
+
+A unified platform for writing and managing news articles and blog posts. Leverages AI to assist with writing, editing, research, and publishing workflows.
+
+**Key Features:**
+- Specialized content creation agents (writer, editor, researcher, publisher)
+- Interactive chat interface for content assistance
+- Persistent content history in SQLite
+- Publishing integration with Ghost.io, WordPress, and more
+- Research capabilities with web search and Wikipedia
+- Multi-model AI support
+
+[Full Writer Documentation](https://github.com/tokenring-ai/writer)
 
 ---
 
@@ -168,8 +170,7 @@ The monorepo contains 50+ specialized packages organized into functional categor
 ### UI and Frontend (5 packages)
 
 - [@tokenring-ai/cli](https://github.com/tokenring-ai/cli) - REPL service with interactive prompts
-- [@tokenring-ai/cli-ink](https://github.com/tokenring-ai/cli-ink) - React Ink-based CLI interface
-- [@tokenring-ai/web-host](https://github.com/tokenring-ai/web-host) - FastFastify-based web server
+- [@tokenring-ai/web-host](https://github.com/tokenring-ai/web-host) - Fastify-based web server
 - [@tokenring-ai/web-frontend](https://github.com/tokenring-ai/web-frontend) - React frontend with CLI-style interface
 - [@tokenring-ai/agent-api](https://github.com/tokenring-ai/agent-api) - WebSocket API for real-time communication
 
@@ -463,7 +464,7 @@ export default {
 ## Documentation
 
 - [Coder Documentation](https://github.com/tokenring-ai/coder) - Complete guide to TokenRing Coder
-- [Writer Documentation](https://github.com/tokenring-ai/app/writer) - Complete guide to TokenRing Writer
+- [Writer Documentation](https://github.com/tokenring-ai/writer) - Complete guide to TokenRing Writer
 - [Package Index](PACKAGES.md) - Detailed package documentation
 - [Dependency Graph](DEPENDENCIES.md) - Package dependencies and relationships
 - [API Documentation](https://docs.tokenring.ai) - API references and guides
