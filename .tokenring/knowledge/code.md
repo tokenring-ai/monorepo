@@ -321,6 +321,89 @@ const commandDefinition = {
 };
 ```
 
+## Provider Pattern
+
+The **Provider Pattern** is a core architectural strategy used across TokenRing AI packages (e.g., `@tokenring-ai/blog`, `@tokenring-ai/ai-client`, `@tokenring-ai/websearch`) to support multiple external platforms through a unified interface.
+
+### Overview
+A Provider abstracts platform-specific logic (API calls, data normalization, filtering) away from the Service layer. This allows the Agent to interact with different backends (e.g., Ghost vs. WordPress, or OpenAI vs. Anthropic) using the same commands and tools.
+
+### 1. The Provider Interface
+Every provider must implement a common interface. This ensures that the Service can delegate tasks without knowing which specific platform is active.
+
+```typescript
+interface SomeProvider {
+  name: string;
+  description: string;
+
+  // Lifecycle hook to register state or tools
+  attach(agent: Agent): void;
+
+  // Data Operations
+  fetchItems(agent: Agent, filter: TFilter): Promise<T[]>;
+  getItem(agent: Agent, id: string): Promise<T>;
+  
+  // State Management
+  getCurrent(agent: Agent): T | null;
+}
+```
+
+
+### 2. Implementation Pattern
+Providers are responsible for two main tasks: **Normalizing** external data into internal types and **Filtering/Sorting** results.
+
+```typescript
+class CustomPlatformProvider implements SomeProvider {
+  async fetchItems(agent: Agent, filter: FilterOptions): Promise<CommonType[]> {
+    // 1. Fetch raw data from external API
+    const rawData = await this.api.getData();
+
+    // 2. Normalize to common interface
+    let items = rawData.map(item => this.normalize(item));
+
+    // 3. Apply platform-agnostic filtering logic
+    if (filter.keyword) {
+      const search = filter.keyword.toLowerCase();
+      items = items.filter(i => i.title.toLowerCase().includes(search));
+    }
+
+    // 4. Standardize sorting (e.g., most recent first)
+    return items.sort((a, b) => b.createdAt - a.createdAt);
+  }
+
+  private normalize(raw: any): CommonType {
+     // Map external fields to internal fields
+     return { id: raw.uuid, title: raw.heading, ... };
+  }
+}
+```
+
+
+### 3. Service Delegation
+The `Service` acts as the orchestrator. It maintains a registry of available providers and delegates agent requests to the currently active one.
+
+```typescript
+class UnifiedService implements TokenRingService {
+  private providers: Record<string, DataProvider> = {};
+  private activeProvider: string = 'default';
+
+  async attach(agent: Agent) {
+    // Register the service and its providers
+    agent.services.register(this.name, this);
+  }
+
+  async getItems(agent: Agent, filter: FilterOptions) {
+    const provider = this.providers[this.activeProvider];
+    return await provider.fetchItems(agent, filter);
+  }
+}
+```
+
+
+### Key Principles
+*   **State Isolation**: Providers should store implementation-specific state (like "current selected post" or "session tokens") in the agent's state slices via `agent.mutateState()`.
+*   **Thin Services**: The Service layer should contain minimal logic, focusing primarily on routing calls to the active provider.
+
 ## State Management
 
 ### State Slices

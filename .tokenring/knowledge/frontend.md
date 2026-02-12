@@ -51,7 +51,8 @@ The style guide includes:
 - Tool selector with category-based organization
 - Dark/light theme toggle with persistent preference
 - File browser with preview and editing capabilities
-- Command history and autocomplete
+- Command history navigation with arrow keys
+- Command autocomplete with slash commands
 - Toast notification system for user feedback
 - Connection status indicator
 - Mobile-responsive design
@@ -368,6 +369,78 @@ try {
 />
 ```
 
+### ChatFooter Component (Command History Navigation)
+
+**Location:** `frontend/chat/src/components/chat/ChatFooter.tsx`
+
+**Features:**
+- Command suggestion autocomplete with arrow keys
+- Command history navigation with up/down arrow keys
+- Persistent input state across navigation
+- Context-aware keyboard shortcuts
+- Keyboard navigation support for all interactive elements
+
+**Command History Navigation:**
+- `ArrowUp` - Navigate to previous command in history
+- `ArrowDown` - Navigate to next command in history
+- When reaching the beginning/end of history, returns to original input
+- Input state is preserved during history navigation
+
+**Implementation Pattern:**
+```tsx
+const [historyIndex, setHistoryIndex] = useState<number | null>(null);
+const [historyBuffer, setHistoryBuffer] = useState('');
+
+const handleKeyDown = (e: React.KeyboardEvent) => {
+  if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (commandHistory.length > 0) {
+      if (historyIndex === null) {
+        // Start navigating history, save current input
+        setHistoryBuffer(input);
+        setHistoryIndex(commandHistory.length - 1);
+      } else if (historyIndex > 0) {
+        setHistoryIndex(prev => prev - 1);
+      }
+      if (historyIndex !== null && commandHistory[historyIndex]) {
+        setInput(commandHistory[historyIndex]);
+      }
+    }
+    return;
+  }
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (historyIndex !== null) {
+      if (historyIndex < commandHistory.length - 1) {
+        setHistoryIndex(prev => prev + 1);
+        if (commandHistory[historyIndex + 1]) {
+          setInput(commandHistory[historyIndex + 1]);
+        }
+      } else {
+        // Go back to the original input before history navigation
+        setInput(historyBuffer);
+        setHistoryIndex(null);
+        setHistoryBuffer('');
+      }
+    }
+    return;
+  }
+};
+```
+
+**Usage:**
+```tsx
+<ChatFooter
+  agentId={agentId}
+  input={input}
+  setInput={setInput}
+  commandHistory={commandHistory.data || []}
+  onSubmit={handleSubmit}
+  // ...other props
+/>
+```
+
 ---
 
 ## RPC Clients and Data Fetching
@@ -389,7 +462,7 @@ try {
 useAgentList() - List all agents (refresh: 1s)
 useAgent(agentId) - Get agent details (refresh: 15s)
 useAvailableCommands(agentId) - Available commands
-useCommandHistory(agentId) - Command history
+useCommandHistory(agentId) - Command history (max 50 commands)
 
 // Model and tool management
 useModel(agentId) - Current model (refresh: 15s)
@@ -661,10 +734,7 @@ useEffect(() => {
      <div className="fixed inset-0 bg-black/50 z-30" />
    )}
 
-   <div className={`
-     ${isMobile ? 'fixed' : 'relative'}
-     ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-   `}>
+   <div className={`\n     ${isMobile ? 'fixed' : 'relative'}\n     ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}\n   `}>
      <Sidebar ... />
    </div>
    ```
@@ -958,7 +1028,7 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 **Core Components:**
 - `frontend/chat/src/components/chat/MessageList.tsx` - Message list
 - `frontend/chat/src/components/chat/ChatHeader.tsx` - Header with selectors
-- `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area
+- `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area with history navigation
 - `frontend/chat/src/components/ModelSelector.tsx` - Model selection
 - `frontend/chat/src/components/ToolSelector.tsx` - Tool selection
 - `frontend/chat/src/components/overlay/file-browser.tsx` - File browser

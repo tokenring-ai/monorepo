@@ -206,8 +206,10 @@ export default {
       vitest: {
         type: "shell",
         name: "Vitest Testing",
-        command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok' | sed -n 1,500p",
+        command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok'",
         workingDirectory: "./",
+        timeoutSeconds: 60,
+        cropOutput: 20000,
       },
     },
   },

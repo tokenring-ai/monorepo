@@ -13,8 +13,7 @@ async function main(): Promise<void> {
   try {
     // Get the list of boilerplate files
     const files = await glob("*", { cwd: sourceDir, absolute: false });
-
-
+    
     console.log(`Found ${files.length} boilerplate files to sync.\n`);
 
     // Process each pattern

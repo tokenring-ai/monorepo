@@ -26,7 +26,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.23",
+      "version": "0.2.24",
       "devDependencies": {
         "@tokenring-ai/agent": "workspace:*",
         "@tokenring-ai/ai-client": "workspace:*",
@@ -42,6 +42,7 @@
         "@tokenring-ai/database": "workspace:*",
         "@tokenring-ai/docker": "workspace:*",
         "@tokenring-ai/drizzle-storage": "workspace:*",
+        "@tokenring-ai/escalation": "workspace:*",
         "@tokenring-ai/feedback": "workspace:*",
         "@tokenring-ai/file-index": "workspace:*",
         "@tokenring-ai/filesystem": "workspace:*",
@@ -84,7 +85,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.23",
+      "version": "0.2.24",
       "devDependencies": {
         "@inquirer/prompts": "^8.2.0",
         "@tokenring-ai/agent": "workspace:*",
@@ -99,6 +100,7 @@
         "@tokenring-ai/cli": "workspace:*",
         "@tokenring-ai/cloudquote": "workspace:*",
         "@tokenring-ai/drizzle-storage": "workspace:*",
+        "@tokenring-ai/escalation": "workspace:*",
         "@tokenring-ai/feedback": "workspace:*",
         "@tokenring-ai/filesystem": "workspace:*",
         "@tokenring-ai/ghost-io": "workspace:*",
@@ -119,6 +121,7 @@
         "@tokenring-ai/scripting": "workspace:*",
         "@tokenring-ai/serper": "workspace:*",
         "@tokenring-ai/tasks": "workspace:*",
+        "@tokenring-ai/telegram": "workspace:*",
         "@tokenring-ai/template": "workspace:*",
         "@tokenring-ai/terminal": "workspace:*",
         "@tokenring-ai/thinking": "workspace:*",
@@ -459,6 +462,7 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/cdn": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
+        "@tokenring-ai/escalation": "0.2.0",
         "@tokenring-ai/rpc": "0.2.0",
         "@tokenring-ai/scripting": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
@@ -720,6 +724,16 @@
         "testcontainers": "^11.11.0",
         "typescript": "^5.9.3",
         "vitest": "^4.0.18",
+      },
+    },
+    "pkg/escalation": {
+      "name": "@tokenring-ai/escalation",
+      "version": "0.2.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "0.2.0",
+        "@tokenring-ai/app": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
+        "zod": "^4.3.6",
       },
     },
     "pkg/feedback": {
@@ -1219,6 +1233,7 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
+        "@tokenring-ai/escalation": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "^4.3.6",
       },
@@ -1252,6 +1267,7 @@
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
+        "@tokenring-ai/escalation": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "node-telegram-bot-api": "^0.67.0",
         "zod": "^4.3.6",
@@ -2918,6 +2934,8 @@
     "@tokenring-ai/drizzle-storage": ["@tokenring-ai/drizzle-storage@workspace:pkg/drizzle-storage"],
 
     "@tokenring-ai/electron-frontend": ["@tokenring-ai/electron-frontend@workspace:frontend/electron"],
+
+    "@tokenring-ai/escalation": ["@tokenring-ai/escalation@workspace:pkg/escalation"],
 
     "@tokenring-ai/feedback": ["@tokenring-ai/feedback@workspace:pkg/feedback"],
 

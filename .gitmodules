@@ -278,3 +278,7 @@
 	path = pkg/posix-system
 	url = git@github.com:tokenring-ai/posix-system.git
 	branch = main
+[submodule "pkg/escalation"]
+	path = pkg/escalation
+	url = git@github.com:tokenring-ai/escalation.git
+	branch = main
