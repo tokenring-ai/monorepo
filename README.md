@@ -72,7 +72,7 @@ docker run -ti --rm -v ./your-content:/repo:rw ghcr.io/tokenring-ai/writer:lates
 
 ### TokenRing Coder
 
-An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
+An AI-powered coding assistant with a comprehensive 50+ package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
 
 **Key Features:**
 - Multiple AI providers (OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek)

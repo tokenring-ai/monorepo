@@ -6,12 +6,12 @@ This file maintains knowledge about documentation standards, patterns, and struc
 
 ### Root Level Documentation
 - **README.md**: Main project overview with applications (Coder/Writer), quick start, package ecosystem overview
-- **PACKAGES.md**: Comprehensive package index with 58+ packages organized by category
+- **PACKAGES.md**: Comprehensive package index with 50+ packages organized by category
 - **DEPENDENCIES.md**: Dependency graph and relationships
 - **AGENTS.md**: Agent definitions and capabilities
 
 ### Package-Level Documentation
-- **Individual README.md files**: Each of the 58+ packages has its own detailed README
+- **Individual README.md files**: Each of the 50+ packages has its own detailed README
 - **Consistent structure across all packages**:
   - Overview/Purpose
   - Installation
@@ -25,7 +25,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
 - **Examples**: When creating examples, use bun as the interpreter
 
 ### Application-Level Documentation
-- **app/coder/README.md**: Comprehensive developer assistant application (58-package ecosystem)
+- **app/coder/README.md**: Comprehensive developer assistant application (50-package ecosystem)
 - **app/writer/README.md**: Content creation and management application
 - **app/webterminal/README.md**: Lightweight coding terminal interface
 
@@ -35,12 +35,16 @@ This file maintains knowledge about documentation standards, patterns, and struc
   - Overview and Purpose
   - Key Features
   - Core Components
-  - API Reference
-  - Usage Examples
+  - Services: Documentation of TokenRingService implementations
+  - Provider Documentation: If applicable, document provider interfaces
+  - RPC Endpoints: If applicable, document RPC endpoints
+  - Chat Commands: Document slash-prefixed commands available in the interface
   - Configuration
   - Integration
+  - Usage Examples
   - Best Practices
   - Testing and Development
+  - Dependencies
   - Related Components
 
 ## 2. Documentation Categories and Patterns
@@ -67,6 +71,7 @@ Pattern: Focus on functionality and integration
 - **@tokenring-ai/scheduler**: Automated scheduling service with task management
 - **@tokenring-ai/image-generation**: AI-powered image generation with metadata management
 - **@tokenring-ai/audio**: Voice recording, playback, and speech processing
+- **@tokenring-ai/web-host**: Web server for serving resources and APIs
 
 **Documentation Pattern:**
 - Overview and purpose with key features
@@ -102,38 +107,33 @@ Pattern: Focus on functionality and integration
 - Key features list with bullet points
 - Integration points with other packages
 
-## Chat Commands
-- Available commands with usage examples
-- Section may be omitted if the package does not have a chatCommands.ts file or commands/ directory
-- Basic usage examples
+## Installation
+- Package installation command
+- Dependencies list
 
-## Plugin Configuration
-- Describe the configuration options and schemas for the plugin, which are defined as the config schema in the plugin.ts and schema.ts file
-- Configuration example
-- Setup requirements and options
+## Features
+- Bullet-point list of main capabilities
 
-## Agent Configuration
-- Add this section if any of the services have an attach (agent: Agent) method that merges in an agent config schema defined for each agent 
-- Describe the configuration options and schemas for the agent
-- Configuration example
-
-## Tools
-- Include this section if the package has a tools.ts file or a tools/ directory
-- List of available tools
-- Tool descriptions and functionality
-
-## Services
-- A section for each service that implements TokenRingService
-- Service interfaces and implementations
+## Core Components/API
+- Core classes, interfaces, and functions
 - Method signatures with parameters and return types
+- Configuration examples
 
-## Providers
-- Include this section if the packages has TypeScript definitions for providers that register with a KeyedRegistry in a TokenRingService
-- Provider interfaces and implementations
-- Method signatures with parameters and return types
+## Usage Examples
+- Multiple usage examples demonstrating different scenarios
+- Show both basic and advanced usage patterns
+
+## Configuration
+- Configuration options and schemas
+- Configuration example
+
+## Integration
+- Integration with other packages
+- Plugin registration
+- Service registration
 
 ## RPC Endpoints
-- Include this section if the package defines RPC endpoints. Endpoints will typically be registered in plugin.ts and reside in an rpc/ directory
+- Include this section if the package defines RPC endpoints
 - Markdown table with endpoints, with name, request params, response params
 
 ## State Management
@@ -146,34 +146,54 @@ Pattern: Focus on functionality and integration
 MIT License - see LICENSE file for details.
 ```
 
-## 2. Documentation Website Standards
+### 2. Documentation Website Standards
 Each package will maintain up-to-date user documentation on the documentation website, which will be placed in `docs/docs/plugins/<package-name>.md`
 
-### File Naming and Organization
+#### File Naming and Organization
 - **Package overview**: `docs/docs/plugins/<package-name>.md`
 - **Consistent naming**: Use hyphenated lowercase names (e.g., `token-ring-app.md`)
+- **CLI Plugin**: `cli.md` (not `cli-plugin.md` or `command-line-interface.md`)
 
-### Content Structure
+#### Content Structure
 Each documentation file should follow this structure:
 1. **Title and Overview**: Clear title and brief description
-2. **Usage Examples**: Practical code examples
-2. **Core Properties**: Key properties and their purposes
-3. **Key Features**: Bullet-point list of main capabilities
-4. **Core Methods/API**: Detailed breakdown of main methods and their usage
-5. **Usage Examples**: Practical code examples
-6. **Configuration**: Configuration options and schemas
-7. **Integration**: How the component integrates with other packages
-8. **Best Practices**: Recommendations for usage
-9. **Testing**: Testing setup and examples
-10. **Related Components**: Cross-references to related components
+2. **Key Features**: Bullet-point list of main capabilities
+3. **Core Components**: Detailed breakdown of main classes, interfaces, and functions
+4. **Services**: Documentation of TokenRingService implementations
+5. **Provider Documentation**: If applicable, document provider interfaces
+6. **RPC Endpoints**: If applicable, document RPC endpoints
+7. **Chat Commands**: Document slash-prefixed commands available in the interface
+8. **Configuration**: Configuration options and schemas
+9. **Integration**: How the component integrates with other packages
+10. **Usage Examples**: Practical code examples
+11. **Best Practices**: Recommendations for usage
+12. **Testing**: Testing setup and examples
+13. **Dependencies**: Package dependencies and version requirements
+14. **Related Components**: Cross-references to related components
 
-### Code Examples
+#### Code Examples
 - Use TypeScript syntax with proper imports
 - Include error handling in examples
 - Show both basic and advanced usage patterns
 - Include event handling examples
 - Show configuration examples
 - Demonstrate integration with other packages
+- For CLI packages, show both plugin and manual usage patterns
+- For provider-based packages, show both registration patterns
+- For provider extension packages, document both direct instantiation and plugin registration patterns
+- For web-host packages, document both HTTP and WebSocket RPC clients
+- For terminal packages, show session lifecycle and output collection examples
+- For POSIX packages, document sandboxing modes and isolation levels
+- For escalation packages, document communication channel patterns with async generators
+- For chat packages, document context handlers and their usage patterns
+
+#### Provider Documentation
+For packages with provider architecture:
+- Document provider interface definitions
+- Show provider configuration schemas
+- Include examples for both plugin-based and programmatic registration
+- Document provider-specific options and capabilities
+- Explain the KeyedRegistry pattern for provider management
 
 ### API Documentation
 - Include method signatures with parameters and return types
@@ -183,37 +203,38 @@ Each documentation file should follow this structure:
 - Document event types and their usage
 - Include configuration schema documentation
 
-### Integration Documentation
+#### Integration Documentation
 - Show how the component integrates with the agent system
 - Document service registration patterns
 - Show command and tool registration examples
 - Include event handling integration
 - Document human interface request patterns
 - Show state management integration
+- Document plugin installation and configuration
 
-### Testing and Development
+#### Testing and Development
 - Include testing setup and examples
 - Show build and development instructions
 - Document package structure
 - Include dependencies and version information
 - Provide license and copyright information
 
-## 3. Documentation Maintenance
+### 3. Documentation Maintenance
 
-### Update Process
+#### Update Process
 1. **Analyze current functionality**: Review plugin source code and implementation
 2. **Compare with existing documentation**: Identify discrepancies and missing information
 3. **Update README**: Modify or create README if needed to match current functionality
 4. **Update website**: Update website documentation to match current functionality
 
-### Documentation Standards Enforcement
+#### Documentation Standards Enforcement
 - **Consistency**: Ensure consistent terminology and formatting across all documentation
 - **Accuracy**: Verify that all examples and code snippets are current and functional
 - **Completeness**: Ensure all features and APIs are documented
 - **Maintainability**: Use modular documentation structure that's easy to update
 - **Accessibility**: Ensure documentation is clear and understandable to both technical and non-technical audiences
 
-### Documentation Tools
+#### Documentation Tools
 - **File System**: Use the filesystem tools to search for and update documentation files
 - **Code Analysis**: Review source code to understand current functionality
 - **Structure Verification**: Verify that documentation follows the established patterns

@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/monorepo",
   "description": "TokenRing Monorepo with all community apps and packages",
-  "version": "0.2.25",
+  "version": "0.2.26",
   "devDependencies": {
     "@tokenring-ai/chat-frontend": "workspace:*",
     "@tokenring-ai/coder": "workspace:*",
@@ -10,8 +10,8 @@
     "@tokenring-ai/agent": "0.2.0",
     "@tokenring-ai/chat": "0.2.0",
     "@tokenring-ai/scheduler": "0.2.0",
-    "@types/bun": "^1.3.8",
-    "bun-types": "^1.3.8",
+    "@types/bun": "^1.3.9",
+    "bun-types": "^1.3.9",
     "husky": "^9.1.7",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
