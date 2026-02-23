@@ -30,7 +30,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
 - **app/webterminal/README.md**: Lightweight coding terminal interface
 
 ### Plugin Documentation
-- **Website Documentation**: `docs/docs/plugins/<plugin-name>.md`
+- **Website Documentation**: `docs/docs/plugins/<package-name>.md`
 - **Consistent structure across all plugins**:
   - Overview and Purpose
   - Key Features

@@ -55,7 +55,7 @@ The style guide includes:
 - Command autocomplete with slash commands
 - Toast notification system for user feedback
 - Connection status indicator
-- Mobile-responsive design
+- Mobile-responsive design with hamburger menu for mobile sidebar
 
 **Message Types:**
 - `agent.created` - Green, indicating agent lifecycle events
@@ -244,7 +244,25 @@ try {
 - ARIA labels and roles
 - Active state indicators for current agent
 - Agent status (idle/busy) with animated spinners
-- Mobile menu toggle with keyboard support
+- Mobile menu toggle with hamburger button in TopBar
+- Mobile overlay backdrop for better UX
+- Smooth transitions for mobile sidebar
+
+**Mobile Implementation:**
+```tsx
+// Mobile sidebar uses fixed positioning
+className="fixed inset-y-0 left-0 z-40 flex flex-col border-r border-primary bg-sidebar transition-all duration-300 ease-in-out
+  ${isMobileOpen ? 'translate-x-0' : '-translate-x-full'}
+  ${isSidebarExpanded ? 'w-72' : 'w-12'}
+  md:relative md:translate-x-0 md:inset-auto md:w-auto
+"
+```
+
+**Mobile Menu Toggle:**
+- Hamburger menu button in TopBar (`md:hidden`)
+- Shows/hides sidebar with slide-in/out animation
+- Backdrop overlay for mobile with click-to-close
+- Proper focus management and ARIA labels
 
 **Loading States:**
 ```tsx
