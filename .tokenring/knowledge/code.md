@@ -9,14 +9,15 @@ The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+
 1. [Monorepo Structure](#monorepo-structure)
 2. [Core Architecture Patterns](#core-architecture-patterns)
 3. [Agent System](#agent-system)
-4. [Package Categories](#package-categories)
-5. [Development Workflows](#development-workflows)
-6. [Testing Framework](#testing-framework)
-7. [Integration Patterns](#integration-patterns)
-8. [Context Management](#context-management)
-9. [State Management](#state-management)
-10. [Frontend Applications](#frontend-applications)
-11. [Development Guidelines](#development-guidelines)
+4. [Agent Command Registration](#agent-command-registration)
+5. [Package Categories](#package-categories)
+6. [Development Workflows](#development-workflows)
+7. [Testing Framework](#testing-framework)
+8. [Integration Patterns](#integration-patterns)
+9. [Context Management](#context-management)
+10. [State Management](#state-management)
+11. [Frontend Applications](#frontend-applications)
+12. [Development Guidelines](#development-guidelines)
 
 ## Monorepo Structure
 
@@ -152,14 +153,21 @@ agent.events(signal).forEach(event => {
 const agentConfig: AgentConfig = {
   name: "specialistAgent",
   description: "Specialized development agent",
-  visual: { color: "blue" },
-  ai: {
-    systemPrompt: "You are a specialist...",
-    temperature: 0.7,
-    maxTokens: 4000
-  },
-  type: "interactive",
-  persistent: true
+  category: "development",
+  debug: false,
+  headless: false,
+  callable: true,
+  idleTimeout: 0,
+  maxRunTime: 0,
+  minimumRunning: 0,
+  subAgent: {},
+  enabledHooks: [],
+  todos: {},
+  command: {  // Optional: Register agent as a callable command
+    enabled: true,
+    name: "specialist",  // Custom command name (defaults to agentType)
+    description: "Run the specialist agent",
+  }
 };
 ```
 

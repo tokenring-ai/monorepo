@@ -1,11 +1,9 @@
-import {configSchema} from "@tokenring-ai/writer/src/plugins";
 import path from "path";
-import {z} from "zod";
 import scheduleTester from "./agents/schedule-tester.js";
 
 export default {
   agents: {
-    scheduleTester
+    user: [scheduleTester]
   },
   scheduler: {},
   websearch: {
@@ -99,4 +97,4 @@ scheduler: {
    region: process.env.AWS_REGION,
   }
  },*/
-} satisfies Partial<z.input<typeof configSchema>>;
+};

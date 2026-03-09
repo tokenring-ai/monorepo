@@ -13,14 +13,14 @@ This file maintains knowledge about documentation standards, patterns, and struc
 ### Package-Level Documentation
 - **Individual README.md files**: Each of the 50+ packages has its own detailed README
 - **Consistent structure across all packages**:
-  - Overview/Purpose
-  - Installation
-  - Features
-  - Core Components/API
-  - Usage Examples
-  - Configuration
-  - Dependencies
-  - License
+ - Overview/Purpose
+ - Installation
+ - Features
+ - Core Components/API
+ - Usage Examples
+ - Configuration
+ - Dependencies
+ - License
 - **Testing**: Packages use vitest for unit testing
 - **Examples**: When creating examples, use bun as the interpreter
 
@@ -32,20 +32,20 @@ This file maintains knowledge about documentation standards, patterns, and struc
 ### Plugin Documentation
 - **Website Documentation**: `docs/docs/plugins/<package-name>.md`
 - **Consistent structure across all plugins**:
-  - Overview and Purpose
-  - Key Features
-  - Core Components
-  - Services: Documentation of TokenRingService implementations
-  - Provider Documentation: If applicable, document provider interfaces
-  - RPC Endpoints: If applicable, document RPC endpoints
-  - Chat Commands: Document slash-prefixed commands available in the interface
-  - Configuration
-  - Integration
-  - Usage Examples
-  - Best Practices
-  - Testing and Development
-  - Dependencies
-  - Related Components
+ - Overview and Purpose
+ - Key Features
+ - Core Components
+ - Services: Documentation of TokenRingService implementations
+ - Provider Documentation: If applicable, document provider interfaces
+ - RPC Endpoints: If applicable, document RPC endpoints
+ - Chat Commands: Document slash-prefixed commands available in the interface
+ - Configuration
+ - Integration
+ - Usage Examples
+ - Best Practices
+ - Testing and Development
+ - Dependencies
+ - Related Components
 
 ## 2. Documentation Categories and Patterns
 

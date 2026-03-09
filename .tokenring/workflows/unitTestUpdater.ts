@@ -1,7 +1,7 @@
 export default {
  name: "All-Package Unit Test Updater",
  description: "This agent automatically updates unit tests for each package in the TokenRing monorepo using the testEngineer agent.",
- agentType: "teamLeader",
+ agentType: "leader",
  steps: [`
     Retrieve the list of packages in the pkg/ directory, by asking for all files with the name pkg/*/README.md.
     Create a task plan with one task per package found in pkg/*. 

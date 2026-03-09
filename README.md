@@ -26,7 +26,7 @@ TokenRing AI is a modular TypeScript monorepo hosting two flagship applicationsâ
 
 ```bash
 # Clone the repository
-git clone https://github.com/tokenring-ai/tokenring.git
+git clone https://github.com/tokenring-ai/monorepo.git
 cd tokenring
 
 # Initialize submodules
@@ -42,7 +42,7 @@ bun install
 
 ```bash
 # Run with npx (no installation)
-npx @tokenring-ai/coder --source ./your-project --initialize
+npx @tokenring-ai/coder
 
 # Run locally
 bun run coder
@@ -56,7 +56,7 @@ docker run -ti --rm -v ./your-project:/repo:rw ghcr.io/tokenring-ai/tokenring-co
 
 ```bash
 # Run with npx (no installation)
-npx @tokenring-ai/writer --source ./your-content --initialize
+npx @tokenring-ai/writer
 
 # Run locally
 bun run writer

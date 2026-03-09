@@ -451,7 +451,7 @@ The TokenRing project appears to be a large-scale AI agent ecosystem with the fo
 - **@tokenring-ai/cli** (0.1.0): Command-line interface utilities
 
 #### 7. Data & Storage (3 packages)
-- **@tokenring-ai/browser-agent-storage** (0.1.0): Browser-based agent storage with IndexedDB
+- **@tokenring-ai/browser-storage** (0.1.0): Browser-based agent storage with IndexedDB
 - **@tokenring-ai/browser-file-system** (0.1.0): Browser-based file system operations
 - **@tokenring-ai/local-filesystem** (0.1.0): Local file system operations
 

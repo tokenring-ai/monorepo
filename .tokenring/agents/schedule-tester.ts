@@ -3,14 +3,17 @@ import type {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import type {SchedulerAgentConfig} from "@tokenring-ai/scheduler/schema";
 
 export default {
-  name: "Scheduling agent",
+  agentType: "schedule-tester",
+  displayName: "Scheduling agent",
   description: "This agent is designed to test the scheduler",
   category: "Testing",
   minimumRunning: 1,
   chat: {
-    autoCompact: true,
+    compaction: {
+      policy: "automatic",
+    },
     systemPrompt: "",
-    enabledTools: ["@tokenring-ai/research/research", "@tokenring-ai/agent/runAgent", "@tokenring-ai/websearch/searchNews"]
+    enabledTools: []
   },
   scheduler: {
     autoStart: true,

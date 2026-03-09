@@ -1,8 +1,5 @@
-/* eslint-disable turbo/no-undeclared-env-vars */
-import {configSchema} from "@tokenring-ai/coder/src/plugins";
 import fs from "fs";
 import path from "path";
-import {z} from "zod";
 import {workflows} from "./workflows";
 
 const rootDir = path.resolve(import.meta.dirname, "../");
@@ -213,4 +210,4 @@ export default {
       },
     },
   },
-} satisfies Partial<z.input<typeof configSchema>>;
+};

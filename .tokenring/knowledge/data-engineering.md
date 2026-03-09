@@ -281,7 +281,7 @@ class CodeBaseService implements TokenRingService {
 
 ### Storage Implementations
 
-#### Browser Agent Storage (@tokenring-ai/browser-agent-storage)
+#### Browser Agent Storage (@tokenring-ai/browser-storage)
 - **Client-Side Storage**: Uses localStorage for persistent agent state storage
 - **Browser-Specific**: Designed for web applications requiring local persistence
 - **Namespace Isolation**: Supports multiple agents with proper separation

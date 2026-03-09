@@ -51,6 +51,7 @@ The style guide includes:
 - Tool selector with category-based organization
 - Dark/light theme toggle with persistent preference
 - File browser with preview and editing capabilities
+- **File attachments for chat messages** (local file upload)
 - Command history navigation with arrow keys
 - Command autocomplete with slash commands
 - Toast notification system for user feedback
@@ -66,7 +67,7 @@ The style guide includes:
 - `output.artifact` - Various colors by MIME type (code, markdown, JSON, HTML, images)
 - `output.chat` - Default text for chat messages
 - `output.reasoning` - Italic, amber icon for agent reasoning
-- `input.received` - Indigo/dark indigo for user input
+- `input.received` - Indigo/dark indigo for user input (may include attachments)
 - `input.handled` - Emerald for successful command handling
 - `question.request` - Cyan for agent questions requiring input
 - `question.response` - Cyan background for agent question responses
@@ -87,8 +88,9 @@ frontend/chat/src/
 │   ├── chat/
 │   │   ├── MessageList.tsx  # Virtualized message list
 │   │   ├── MessageComponent.tsx # Individual message rendering
+│   │   ├── AttachmentChip.tsx # Reusable attachment display component
 │   │   ├── ChatHeader.tsx   # Header with model/tool selectors
-│   │   ├── ChatFooter.tsx   # Input area with commands and suggestions
+│   │   ├── ChatFooter.tsx   # Input area with file attachments and history
 │   │   └── AutoScrollContainer.tsx # Scroll management
 │   ├── editor/
 │   │   ├── CodeEditor.tsx   # Monaco editor wrapper
@@ -387,16 +389,33 @@ className="fixed inset-y-0 left-0 z-40 flex flex-col border-r border-primary bg-
 />
 ```
 
-### ChatFooter Component (Command History Navigation)
+### ChatFooter Component
 
 **Location:** `frontend/chat/src/components/chat/ChatFooter.tsx`
 
 **Features:**
+- **File attachments** - Upload local files to attach to messages
+- **Remote file browser** - Browse remote files via FolderOpen icon
 - Command suggestion autocomplete with arrow keys
 - Command history navigation with up/down arrow keys
 - Persistent input state across navigation
 - Context-aware keyboard shortcuts
 - Keyboard navigation support for all interactive elements
+
+**File Attachments:**
+- Paperclip icon (📎) - Opens file picker for local file upload
+- FolderOpen icon (📁) - Opens remote file browser
+- Files are encoded as base64 before sending
+- Maximum file size: 5MB per file
+- Multiple files can be attached at once
+- Files display as preview chips above input area
+- Remove attachments with X button
+
+**Attachment Preview:**
+- Shows file name with type-specific icon
+- Icons: Image for images, FileText for text, FileCode for code, File for others
+- Smooth enter/exit animations
+- File count displayed in status area
 
 **Command History Navigation:**
 - `ArrowUp` - Navigate to previous command in history
@@ -404,48 +423,11 @@ className="fixed inset-y-0 left-0 z-40 flex flex-col border-r border-primary bg-
 - When reaching the beginning/end of history, returns to original input
 - Input state is preserved during history navigation
 
-**Implementation Pattern:**
-```tsx
-const [historyIndex, setHistoryIndex] = useState<number | null>(null);
-const [historyBuffer, setHistoryBuffer] = useState('');
-
-const handleKeyDown = (e: React.KeyboardEvent) => {
-  if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    if (commandHistory.length > 0) {
-      if (historyIndex === null) {
-        // Start navigating history, save current input
-        setHistoryBuffer(input);
-        setHistoryIndex(commandHistory.length - 1);
-      } else if (historyIndex > 0) {
-        setHistoryIndex(prev => prev - 1);
-      }
-      if (historyIndex !== null && commandHistory[historyIndex]) {
-        setInput(commandHistory[historyIndex]);
-      }
-    }
-    return;
-  }
-
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    if (historyIndex !== null) {
-      if (historyIndex < commandHistory.length - 1) {
-        setHistoryIndex(prev => prev + 1);
-        if (commandHistory[historyIndex + 1]) {
-          setInput(commandHistory[historyIndex + 1]);
-        }
-      } else {
-        // Go back to the original input before history navigation
-        setInput(historyBuffer);
-        setHistoryIndex(null);
-        setHistoryBuffer('');
-      }
-    }
-    return;
-  }
-};
-```
+**Keyboard Shortcuts:**
+- `Enter` - Send message (with attachments if any)
+- `Shift+Enter` - New line
+- `Tab` - Accept command suggestion
+- `ArrowUp/Down` - Navigate history or suggestions
 
 **Usage:**
 ```tsx
@@ -454,9 +436,156 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
   input={input}
   setInput={setInput}
   commandHistory={commandHistory.data || []}
-  onSubmit={handleSubmit}
+  onSubmit={handleSubmit}  // Now receives optional attachments parameter
   // ...other props
 />
+```
+
+**Submit Handler Pattern:**
+```tsx
+const handleSubmit = async (attachments?: InputAttachment[]) => {
+  await agentRPCClient.sendInput({ 
+    agentId, 
+    message: input,
+    attachments,  // Optional array of attachments
+  });
+};
+```
+
+---
+
+## File Attachment Schema
+
+**Location:** `pkg/agent/AgentEvents.ts`
+
+### InputAttachment
+
+```typescript
+interface InputAttachment {
+  name: string;           // File name
+  encoding: "text" | "base64" | "href";
+  mimeType: string;       // MIME type (e.g., "image/png", "text/plain")
+  body: string;           // File content (base64 encoded or text)
+  timestamp: number;      // Unix timestamp
+}
+```
+
+### Encoding Types:
+- `text` - Plain text content
+- `base64` - Base64 encoded binary data (used for file uploads)
+- `href` - Reference to external resource
+
+### Sending Attachments:
+
+```typescript
+import type { InputAttachment } from '@tokenring-ai/agent/AgentEvents.ts';
+
+// Create attachment from file
+const readFileAsAttachment = async (file: File): Promise<InputAttachment> => {
+  const arrayBuffer = await file.arrayBuffer();
+  const bytes = new Uint8Array(arrayBuffer);
+  let binary = '';
+  for (let i = 0; i < bytes.byteLength; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  }
+  return {
+    name: file.name,
+    encoding: 'base64',
+    mimeType: file.type || 'application/octet-stream',
+    body: btoa(binary),
+    timestamp: Date.now(),
+  };
+};
+
+// Send with message
+await agentRPCClient.sendInput({
+  agentId,
+  message: "Please analyze this file",
+  attachments: [attachment],
+});
+```
+
+---
+
+## AttachmentChip Component
+
+**Location:** `frontend/chat/src/components/chat/AttachmentChip.tsx`
+
+**Purpose:** Reusable component for displaying file attachments in chat messages and input areas.
+
+**Features:**
+- MIME type detection for appropriate icon display
+- Download functionality with proper Blob handling
+- Content preview for text-based attachments
+- Responsive layout with truncation for long filenames
+- Hover states showing MIME type information
+- Optional remove functionality (for input area usage)
+- Accessibility with ARIA labels
+- Theme-aware styling
+
+**Props:**
+```tsx
+interface AttachmentChipProps {
+  attachment: InputAttachment;
+  onRemove?: () => void;      // Optional callback for removal
+  showRemove?: boolean;        // Whether to show remove button
+}
+```
+
+**Usage in MessageComponent:**
+```tsx
+import AttachmentChip from './AttachmentChip';
+
+// Display attachments below message content
+{hasAttachments && (
+  <div className="not-prose mt-4 mb-2">
+    <div className="flex flex-wrap gap-2">
+      {msg.attachments!.map((attachment, index) => (
+        <AttachmentChip 
+          key={`${attachment.name}-${attachment.timestamp}-${index}`} 
+          attachment={attachment} 
+        />
+      ))}
+    </div>
+  </div>
+)}
+```
+
+**Usage in ChatFooter (with remove functionality):**
+```tsx
+<AttachmentChip 
+  attachment={attachment}
+  onRemove={() => removeAttachment(index)}
+  showRemove={true}
+/>
+```
+
+**Icon Mapping:**
+- Images (`image/*`) - ImageIcon
+- JSON - FileJson
+- Text/Markdown - FileText
+- Code/Scripts - FileCode
+- Others - File
+
+**Download Implementation:**
+```tsx
+function downloadAttachment(attachment: InputAttachment) {
+  const decodedBody = attachment.encoding === 'base64' 
+    ? Buffer.from(attachment.body, 'base64') 
+    : attachment.body;
+  const blob = new Blob([decodedBody], { type: attachment.mimeType });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = attachment.name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  
+  // Clean up URL object
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+}
 ```
 
 ---
@@ -673,7 +802,7 @@ className="... hover:bg-zinc-900/30 transition-colors"
   aria-label="Command or message input"
   aria-describedby={hasSuggestions ? "command-suggestions" : undefined}
   aria-invalid={hasError}
-  aria-required={true}
+  aria-required="true"
 />
 ```
 
@@ -853,6 +982,7 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - Downloadable artifacts
 - Timestamp formatting
 - Smooth enter animations
+- **Attachment display** - Shows file attachments below message content for `input.received` messages
 
 **Message Footer Actions:**
 - Copy message to clipboard
@@ -864,6 +994,14 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - Type-specific rendering (code blocks, markdown, JSON preview, image, HTML iframe)
 - MIME type-specific icons
 - Summary information on collapsed view
+
+**Attachment Display:**
+- Attachments are displayed below the message content
+- Uses reusable `AttachmentChip` component
+- Shows file icon based on MIME type
+- Download button for each attachment
+- Flex-wrapped layout for multiple attachments
+- Hover state shows MIME type information
 
 ---
 
@@ -958,7 +1096,7 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - `/agent/deleteAgent` - Delete agent
 - `/agent/getAvailableCommands/{agentId}` - Available commands
 - `/agent/getCommandHistory/{agentId}` - Command history
-- `/agent/sendInput` - Send user input
+- `/agent/sendInput` - Send user input (supports attachments)
 - `/agent/abortAgent` - Abort agent operation
 - `/agent/resetAgent` - Reset agent state
 
@@ -1045,8 +1183,10 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 
 **Core Components:**
 - `frontend/chat/src/components/chat/MessageList.tsx` - Message list
+- `frontend/chat/src/components/chat/MessageComponent.tsx` - Message rendering with attachments
+- `frontend/chat/src/components/chat/AttachmentChip.tsx` - Reusable attachment display
 - `frontend/chat/src/components/chat/ChatHeader.tsx` - Header with selectors
-- `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area with history navigation
+- `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area with file attachments
 - `frontend/chat/src/components/ModelSelector.tsx` - Model selection
 - `frontend/chat/src/components/ToolSelector.tsx` - Tool selection
 - `frontend/chat/src/components/overlay/file-browser.tsx` - File browser
