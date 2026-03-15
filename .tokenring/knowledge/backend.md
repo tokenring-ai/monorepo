@@ -21,6 +21,7 @@ This file maintains knowledge about backend systems, business logic, and server-
   - @tokenring-ai/filesystem - Filesystem abstraction
   - @tokenring-ai/memory - Short-term memory management
   - @tokenring-ai/drizzle-storage - Multi-database ORM storage
+  - @tokenring-ai/web-host - Bun-based web server (replaced Fastify)
 
 ## Backend Architecture Patterns
 
@@ -127,7 +128,152 @@ class ModelRegistry {
 
 ## Core Backend Services
 
-### 1. Database Service Layer (@tokenring-ai/database)
+### 1. Web Host Service (@tokenring-ai/web-host) - Bun Server
+
+**Architecture Pattern**: Bun Native Web Server with Router Abstraction
+
+**Service Implementation**:
+```typescript
+class WebHostService implements TokenRingService {
+  readonly name = "WebHostService";
+  description = "Bun web host for serving resources and APIs";
+
+  private router = new Router();
+  private server: any;
+  
+  resources = new KeyedRegistry<WebResource>();
+  registerResource = this.resources.register;
+
+  async start(signal: AbortSignal) {
+    // Register authentication if configured
+    if (this.config.auth) {
+      registerAuth(this.router, this.config.auth);
+    }
+
+    // Register all resources
+    for (const resource of this.resources.getAllItemValues()) {
+      await resource.register(this.router);
+    }
+
+    // Build Bun.serve fetch handler
+    const fetchHandler = this.buildFetchHandler();
+    
+    // Build WebSocket handlers
+    const websocketHandlers = this.buildWebSocketHandlers();
+
+    // Start Bun server
+    this.server = Bun.serve({
+      port: this.config.port,
+      hostname: this.config.host,
+      fetch: fetchHandler,
+      websocket: websocketHandlers
+    });
+
+    this.app.serviceOutput(this, `Web Host listening at ${this.getURL()}`);
+  }
+
+  async stop() {
+    if (this.server) {
+      this.server.stop();
+      this.server = null;
+    }
+  }
+}
+```
+
+**Router Interface**:
+```typescript
+interface BunRouter {
+  get(path: string, handler: RouteHandler): void;
+  post(path: string, handler: RouteHandler): void;
+  put(path: string, handler: RouteHandler): void;
+  delete(path: string, handler: RouteHandler): void;
+  ws(path: string, handler: WebSocketHandler): void;
+  static(prefix: string, root: string, options?: StaticOptions): void;
+  fallback(handler: RouteHandler): void;
+}
+```
+
+**Resource Pattern**:
+```typescript
+interface WebResource {
+  register(router: BunRouter): Promise<void>;
+}
+
+class JsonRpcResource implements WebResource {
+  async register(router: BunRouter): Promise<void> {
+    router.post(this.jsonRpcEndpoint.path, async (request, response) => {
+      const body = await request.json();
+      // Handle JSON-RPC request
+      return response.json({jsonrpc: "2.0", id, result});
+    });
+  }
+}
+```
+
+**WebSocket Support**:
+```typescript
+router.ws(path, {
+  open(ws: BunWebSocket) {
+    // WebSocket opened
+  },
+  close(ws: BunWebSocket) {
+    // WebSocket closed
+  },
+  message(ws: BunWebSocket, message: string | Buffer) {
+    // Message received
+    ws.send(JSON.stringify({response: "data"}));
+  }
+});
+```
+
+**Authentication**:
+```typescript
+// Auth check function
+function checkAuth(request: BunRequest, config: ParsedAuthConfig): string | null {
+  const auth = request.headers.get("authorization");
+  
+  if (auth?.startsWith("Bearer ")) {
+    const token = auth.substring(7);
+    // Validate token
+  } else if (auth?.startsWith("Basic ")) {
+    const decoded = Buffer.from(auth.substring(6), "base64").toString();
+    // Validate credentials
+  }
+  
+  return username;
+}
+
+// Usage in fetch handler
+if (authConfig) {
+  const username = checkAuth(bunRequest, authConfig);
+  if (!username) {
+    return unauthorizedResponse(bunResponse);
+  }
+}
+```
+
+**Key Features**:
+- Native Bun.serve integration for optimal performance
+- Router abstraction for resource-based routing
+- WebSocket support via Bun's native WebSocket
+- Static file serving with Bun.file()
+- SPA routing support for single-page applications
+- JSON-RPC 2.0 protocol support
+- Basic and Bearer token authentication
+- Type-safe request/response handling
+- No external dependencies (removed Fastify, @fastify/websocket, @fastify/static, ws)
+
+**Migration from Fastify to Bun**:
+- Replaced `fastify` package with `Bun.serve`
+- Replaced `@fastify/websocket` with Bun's native WebSocket
+- Replaced `@fastify/static` with `Bun.file()` for static serving
+- Replaced `ws` package with Bun's WebSocket implementation
+- Converted FastifyInstance interface to BunRouter interface
+- Updated all resource implementations to use new router pattern
+- Simplified architecture with fewer dependencies
+
+### 2. Database Service Layer (@tokenring-ai/database)
 
 **Architecture Pattern**: Abstract Provider Pattern
 
@@ -184,7 +330,7 @@ const executeSql = new TokenRingTool({
 })
 ```
 
-### 2. MySQL Provider (@tokenring-ai/mysql)
+### 3. MySQL Provider (@tokenring-ai/mysql)
 
 **Architecture Pattern**: Concrete Implementation with Connection Pooling
 
@@ -232,7 +378,7 @@ class MySQLProvider extends DatabaseProvider {
 }
 ```
 
-### 3. Queue Management System (@tokenring-ai/queue)
+### 4. Queue Management System (@tokenring-ai/queue)
 
 **Architecture Pattern**: FIFO Queue with State Preservation
 
@@ -303,7 +449,7 @@ const queueCommand: TokenRingChatCommand = {
 }
 ```
 
-### 4. Checkpoint/Persistence System (@tokenring-ai/checkpoint)
+### 5. Checkpoint/Persistence System (@tokenring-ai/checkpoint)
 
 **Architecture Pattern**: Provider-Based State Persistence
 
@@ -360,7 +506,7 @@ const autoCheckpoint: HookConfig = {
 }
 ```
 
-### 5. Task Planning & Execution (@tokenring-ai/tasks)
+### 6. Task Planning & Execution (@tokenring-ai/tasks)
 
 **Architecture Pattern**: Multi-Agent Workflow Orchestration
 
@@ -434,7 +580,7 @@ interface Task {
 }
 ```
 
-### 6. Application Framework (@tokenring-ai/app)
+### 7. Application Framework (@tokenring-ai/app)
 
 **Architecture Pattern**: Base Application with Service Management
 
@@ -473,7 +619,7 @@ class TokenRingApp {
 }
 ```
 
-### 7. AI Client Integration (@tokenring-ai/ai-client)
+### 8. AI Client Integration (@tokenring-ai/ai-client)
 
 **Architecture Pattern**: Multi-Provider Abstraction with Intelligent Selection
 
@@ -520,7 +666,7 @@ interface ImageGenerationClient {
 }
 ```
 
-### 8. Chat Management (@tokenring-ai/chat)
+### 9. Chat Management (@tokenring-ai/chat)
 
 **Architecture Pattern**: Interface Management with Tool Integration
 
@@ -563,7 +709,7 @@ class ChatService implements TokenRingService {
 }
 ```
 
-### 9. Filesystem Abstraction (@tokenring-ai/filesystem)
+### 10. Filesystem Abstraction (@tokenring-ai/filesystem)
 
 **Architecture Pattern**: Provider Pattern with Virtual Filesystem
 
@@ -628,7 +774,7 @@ const fileModify = new TokenRingTool({
 })
 ```
 
-### 10. Memory Management (@tokenring-ai/memory)
+### 11. Memory Management (@tokenring-ai/memory)
 
 **Architecture Pattern**: Session-Based Short-Term Memory
 
@@ -685,7 +831,7 @@ class MemoryState implements StateSlice {
 }
 ```
 
-### 11. Drizzle ORM Storage (@tokenring-ai/drizzle-storage)
+### 12. Drizzle ORM Storage (@tokenring-ai/drizzle-storage)
 
 **Architecture Pattern**: Multi-Database ORM with Type Safety
 
@@ -1254,6 +1400,8 @@ async withRetry<T>(operation: () => Promise<T>, maxRetries: number = 3): Promise
 8. **Testing**: Unit tests for core functionality
 9. **Provider Abstraction**: Abstract interfaces with multiple implementations
 10. **Event-Driven Architecture**: Use events for loose coupling
+11. **Native Runtime Features**: Leverage Bun's built-in capabilities when possible (e.g., Bun.serve, Bun.file)
+12. **Dependency Minimization**: Reduce external dependencies by using runtime-native features
 
 ## Integration with AI Agents
 

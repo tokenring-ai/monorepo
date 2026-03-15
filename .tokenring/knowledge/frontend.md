@@ -320,16 +320,95 @@ className="fixed inset-y-0 left-0 z-40 flex flex-col border-r border-primary bg-
 
 **Features:**
 - Auto-scroll to bottom when new messages arrive
-- Persistent scroll position when user scrolls up
-- Manual scroll-to-bottom button
+- Persistent scroll position when user scrolls up (user preference respected)
+- Manual scroll-to-bottom button with animation
 - Resize observer for content changes
 - Mutation observer for DOM changes
+- **Automatic scroll on mount** - When navigating to an agent with existing messages, automatically scrolls to the bottom
+
+**Scroll Behavior:**
+- Tracks whether user is at bottom using `isAtBottomRef`
+- Only auto-scrolls when `isAtBottomRef.current` is `true`
+- Shows scroll-to-bottom button when user has scrolled up
+- Uses `behavior: 'instant'` for programmatic scrolls, `smooth` for user clicks
+- Initializes scroll position on component mount with `hasInitializedRef`
 
 **Usage:**
 ```tsx
 <AutoScrollContainer>
-  <MessageList messages={messages} agentId={agentId} busyWith={busyWith} />
+  <MessageList messages={messages} agentId={agentId} agentStatus={agentStatus} />
 </AutoScrollContainer>
+```
+
+**Implementation Pattern:**
+```tsx
+// Track initialization to avoid re-scrolling on every render
+const hasInitializedRef = useRef(false);
+
+// Auto-scroll on mount
+useEffect(() => {
+  if (!hasInitializedRef.current && scrollRef.current && contentRef.current) {
+    const timer = setTimeout(() => {
+      if (scrollRef.current && contentRef.current) {
+        const { scrollHeight } = scrollRef.current;
+        isAtBottomRef.current = true;
+        scrollRef.current.scrollTo({
+          top: scrollHeight,
+          behavior: 'instant'
+        });
+        hasInitializedRef.current = true;
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }
+}, []);
+```
+
+### MessageList Component
+
+**Location:** `frontend/chat/src/components/chat/MessageList.tsx`
+
+**Features:**
+- Virtualized message list using react-virtuoso
+- Header separator for session start
+- Busy indicator when agent is processing
+- Message type-specific rendering
+- **Auto-scroll on mount** - Scrolls to bottom when first rendered with messages
+- Smooth follow-output for new messages
+
+**Virtualized List Pattern:**
+```tsx
+const virtuosoRef = useRef<any>(null);
+const hasInitializedRef = useRef(false);
+
+// Scroll to bottom on initial mount
+useEffect(() => {
+  if (!hasInitializedRef.current && virtuosoRef.current && allItems.length > 1) {
+    const timer = setTimeout(() => {
+      if (virtuosoRef.current) {
+        virtuosoRef.current.scrollToIndex({
+          index: allItems.length - 1,
+          behavior: 'instant',
+          align: 'end'
+        });
+        hasInitializedRef.current = true;
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }
+}, [allItems.length]);
+
+return (
+  <Virtuoso
+    ref={virtuosoRef}
+    data={allItems}
+    followOutput="smooth"
+    initialTopMostItemIndex={allItems.length > 1 ? allItems.length - 1 : 0}
+    itemContent={(index, item) => {
+      // Render items
+    }}
+  />
+);
 ```
 
 ### ErrorBoundary Component
@@ -1166,6 +1245,7 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 8. **Support accessibility** - ARIA labels, keyboard navigation, focus rings
 9. **Responsive design** - Mobile-first approach with responsive breakpoints
 10. **Error boundaries** - Wrap components to catch rendering errors
+11. **Auto-scroll on mount** - When navigating to existing chat, automatically scroll to bottom for best UX
 
 ---
 
@@ -1182,11 +1262,12 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - `frontend/chat/src/pages/AgentSelection.tsx` - Agent dashboard
 
 **Core Components:**
-- `frontend/chat/src/components/chat/MessageList.tsx` - Message list
+- `frontend/chat/src/components/chat/MessageList.tsx` - Message list with virtualized scrolling
 - `frontend/chat/src/components/chat/MessageComponent.tsx` - Message rendering with attachments
 - `frontend/chat/src/components/chat/AttachmentChip.tsx` - Reusable attachment display
 - `frontend/chat/src/components/chat/ChatHeader.tsx` - Header with selectors
 - `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area with file attachments
+- `frontend/chat/src/components/chat/AutoScrollContainer.tsx` - Auto-scroll container with mount behavior
 - `frontend/chat/src/components/ModelSelector.tsx` - Model selection
 - `frontend/chat/src/components/ToolSelector.tsx` - Tool selection
 - `frontend/chat/src/components/overlay/file-browser.tsx` - File browser

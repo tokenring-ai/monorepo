@@ -25,17 +25,6 @@ export default {
    },*/
   }
  },
- filesystem: {
-   agentDefaults: {
-     provider: "local",
-   },
-  providers: {
-   local: {
-    type: "posix",
-    workingDirectory: path.resolve(import.meta.dirname,"../")
-   }
-  }
- },
 /*
 scheduler: {
   tasks: [

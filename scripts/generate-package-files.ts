@@ -12,7 +12,7 @@ const targetPatterns = ['pkg/*', 'app/*', 'frontend/*'];
 async function main(): Promise<void> {
   try {
     // Get the list of boilerplate files
-    const files = await glob("*", { cwd: sourceDir, absolute: false });
+    const files = await glob("*", { cwd: sourceDir, absolute: false, dot: true});
     
     console.log(`Found ${files.length} boilerplate files to sync.\n`);
 
@@ -59,11 +59,11 @@ async function main(): Promise<void> {
             }
 
 
-            // Add vitest to devDependencies
-            if (packageData.devDependencies.vitest != 'catalog:') {
+            /*
+            if (packageData.devDependencies.vitest == 'catalog:') {
               modified = true;
-              packageData.devDependencies.vitest = 'catalog:';
-            }
+              packageData.devDependencies.vitest = '^4.0.18';
+            }*/
 
             if (packageData.scripts.test != 'vitest run') {
               modified = true;
@@ -79,15 +79,33 @@ async function main(): Promise<void> {
               modified = true;
               packageData.scripts['test:coverage'] = 'vitest run --coverage';
             }
-
-            if (packageData.devDependencies.typescript != 'catalog:') {
+/*
+            if (packageData.devDependencies.typescript == 'catalog:') {
               modified = true;
-              packageData.devDependencies.typescript = 'catalog:';
+              packageData.devDependencies.typescript = '^5.9.3';
             }
+*/
 
-            if (packageData.scripts.build != 'tsc --noEmit') {
-              modified = true;
-              packageData.scripts.build = 'tsc --noEmit';
+            if (packageDir.includes('/pkg/')) {
+              if (packageData.scripts.build != 'tsc --noEmit') {
+                modified = true;
+                packageData.scripts.build = 'tsc --noEmit';
+              }
+
+              if (! packageData.exports) {
+                modified = true;
+                packageData.exports = {};
+              }
+
+              if (! packageData.exports["."]) {
+                modified = true;
+                packageData.exports["."] = "./index.ts";
+              }
+
+              if (! packageData.exports["./*"]) {
+                modified = true;
+                packageData.exports["./*"] = "./*.ts";
+              }
             }
 
             if (! packageData.license) {
@@ -98,21 +116,6 @@ async function main(): Promise<void> {
             if (! packageData.type) {
               modified = true;
               packageData.type = 'module';
-            }
-
-            if (! packageData.exports) {
-              modified = true;
-              packageData.exports = {};
-            }
-
-            if (! packageData.exports["."]) {
-              modified = true;
-              packageData.exports["."] = "./index.ts";
-            }
-
-            if (! packageData.exports["./*"]) {
-              modified = true;
-              packageData.exports["./*"] = "./*.ts";
             }
 
             if (modified) {

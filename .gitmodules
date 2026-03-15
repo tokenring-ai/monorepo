@@ -306,11 +306,15 @@
 	path = pkg/skills
 	url = git@github.com:tokenring-ai/skills.git
 	branch = main
-[submodule "pkg/agent-metrics"]
+[submodule "pkg/metrics"]
 	path = pkg/metrics
-	url = git@github.com:tokenring-ai/agent-metrics.git
+	url = git@github.com:tokenring-ai/metrics.git
 	branch = main
 [submodule "pkg/lifecycle"]
 	path = pkg/lifecycle
 	url = git@github.com:tokenring-ai/lifecycle.git
+	branch = main
+[submodule "pkg/acp"]
+	path = pkg/acp
+	url = git@github.com:tokenring-ai/acp.git
 	branch = main
