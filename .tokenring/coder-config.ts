@@ -163,13 +163,9 @@ export default {
     }
   },*/
   filesystem: {
-    agentDefaults: {
-      provider: "local",
-    },
     providers: {
       local: {
         type: "posix",
-        workingDirectory: path.resolve(import.meta.dirname, "../"),
         indexedFiles: [
           {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
           {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},

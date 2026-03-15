@@ -186,6 +186,7 @@ Each documentation file should follow this structure:
 - For POSIX packages, document sandboxing modes and isolation levels
 - For escalation packages, document communication channel patterns with async generators
 - For chat packages, document context handlers and their usage patterns
+- For template packages, document template chaining workflows and tool state management
 
 #### Provider Documentation
 For packages with provider architecture:
