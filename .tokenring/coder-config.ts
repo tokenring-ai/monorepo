@@ -71,7 +71,7 @@ for (const pkgRoot of packageRoots) {
 export default {
   workflows,
   chat: {
-    defaultModels: ['llamacpp:*', 'zai:glm-4.7'],
+    defaultModels: ['llamacpp:*', 'zai:glm-5'],
   },
   sandbox: {
     agentDefaults: {
@@ -194,13 +194,13 @@ export default {
         type: "shell",
         name: "Typescript Check",
         command: "npx tsc --noEmit",
-        workingDirectory: "./",
+        projectDirectory: "./",
       },
       vitest: {
         type: "shell",
         name: "Vitest Testing",
         command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok'",
-        workingDirectory: "./",
+        projectDirectory: "./",
         timeoutSeconds: 60,
         cropOutput: 20000,
       },

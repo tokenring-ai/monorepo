@@ -504,7 +504,7 @@ describe("Integration Flow Tests", () => {
     
     const result = await execute({
       command: "git status",
-      workingDirectory: "src",
+      projectDirectory: "src",
     }, registry);
     
     expect(result).toEqual(mockResult);

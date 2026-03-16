@@ -644,7 +644,7 @@ interface AWSCommand {
 // Example: AWS status command
 const awsStatusCommand: AWSCommand = {
   name: "aws status",
-  description: "/aws status - View current AWS authentication status",
+  description: "View current AWS authentication status",
   execute: async (remainder, agent) => {
     const awsService = agent.requireServiceByType(AWSService);
     try {
@@ -860,7 +860,7 @@ interface CodebaseCommand {
 // Example commands:
 const codebaseSelectCommand: CodebaseCommand = {
   name: "codebase select",
-  description: "/codebase select - Interactive resource selection",
+  description: "Interactive resource selection",
   execute: async (remainder, agent) => {
     const codebaseService = agent.requireServiceByType(CodeBaseService);
     const sortedResources = codebaseService.getAvailableResources().sort();
@@ -1330,7 +1330,7 @@ interface MemoryCommand {
 // Example: Memory list command
 const memoryListCommand: MemoryCommand = {
   name: "memory list",
-  description: "/memory list - Display all stored memory items",
+  description: "Display all stored memory items",
   help: `# /memory list\n\nDisplay all stored memory items.\n\n## Example\n\n/memory list`,
   execute: async (_remainder: string, agent: Agent): Promise<string> => {
     const memoryService = agent.requireServiceByType(ShortTermMemoryService);
@@ -1512,7 +1512,7 @@ interface QueueCommand {
 // Example commands:
 const queueAddCommand: QueueCommand = {
   name: "queue add",
-  description: "/queue add <prompt> - Add a prompt to the queue",
+  description: "Add a prompt to the queue",
   help: `# /queue add\n\nAdd a new prompt to the end of the queue.\n\n## Example\n\n/queue add 'Write a Python function to calculate Fibonacci numbers'`,
   execute: async (remainder: string, agent: Agent): Promise<string> => {
     const prompt = remainder.trim();
@@ -1525,7 +1525,7 @@ const queueAddCommand: QueueCommand = {
 
 const queueListCommand: QueueCommand = {
   name: "queue list",
-  description: "/queue list - Display all queued prompts",
+  description: "Display all queued prompts",
   help: `# /queue list\n\nDisplay all queued prompts with their indices.\n\n## Example\n\n/queue list`,
   execute: async (_remainder: string, agent: Agent): Promise<string> => {
     const workQueueService = agent.requireServiceByType(WorkQueueService);
@@ -1610,7 +1610,7 @@ interface TestingCommand {
 // Example commands:
 const testListCommand: TestingCommand = {
   name: "test list",
-  description: "/test list - List available tests",
+  description: "List available tests",
   help: `# /test list\n\nShow all available tests.\n\n## Example\n\n/test list`,
   execute: async (_remainder: string, agent: Agent): Promise<string> => {
     const available = Array.from(agent.requireServiceByType(TestingService).getAvailableResources());
@@ -1620,7 +1620,7 @@ const testListCommand: TestingCommand = {
 
 const testRunCommand: TestingCommand = {
   name: "test run",
-  description: "/test run - Run tests",
+  description: "Run tests",
   help: `# /test run [test_name]\n\nRun a specific test or all tests. If tests fail, the agent may offer to automatically repair the issues.\n\n## Example\n\n/test run\n/test run userAuth`,
   execute: async (remainder: string, agent: Agent): Promise<string> => {
     await agent.requireServiceByType(TestingService).runTests(remainder?.trim() || "*", agent);
@@ -3208,7 +3208,7 @@ interface TestingCommand {
 // /test list - List available tests
 const testListCommand: TestingCommand = {
   name: "test list",
-  description: "/test list - List available tests",
+  description: "List available tests",
   help: `# /test list\n\nShow all available tests.\n\n## Example\n\n/test list`,
   execute: async (_remainder: string, agent: Agent): Promise<string> => {
     const available = Array.from(agent.requireServiceByType(TestingService).getAvailableResources());
@@ -3219,7 +3219,7 @@ const testListCommand: TestingCommand = {
 // /test run - Run tests
 const testRunCommand: TestingCommand = {
   name: "test run",
-  description: "/test run - Run tests",
+  description: "Run tests",
   help: `# /test run [test_name]\n\nRun a specific test or all tests. If tests fail, the agent may offer to automatically repair the issues.\n\n## Example\n\n/test run\n/test run userAuth`,
   execute: async (remainder: string, agent: Agent): Promise<string> => {
     await agent.requireServiceByType(TestingService).runTests(remainder?.trim() || "*", agent);

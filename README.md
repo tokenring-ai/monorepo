@@ -36,34 +36,60 @@ git submodule update --init --recursive
 bun install
 ```
 
+### Environment Variables
+
+At least one AI provider key is required. Set whichever providers you want to use:
+
+```bash
+# AI Providers (at least one required)
+export OPENAI_API_KEY=sk-...
+export ANTHROPIC_API_KEY=sk-ant-...
+export GOOGLE_GENERATIVE_AI_API_KEY=AIza...
+export GROQ_API_KEY=gsk_...
+export CEREBRAS_API_KEY=...
+export DEEPSEEK_API_KEY=...
+export PERPLEXITY_API_KEY=...
+export XAI_API_KEY=...
+export OPENROUTER_API_KEY=...
+
+# Web Search (optional)
+export SERPER_API_KEY=...
+```
+
 ### Running Applications
 
 #### TokenRing Coder
 
 ```bash
-# Run with npx (no installation)
-npx @tokenring-ai/coder
+# Run with npx (published as 'next' tag)
+npx @tokenring-ai/coder@next
 
 # Run locally
 bun run coder
 
 # Run with Docker
-docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
-docker run -ti --rm -v ./your-project:/repo:rw ghcr.io/tokenring-ai/tokenring-coder:latest
+docker pull ghcr.io/tokenring-ai/coder:latest
+docker run -ti --rm \
+  -v ./your-project:/repo:rw \
+  -e OPENAI_API_KEY \
+  ghcr.io/tokenring-ai/coder:latest
 ```
 
 #### TokenRing Writer
 
 ```bash
-# Run with npx (no installation)
-npx @tokenring-ai/writer
+# Run with npx (published as 'next' tag)
+npx @tokenring-ai/writer@next
 
 # Run locally
 bun run writer
 
 # Run with Docker
 docker pull ghcr.io/tokenring-ai/writer:latest
-docker run -ti --rm -v ./your-content:/repo:rw ghcr.io/tokenring-ai/writer:latest
+docker run -ti --rm \
+  -v ./your-content:/repo:rw \
+  -e OPENAI_API_KEY \
+  ghcr.io/tokenring-ai/writer:latest
 ```
 
 ---
@@ -356,12 +382,11 @@ Both applications are available as Docker images:
 
 ```bash
 # TokenRing Coder
-docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
+docker pull ghcr.io/tokenring-ai/coder:latest
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  -e ANTHROPIC_API_KEY \
-  ghcr.io/tokenring-ai/tokenring-coder:latest
+  ghcr.io/tokenring-ai/coder:latest
 
 # TokenRing Writer
 docker pull ghcr.io/tokenring-ai/writer:latest
@@ -377,7 +402,7 @@ docker run -ti --rm \
 version: '3.8'
 services:
   tokenring-coder:
-    image: ghcr.io/tokenring-ai/tokenring-coder:latest
+    image: ghcr.io/tokenring-ai/coder:latest
     volumes:
       - ./project:/repo:rw
     environment:
@@ -385,6 +410,7 @@ services:
       - ANTHROPIC_API_KEY
     ports:
       - "3000:3000"
+    command: ["--http", "0.0.0.0:3000"]
 
   tokenring-writer:
     image: ghcr.io/tokenring-ai/writer:latest
