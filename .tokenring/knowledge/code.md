@@ -9,15 +9,16 @@ The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+
 1. [Monorepo Structure](#monorepo-structure)
 2. [Core Architecture Patterns](#core-architecture-patterns)
 3. [Agent System](#agent-system)
-4. [Agent Command Registration](#agent-command-registration)
-5. [Package Categories](#package-categories)
-6. [Development Workflows](#development-workflows)
-7. [Testing Framework](#testing-framework)
-8. [Integration Patterns](#integration-patterns)
-9. [Context Management](#context-management)
-10. [State Management](#state-management)
-11. [Frontend Applications](#frontend-applications)
-12. [Development Guidelines](#development-guidelines)
+4. [Custom Agents](#custom-agents)
+5. [Agent Command Registration](#agent-command-registration)
+6. [Package Categories](#package-categories)
+7. [Development Workflows](#development-workflows)
+8. [Testing Framework](#testing-framework)
+9. [Integration Patterns](#integration-patterns)
+10. [Context Management](#context-management)
+11. [State Management](#state-management)
+12. [Frontend Applications](#frontend-applications)
+13. [Development Guidelines](#development-guidelines)
 
 ## Monorepo Structure
 
@@ -35,6 +36,7 @@ tokenring/
 │   ├── codebase/         # Codebase context injection
 │   ├── queue/            # Task queuing with checkpoints
 │   ├── memory/           # Short-term memory storage
+│   ├── app/              # TokenRingApp framework (@tokenring-ai/app)
 │   └── [40+ more packages]
 ├── frontend/              # Frontend applications
 │   ├── chat/             # Web-based chat interface for agent interaction
@@ -42,7 +44,14 @@ tokenring/
 ├── design/               # Architecture design documents
 ├── deps/                 # External dependencies
 ├── docker/              # Docker configurations
-└── docs/                # Documentation
+├── docs/                # Documentation
+└── .tokenring/          # Configuration directory
+    ├── agents/          # Custom agent configurations
+    │   ├── index.ts     # Exports all custom agents
+    │   └── *.ts         # Individual agent configs
+    ├── knowledge/       # Knowledge base files
+    ├── workflows/       # Workflow definitions
+    └── skills/          # Skill definitions
 ```
 
 ### Package Structure Patterns
@@ -190,6 +199,128 @@ agent.handleInput({ message: "Your request" });
 // Human Interaction
 await agent.askHuman(request);
 agent.sendHumanResponse(sequence, response);
+```
+
+## Custom Agents
+
+### Overview
+
+TokenRing Coder supports custom agents defined in the `.tokenring/agents/` directory. These agents are loaded dynamically and made available alongside the built-in agents under the `agents.user` configuration key.
+
+### Directory Structure
+
+```
+.tokenring/agents/
+├── index.ts           # Exports all custom agents
+├── package-builder.ts # Package Builder agent
+└── [agent-name].ts   # Additional custom agents
+```
+
+### Creating Custom Agents
+
+1. **Create Agent Configuration File**
+
+```typescript
+// .tokenring/agents/my-agent.ts
+import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
+
+export default {
+  agentType: "my-agent",
+  displayName: "My Agent",
+  description: "Description of what this agent does",
+  category: "Development",
+  chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "task-plan"},
+        {type: "tool-context"},
+        {type: "current-message"},
+      ],
+    },
+    systemPrompt: "You are an expert in your domain...",
+    enabledTools: ["todo", "file_*", "terminal_*"],
+  },
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/some-file.md']
+  }
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;
+```
+
+2. **Export in Index File**
+
+```typescript
+// .tokenring/agents/index.ts
+import myAgent from "./my-agent.ts";
+import packageBuilderAgent from "./package-builder.ts";
+
+export default [
+  myAgent,
+  packageBuilderAgent,
+] as const;
+```
+
+3. **Automatic Loading**
+
+The `tr-coder.ts` application automatically loads custom agents from `.tokenring/agents/index.ts` and adds them to the configuration under `agents.user`.
+
+### Package Builder Agent
+
+The **Package Builder** agent (`package-builder`) is a specialized agent for creating TokenRing AI packages.
+
+**Capabilities:**
+- Creates complete package structures following TokenRing patterns
+- Implements `TokenRingService` interfaces
+- Registers tools and commands
+- Writes comprehensive tests
+- Generates documentation
+- Follows package development standards
+
+**Usage:**
+```
+Call this agent to build TokenRing AI packages. Provide package requirements, functionality goals, or existing package specs.
+```
+
+**Reference Files:**
+- `.tokenring/knowledge/package-development.md` - Package development guide
+- `pkg/template/` - Package template for reference
+
+### Built-in Agents
+
+Built-in agents are defined in `app/coder/src/agents/` and include:
+
+**Interactive Agents:**
+- `code` - Interactive coding assistant
+- `plan` - Planning and task management
+- `swarm` - Multi-agent coordination
+- `research` - Research and information gathering
+- `leader` - Team leader agent
+
+**Specialized Agents:**
+- **Development**: `backend-design`, `frontend-design`, `api-designer`, `database-design`, `full-stack-developer`
+- **Engineering**: `auth-design`, `business-logic-engineer`, `data-engineer`, `integration-engineer`
+- **Planning**: `system-architect`, `product-manager`, `product-design-engineer`
+- **Quality**: `code-quality-engineer`, `security-review`, `performance-engineer`, `devops-engineer`, `test-engineer`
+- **Design & Documentation**: `ui-ux-designer`, `documentation-engineer`, `accessibility-engineer`, `seo-engineer`
+
+## Agent Command Registration
+
+Agents can be registered as callable commands via the `command` configuration:
+
+```typescript
+const agentConfig: AgentConfig = {
+  agentType: "specialist",
+  // ... other config
+  command: {
+    enabled: true,
+    name: "specialist",  // Command name (defaults to agentType)
+    description: "Run the specialist agent",
+    background: false,
+    forwardChatOutput: true,
+  }
+};
 ```
 
 ## Package Categories
@@ -416,31 +547,112 @@ class UnifiedService implements TokenRingService {
 
 ### State Slices
 
+State slices are the core mechanism for managing persistent, serializable state in TokenRing applications. Both agents and the TokenRingApp use state slices.
+
 ```typescript
-class CustomState implements StateSlice {
-  name = 'CustomState';
+// Agent state slice
+class CustomState extends AgentStateSlice<typeof serializationSchema> {
   data: any[] = [];
   
-  reset(what: ResetWhat[]): void {
-    if (what.includes('chat')) {
-      this.data = [];
-    }
+  constructor(initialConfig: Config) {
+    super("CustomState", serializationSchema);
   }
   
-  serialize(): object {
+  serialize(): z.output<typeof serializationSchema> {
     return { data: this.data };
   }
   
-  deserialize(obj: any): void {
-    this.data = obj.data || [];
+  deserialize(data: z.output<typeof serializationSchema>): void {
+    this.data = data.data || [];
   }
 }
 
-// Usage in agent
-agent.initializeState(CustomState, {});
+// App state slice (pkg/app/state/)
+class AppLogsState extends AppStateSlice<typeof serializationSchema> {
+  logs: LogEntry[] = [];
+  
+  constructor() {
+    super("AppLogsState", serializationSchema);
+  }
+  
+  addLog(level: "info" | "error", message: string): void {
+    this.logs.push({ timestamp: Date.now(), level, message });
+  }
+}
+```
+
+### Usage Pattern
+
+```typescript
+// Initialize state
+agent.initializeState(CustomState, initialConfig);
+// or for app
+app.stateManager.initializeState(AppLogsState, {});
+
+// Mutate state
 agent.mutateState(CustomState, state => {
   state.data.push(newItem);
 });
+// or for app
+app.stateManager.mutateState(AppLogsState, state => {
+  state.addLog("info", "Message");
+});
+
+// Get state
+const state = agent.getState(CustomState);
+// or for app
+const logs = app.logs; // getter returns logs array
+
+// Serialize to checkpoint
+const checkpoint = agent.generateCheckpoint();
+// or for app
+const checkpoint = app.generateStateCheckpoint();
+
+// Restore from checkpoint
+agent.restoreState(checkpoint.state);
+// or for app
+app.restoreState(checkpoint.state);
+```
+
+### Key Differences: Agent vs App State
+
+| Feature | Agent State | App State |
+|---------|-------------|-----------|
+| Base Class | `AgentStateSlice` | `AppStateSlice` |
+| Manager | `agent.stateManager` | `app.stateManager` |
+| Use Case | Agent-specific data | Application-wide data |
+| Example | Chat history, todos | Logs, session info |
+
+## TokenRingApp Logging
+
+The `@tokenring-ai/app` package provides persistent logging through `AppLogsState`:
+
+```typescript
+const app = new TokenRingApp(config);
+
+// Log messages (service name is automatically prepended)
+app.serviceOutput(service, 'Info message');
+app.serviceError(service, 'Error message');
+
+// Access logs
+const logs = app.logs; // Array of LogEntry
+
+// Logs persist in checkpoints
+const checkpoint = app.generateStateCheckpoint();
+// checkpoint.AppLogsState.logs contains all entries
+
+// Restore logs
+app.restoreState(checkpoint.state);
+```
+
+### Log Entry Structure
+
+```typescript
+interface LogEntry {
+  timestamp: number;    // Unix timestamp in milliseconds
+  level: "info" | "error";
+  message: string;      // Formatted with [serviceName] prefix
+}
 ```
 
 ## Key Architectural Principles
