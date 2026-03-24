@@ -49,9 +49,11 @@ The style guide includes:
 - Agent management (selection, creation, deletion, switching)
 - Model selector with provider grouping and search
 - Tool selector with category-based organization
+- Hook selector for lifecycle event management
 - Dark/light theme toggle with persistent preference
 - File browser with preview and editing capabilities
 - **File attachments for chat messages** (local file upload)
+- **Question-response pairing** - Questions and their responses displayed together as coherent units
 - Command history navigation with arrow keys
 - Command autocomplete with slash commands
 - Toast notification system for user feedback
@@ -69,8 +71,8 @@ The style guide includes:
 - `output.reasoning` - Italic, amber icon for agent reasoning
 - `input.received` - Indigo/dark indigo for user input (may include attachments)
 - `input.handled` - Emerald for successful command handling
-- `question.request` - Cyan for agent questions requiring input
-- `question.response` - Cyan background for agent question responses
+- `input.interaction` - **Not shown directly** - Responses are paired with questions
+- `question` - **Paired with response** - Agent questions showing question + answer together
 - `reset` - Purple for system resets
 - `abort` - Red for aborted operations
 
@@ -86,8 +88,8 @@ frontend/chat/src/
 │   │   ├── dropdown-menu.tsx # Radix UI dropdown
 │   │   └── select.tsx       # Radix UI select
 │   ├── chat/
-│   │   ├── MessageList.tsx  # Virtualized message list
-│   │   ├── MessageComponent.tsx # Individual message rendering
+│   │   ├── MessageList.tsx  # Virtualized message list (pairs questions with responses)
+│   │   ├── MessageComponent.tsx # Individual message rendering with question-response display
 │   │   ├── AttachmentChip.tsx # Reusable attachment display component
 │   │   ├── ChatHeader.tsx   # Header with model/tool selectors
 │   │   ├── ChatFooter.tsx   # Input area with file attachments and history
@@ -99,16 +101,10 @@ frontend/chat/src/
 │   ├── SidebarContext.tsx   # Sidebar state management
 │   ├── ModelSelector.tsx    # AI model selector with provider groups
 │   ├── ToolSelector.tsx     # Tool selector with categories
+│   ├── HookSelector.tsx     # Lifecycle hook selector
 │   ├── FileBrowserOverlay.tsx # File browser with preview pane
 │   ├── ErrorBoundary.tsx    # Error boundary component
-│   ├── ChatInputContext.tsx # Input persistence across routes
-│   └── question/            # Interactive question components
-│       ├── InlineQuestion.tsx
-│       └── inputs/
-│           ├── text-inline.tsx
-│           ├── file-inline.tsx
-│           ├── tree-inline.tsx
-│           └── form-inline.tsx
+│   └── ChatInputContext.tsx # Input persistence across routes
 ├── pages/
 │   ├── AgentSelection.tsx   # Dashboard with agents, workflows, templates
 │   └── ChatPage.tsx         # Main chat interface
@@ -122,6 +118,8 @@ frontend/chat/src/
 └── lib/
     └── utils.ts             # Utility functions (cn, etc.)
 ```
+
+---
 
 ## UI Components
 
@@ -234,6 +232,32 @@ try {
 ```tsx
 <ToolSelector agentId={agentId} />
 ```
+
+### HookSelector Component
+
+**Location:** `frontend/chat/src/components/HookSelector.tsx`
+
+**Features:**
+- Dropdown-based lifecycle hook selection using Radix UI
+- Shows enabled/disabled status per hook
+- Search/filter functionality across hooks
+- Toggle all hooks button
+- Hook count badges (enabled/total)
+- Amber color coding for enabled hooks
+- Hook descriptions display
+- Keyboard accessible navigation
+
+**Usage:**
+```tsx
+<HookSelector agentId={agentId} />
+<HookSelector agentId={agentId} triggerVariant="icon" />
+```
+
+**Hook Management:**
+- Hooks are managed via the lifecycle RPC interface
+- Hooks execute on agent lifecycle events
+- Enabled hooks are highlighted with amber color
+- Description text shows hook purpose
 
 ### Sidebar Component
 
@@ -373,42 +397,60 @@ useEffect(() => {
 - Header separator for session start
 - Busy indicator when agent is processing
 - Message type-specific rendering
+- **Question-response pairing** - Questions are paired with their responses and displayed together
 - **Auto-scroll on mount** - Scrolls to bottom when first rendered with messages
 - Smooth follow-output for new messages
 
+**Question-Response Pairing Logic:**
+- Build a map of `interactionId` -> response
+- For each question in the message stream:
+  - If a response exists, create a `question-pair` item showing both
+  - If no response exists, skip the question (not shown until answered)
+- Standalone responses are not shown (they're already paired with questions)
+- Regular messages are shown as-is
+
 **Virtualized List Pattern:**
 ```tsx
-const virtuosoRef = useRef<any>(null);
-const hasInitializedRef = useRef(false);
+const displayItems = useMemo(() => {
+  const items = [{ type: 'header' }];
 
-// Scroll to bottom on initial mount
-useEffect(() => {
-  if (!hasInitializedRef.current && virtuosoRef.current && allItems.length > 1) {
-    const timer = setTimeout(() => {
-      if (virtuosoRef.current) {
-        virtuosoRef.current.scrollToIndex({
-          index: allItems.length - 1,
-          behavior: 'instant',
-          align: 'end'
-        });
-        hasInitializedRef.current = true;
-      }
-    }, 0);
-    return () => clearTimeout(timer);
+  // Build response map
+  const responseMap = new Map<string, InteractionResponseMessage>();
+  for (const msg of messages) {
+    if (msg.type === 'input.interaction') {
+      responseMap.set(msg.interactionId, msg);
+    }
   }
-}, [allItems.length]);
 
-return (
-  <Virtuoso
-    ref={virtuosoRef}
-    data={allItems}
-    followOutput="smooth"
-    initialTopMostItemIndex={allItems.length > 1 ? allItems.length - 1 : 0}
-    itemContent={(index, item) => {
-      // Render items
-    }}
-  />
-);
+  // Process messages
+  for (const msg of messages) {
+    if (isQuestionPromptMessage(msg)) {
+      const response = responseMap.get(msg.interactionId);
+      if (response) {
+        items.push({ 
+          type: 'question-pair', 
+          data: { question: msg, response } 
+        });
+      }
+      // Skip unanswered questions
+    } else if (msg.type === 'input.interaction') {
+      continue; // Skip standalone responses
+    } else {
+      items.push({ type: 'message', data: msg });
+    }
+  }
+
+  return items;
+}, [messages]);
+```
+
+**Props:**
+```tsx
+interface MessageListProps {
+  messages: ChatMessage[];
+  agentId: string;
+  agentStatus: RemoteAgentStatus;
+}
 ```
 
 ### ErrorBoundary Component
@@ -435,9 +477,20 @@ return (
 **Features:**
 - Expandable/collapsible question panels
 - Keyboard navigation (Enter/Space to toggle, Escape to close)
-- Auto-scroll into view when rendered
+- Optional auto-scroll into view when rendered
 - Focus management for first input
 - ARIA roles and attributes
+
+**Props:**
+```tsx
+interface InlineQuestionProps {
+  request: QuestionInteraction;
+  agentId: string;
+  requestId: string;
+  response?: InteractionResponseMessage;
+  autoScroll?: boolean;  // Defaults to true
+}
+```
 
 **Input Types:**
 - `text` - Single/multi-line text input
@@ -475,6 +528,7 @@ return (
 **Features:**
 - **File attachments** - Upload local files to attach to messages
 - **Remote file browser** - Browse remote files via FolderOpen icon
+- **Hook selector** - Manage lifecycle hooks
 - Command suggestion autocomplete with arrow keys
 - Command history navigation with up/down arrow keys
 - Persistent input state across navigation
@@ -680,6 +734,7 @@ function downloadAttachment(attachment: InputAttachment) {
 - `aiRPCClient` - AI model and tool management
 - `chatRPCClient` - Chat-specific operations
 - `filesystemRPCClient` - File system operations
+- `lifecycleRPCClient` - Lifecycle hook management
 - `workflowRPCClient` - Workflow management
 
 **SWR Hooks:**
@@ -695,6 +750,10 @@ useModel(agentId) - Current model (refresh: 15s)
 useChatModelsByProvider() - Models grouped by provider
 useAvailableTools() - Available tools
 useEnabledTools(agentId) - Enabled tools (refresh: 5s)
+
+// Lifecycle hook management
+useAvailableHooks() - Available hooks
+useEnabledHooks(agentId) - Enabled hooks (refresh: 5s)
 
 // File system
 useDirectoryListing(opts) - Directory contents (refresh: 5s)
@@ -713,7 +772,7 @@ useSelectedFiles(agentId) - Selected chat files
 **Features:**
 - Expandable/collapsible question panels
 - Keyboard navigation (Enter/Space to toggle, Escape to close)
-- Auto-scroll into view when rendered
+- Optional auto-scroll into view when rendered (controlled by `autoScroll` prop)
 - Focus management for first input
 - ARIA roles and attributes
 
@@ -735,12 +794,12 @@ useEffect(() => {
   }
 }, [autoFocus]);
 
-// Scroll into view
+// Scroll into view (only if autoScroll is true)
 useEffect(() => {
-  if (containerRef.current) {
+  if (autoScroll && containerRef.current) {
     containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
-}, []);
+}, [autoScroll]);
 ```
 
 ### Keyboard Navigation
@@ -789,10 +848,10 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
 - Secondary Text: `#a0a0b0` (Dimmed) / `#44403c` (Paper dim)
 - Accent Colors:
   - Indigo: `#6366f1` (Primary actions)
-  - Cyan: `#06b6d4` (Information)
+  - Cyan: `#06b6d4` (Information, questions)
   - Purple: `#a855f7` (Secondary actions)
-  - Amber: `#f59e0b` (Warnings/busy state)
-  - Emerald: `#10b981` (Success)
+  - Amber: `#f59e0b` (Warnings/busy state/hooks)
+  - Emerald: `#10b981` (Success, responses)
   - Red: `#ef4444` (Errors)
 - Borders: `#18181b` (Subtle definition) / `#e7e5e4` (Paper light)
 
@@ -1062,6 +1121,29 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - Timestamp formatting
 - Smooth enter animations
 - **Attachment display** - Shows file attachments below message content for `input.received` messages
+- **Question-response pairing** - Questions and responses displayed together as coherent units
+
+**Question-Response Display:**
+- Questions shown with cyan `?` icon and cyan-tinted background
+- Responses displayed below with emerald border separator
+- Response result shown in a styled code block
+- Clear visual hierarchy showing question followed by answer
+
+**Message Type Styling:**
+```tsx
+// Question with response styling
+className="bg-cyan-50/30 dark:bg-cyan-500/5 border-cyan-500/30"
+icon={<span className="text-cyan-500 font-bold">?</span>}
+
+// Question text
+className="text-cyan-800 dark:text-cyan-300 font-medium"
+
+// Response border
+className="border-l-2 border-emerald-300 dark:border-emerald-700/50"
+
+// Response result
+className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300"
+```
 
 **Message Footer Actions:**
 - Copy message to clipboard
@@ -1186,6 +1268,13 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - `/chat/enableTools` - Enable tools
 - `/chat/disableTools` - Disable tools
 
+**Lifecycle RPC:**
+- `/lifecycle/getAvailableHooks` - List available hooks
+- `/lifecycle/getEnabledHooks/{agentId}` - Get enabled hooks
+- `/lifecycle/enableHooks` - Enable hooks
+- `/lifecycle/disableHooks` - Disable hooks
+- `/lifecycle/setEnabledHooks` - Set enabled hooks
+
 **Filesystem RPC:**
 - `/filesystem/listDirectory/{path}` - List directory
 - `/filesystem/readTextFile/{path}` - Read file
@@ -1246,6 +1335,9 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 9. **Responsive design** - Mobile-first approach with responsive breakpoints
 10. **Error boundaries** - Wrap components to catch rendering errors
 11. **Auto-scroll on mount** - When navigating to existing chat, automatically scroll to bottom for best UX
+12. **Pair questions with responses** - Display questions and their answers together as coherent units
+13. **Hide unanswered questions** - Only show questions once they have been answered
+14. **Use semantic colors** - Cyan for questions, emerald for responses, indigo for user input
 
 ---
 
@@ -1262,14 +1354,15 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - `frontend/chat/src/pages/AgentSelection.tsx` - Agent dashboard
 
 **Core Components:**
-- `frontend/chat/src/components/chat/MessageList.tsx` - Message list with virtualized scrolling
-- `frontend/chat/src/components/chat/MessageComponent.tsx` - Message rendering with attachments
+- `frontend/chat/src/components/chat/MessageList.tsx` - Message list with question-response pairing
+- `frontend/chat/src/components/chat/MessageComponent.tsx` - Message rendering with question-response display
 - `frontend/chat/src/components/chat/AttachmentChip.tsx` - Reusable attachment display
 - `frontend/chat/src/components/chat/ChatHeader.tsx` - Header with selectors
 - `frontend/chat/src/components/chat/ChatFooter.tsx` - Input area with file attachments
 - `frontend/chat/src/components/chat/AutoScrollContainer.tsx` - Auto-scroll container with mount behavior
 - `frontend/chat/src/components/ModelSelector.tsx` - Model selection
 - `frontend/chat/src/components/ToolSelector.tsx` - Tool selection
+- `frontend/chat/src/components/HookSelector.tsx` - Lifecycle hook selection
 - `frontend/chat/src/components/overlay/file-browser.tsx` - File browser
 
 **Hooks:**

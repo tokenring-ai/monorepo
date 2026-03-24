@@ -20,7 +20,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.38",
+      "version": "0.2.39",
       "devDependencies": {
         "@tokenring-ai/acp": "workspace:*",
         "@tokenring-ai/agent": "workspace:*",
@@ -29,6 +29,7 @@
         "@tokenring-ai/audio": "workspace:*",
         "@tokenring-ai/aws": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
+        "@tokenring-ai/chat-frontend": "workspace:*",
         "@tokenring-ai/checkpoint": "workspace:*",
         "@tokenring-ai/chrome": "workspace:*",
         "@tokenring-ai/cli": "workspace:*",
@@ -84,7 +85,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.38",
+      "version": "0.2.39",
       "devDependencies": {
         "@tokenring-ai/acp": "workspace:*",
         "@tokenring-ai/agent": "workspace:*",
@@ -95,6 +96,7 @@
         "@tokenring-ai/calendar": "workspace:*",
         "@tokenring-ai/cdn": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
+        "@tokenring-ai/chat-frontend": "workspace:*",
         "@tokenring-ai/checkpoint": "workspace:*",
         "@tokenring-ai/chrome": "workspace:*",
         "@tokenring-ai/cli": "workspace:*",
@@ -210,7 +212,9 @@
         "@tokenring-ai/ai-client": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
+        "@tokenring-ai/checkpoint": "0.2.0",
         "@tokenring-ai/filesystem": "0.2.0",
+        "@tokenring-ai/lifecycle": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "@tokenring-ai/web-host": "0.2.0",
         "@tokenring-ai/workflow": "0.2.0",
@@ -337,9 +341,10 @@
         "@ai-sdk/fal": "^2.0.26",
         "@ai-sdk/google": "^3.0.51",
         "@ai-sdk/groq": "^3.0.30",
+        "@ai-sdk/open-responses": "^1.0.8",
         "@ai-sdk/openai": "^3.0.45",
         "@ai-sdk/openai-compatible": "^2.0.36",
-        "@ai-sdk/perplexity": "^3.0.24",
+        "@ai-sdk/perplexity": "^3.0.26",
         "@ai-sdk/provider": "^3.0.8",
         "@ai-sdk/xai": "^3.0.71",
         "@openrouter/ai-sdk-provider": "^2.3.1",
@@ -966,6 +971,7 @@
       "dependencies": {
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
+        "@tokenring-ai/rpc": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
         "zod": "^4.3.6",
       },
@@ -1569,11 +1575,13 @@
 
     "@ai-sdk/mcp": ["@ai-sdk/mcp@1.0.28", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.20", "pkce-challenge": "^5.0.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-GkIEgvu1VFOOskJRVigucL4Td2TvYcpoqUCygqI39DmKFe44Dc1pB5hxYBKtu9gAs/hySzuzOayer4auRimYBA=="],
 
+    "@ai-sdk/open-responses": ["@ai-sdk/open-responses@1.0.8", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.21" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-DGkpfWH4hw/cIe84fvT9DhosOVDS4xgHAFUJiHt9WmhFTPCs1apIY2WXMmBSitbwfYBjsq6pWWeD1Z1pX5APoA=="],
+
     "@ai-sdk/openai": ["@ai-sdk/openai@3.0.46", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.20" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-8grBb4sAMU0MAC6uOOD/wP/+SyX/3MMS/Lf+ToGgeUzoF9oWU9dWBLkvgjXpn7Ro81bPDeycW2GCCT63V/Vnvg=="],
 
     "@ai-sdk/openai-compatible": ["@ai-sdk/openai-compatible@2.0.36", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.20" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-YMfukkCwZ/CDj99JPVxTr7Hq1WY1nrLVlyzMTpruDzlwTaXlwHMc89ObvprQYCggSADIuto2tD4Vm1uoKY1y6Q=="],
 
-    "@ai-sdk/perplexity": ["@ai-sdk/perplexity@3.0.24", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.20" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-N2ZfkUME0dLEREZpr4FJZBORCqaBiEZlxWHNlFL1XOhTu4V8QbeG/Zu0vmMLhNvYzoZebJLRxpZFYKBtQ61C6g=="],
+    "@ai-sdk/perplexity": ["@ai-sdk/perplexity@3.0.26", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.21" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-dXzrVsLR5f6tr+U04jq4AXoRroGFBTvODnLgss0SWbzNjGGQg3XqtQ9j7rCLo6o8qbYGuAHvqUrIpUCuiscuFg=="],
 
     "@ai-sdk/provider": ["@ai-sdk/provider@3.0.8", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-oGMAgGoQdBXbZqNG0Ze56CHjDZ1IDYOwGYxYjO5KLSlz5HiNQ9udIXsPZ61VWaHGZ5XW/jyjmr6t2xz2jGVwbQ=="],
 
@@ -5890,6 +5898,10 @@
     "zustand": ["zustand@5.0.12", "", { "peerDependencies": { "@types/react": ">=18.0.0", "immer": ">=9.0.6", "react": ">=18.0.0", "use-sync-external-store": ">=1.2.0" }, "optionalPeers": ["@types/react", "immer", "react", "use-sync-external-store"] }, "sha512-i77ae3aZq4dhMlRhJVCYgMLKuSiZAaUPAct2AksxQ+gOtimhGMdXljRT21P5BNpeT4kXlLIckvkPM029OljD7g=="],
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
+
+    "@ai-sdk/open-responses/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@4.0.21", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@standard-schema/spec": "^1.1.0", "eventsource-parser": "^3.0.6" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-MtFUYI1/8mgDvRmaBDjbLJPFFrMG777AvSgyIFQtZHIMzm88R/12vYBBpnk7pfiWLFE1DSZzY4WDYzGbKAcmiw=="],
+
+    "@ai-sdk/perplexity/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@4.0.21", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@standard-schema/spec": "^1.1.0", "eventsource-parser": "^3.0.6" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-MtFUYI1/8mgDvRmaBDjbLJPFFrMG777AvSgyIFQtZHIMzm88R/12vYBBpnk7pfiWLFE1DSZzY4WDYzGbKAcmiw=="],
 
     "@auth/core/jose": ["jose@6.2.1", "", {}, "sha512-jUaKr1yrbfaImV7R2TN/b3IcZzsw38/chqMpo2XJ7i2F8AfM/lA4G1goC3JVEwg0H7UldTmSt3P68nt31W7/mw=="],
 

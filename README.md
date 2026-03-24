@@ -61,8 +61,8 @@ export SERPER_API_KEY=...
 #### TokenRing Coder
 
 ```bash
-# Run with npx (published as 'next' tag)
-npx @tokenring-ai/coder@next
+# Run with npx
+npx @tokenring-ai/coder
 
 # Run locally
 bun run coder
@@ -78,8 +78,8 @@ docker run -ti --rm \
 #### TokenRing Writer
 
 ```bash
-# Run with npx (published as 'next' tag)
-npx @tokenring-ai/writer@next
+# Run with npx
+npx @tokenring-ai/writer
 
 # Run locally
 bun run writer
