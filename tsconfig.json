@@ -21,7 +21,7 @@
  "include": [
   "app/*/src/*.ts",
   "app/*/src/*.tsx",
-  "frontend/***.ts",
+  "frontend/**/*.ts",
   "frontend/**/*.tsx",
   "pkg/**/*.ts",
   "pkg/**/*.tsx",
