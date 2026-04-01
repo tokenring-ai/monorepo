@@ -1,0 +1,12 @@
+export default {
+  name: "Chat Frontend UX Improver",
+  description: "This agent will find and implement a small UX improvement for each .tsx file in the chat frontend",
+  agentType: "leader",
+  steps: [
+    `/function define js getChatTsxFiles() { return (await import('fs')).globSync('frontend/chat/src/**/*.tsx') }`,
+    `/list @files = getChatTsxFiles()`,
+    `/for $file in @files {
+      /eval /agent run --type ui-ux-designer Review $file and identify one small, focused user experience improvement that can be made, then implement it
+     }`
+  ],
+};
