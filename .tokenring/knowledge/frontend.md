@@ -259,6 +259,43 @@ try {
 - Enabled hooks are highlighted with amber color
 - Description text shows hook purpose
 
+### Consistent Selector Sizing
+
+All selector components (ModelSelector, ToolSelector, HookSelector, SubAgentSelector) follow consistent sizing patterns:
+
+**Header Section:**
+
+- Section title: `text-sm font-mono text-muted`
+- Search input: `text-xs font-mono`, `py-1.5`, `rounded-md`
+- Search icon: `w-4 h-4`
+
+**Provider/Category Headers:**
+
+- Padding: `py-1.5`, `px-2`
+- Title text: `text-xs font-medium`
+- Badge text: `text-2xs font-mono`
+- Chevron icon: `w-3 h-3`
+
+**List Items:**
+
+- Padding: `py-1.5`, `px-3`
+- Item text: `text-xs font-mono`
+- Status dot: `w-1.5 h-1.5`
+- Icon indicators: `w-3 h-3`
+- Spacing: `space-y-0.5`
+- Margin: `mt-0.5`
+
+**Toggle All Buttons:**
+
+- Padding: `py-1.5`
+- Text: `text-xs`
+- Loading icon: `w-3 h-3`
+
+**Empty States:**
+
+- Padding: `px-3 py-4`
+- Text: `text-xs text-muted`
+
 ### Sidebar Component
 
 **Location:** `frontend/chat/src/components/Sidebar.tsx`
@@ -544,6 +581,13 @@ interface InlineQuestionProps {
 - Files display as preview chips above input area
 - Remove attachments with X button
 
+**Input Behavior:**
+
+- **Auto-expand textarea** - Input field automatically expands to fit content as user types
+- **Shrink on submit** - After submitting, textarea collapses back to minimum height
+- **Enter key behavior** - Enter key creates new lines (Shift+Enter also creates new line); Enter does NOT submit
+- **Submit via button** - Users must click the send button to submit messages
+
 **Attachment Preview:**
 - Shows file name with type-specific icon
 - Icons: Image for images, FileText for text, FileCode for code, File for others
@@ -557,10 +601,10 @@ interface InlineQuestionProps {
 - Input state is preserved during history navigation
 
 **Keyboard Shortcuts:**
-- `Enter` - Send message (with attachments if any)
 - `Shift+Enter` - New line
 - `Tab` - Accept command suggestion
 - `ArrowUp/Down` - Navigate history or suggestions
+- **Note:** Enter key no longer submits messages - users must click the send button to submit
 
 **Usage:**
 ```tsx

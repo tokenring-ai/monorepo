@@ -1,5 +1,4 @@
-import path from "path";
-import scheduleTester from "./agents/schedule-tester.js";
+import scheduleTester from "./agents/schedule-tester.ts";
 
 export default {
   agents: {
@@ -7,14 +6,14 @@ export default {
   },
   scheduler: {},
   websearch: {
-   agentDefaults: {
-     provider: "chrome"
-   },
-  providers: {
-   chrome: {
-    type: 'chrome',
+    agentDefaults: {
+      provider: "chrome"
+    },
+  },
+  chrome: {
     launch: true
-   },/*
+  },
+  /*
    serper: {
     type: 'serper',
     apiKey: process.env.SERPER_API_KEY,
@@ -23,8 +22,6 @@ export default {
     type: 'scraperapi',
     apiKey: process.env.SCRAPERAPI_API_KEY,
    },*/
-  }
- },
 /*
 scheduler: {
   tasks: [

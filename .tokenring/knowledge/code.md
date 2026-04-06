@@ -770,4 +770,12 @@ The ecosystem is agent-centric: `@tokenring-ai/agent` is the hub, registering to
 - `@tokenring-ai/tasks` orchestrates multi-agent workflows
 - `@tokenring-ai/iterables` provides batch processing
 
+### AI Client ↔ Vault Integration
+
+- `@tokenring-ai/ai-client` depends on `@tokenring-ai/vault` for secure API key storage
+- Provider API keys are stored in vault with key format: `ai-provider.<providerCode>` (e.g., `ai-provider.openai`)
+- The `/ai auth` command allows users to store provider API keys in the vault interactively
+- Auto-configuration resolves missing API keys from vault when the vault is unlocked at startup
+- Vault keys are mapped in `providerAuthInfo` export from `providers.ts`
+
 This knowledge base serves as a reference for understanding and extending the TokenRing AI ecosystem.

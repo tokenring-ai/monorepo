@@ -100,7 +100,7 @@ export default {
       },
     }
   },*/
-  filesystem: {
+  /*filesystem: {
     providers: {
       local: {
         type: "posix",
@@ -116,7 +116,7 @@ export default {
         ],
       }
     }
-  },
+  },*/
   codebase: {
     resources: {
       ...dynamicRepoMapResources,
