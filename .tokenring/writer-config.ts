@@ -1,8 +1,8 @@
-import scheduleTester from "./agents/schedule-tester.ts";
+import scheduleTester from "./configs/agents/schedule-tester.yaml" with { type: "yaml" };
 
 export default {
   agents: {
-    user: [scheduleTester]
+    [scheduleTester.agentType]: scheduleTester,
   },
   scheduler: {},
   websearch: {

@@ -1,0 +1,4 @@
+chat:
+  defaultModels:
+    - "llamacpp:*"
+    - "zai:glm-5.1"

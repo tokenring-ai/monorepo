@@ -1,0 +1,16 @@
+testing:
+  agentDefaults:
+    maxAutoRepairs: 5
+  resources:
+    tsc:
+      type: shell
+      name: Typescript Check
+      command: npx tsc --noEmit
+      projectDirectory: ./
+    vitest:
+      type: shell
+      name: Vitest Testing
+      command: set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok'
+      projectDirectory: ./
+      timeoutSeconds: 60
+      cropOutput: 20000

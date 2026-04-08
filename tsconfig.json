@@ -25,7 +25,7 @@
   "frontend/**/*.tsx",
   "pkg/**/*.ts",
   "pkg/**/*.tsx",
-  ".tokenring/agents/*.ts"
+   ".tokenring/configs/agents/*.ts"
  ],
  "exclude": [
   "node_modules",

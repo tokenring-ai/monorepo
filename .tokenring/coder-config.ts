@@ -1,7 +1,5 @@
 import fs from "fs";
 import path from "path";
-import packageBuilder from "./agents/package-builder";
-import {workflows} from "./workflows";
 
 const rootDir = path.resolve(import.meta.dirname, "../");
 
@@ -70,23 +68,6 @@ for (const pkgRoot of packageRoots) {
 }
 
 export default {
-  agents: {
-    user: [packageBuilder],
-  },
-  workflows,
-  chat: {
-    defaultModels: ['llamacpp:*', 'zai:glm-5'],
-  },
-  sandbox: {
-    agentDefaults: {
-      provider: "docker",
-    },
-    providers: {
-      docker: {
-        type: "docker",
-      }
-    }
-  },
   /*websearch: {
     defaultProvider: "serper",
     providers: {
@@ -121,27 +102,6 @@ export default {
     resources: {
       ...dynamicRepoMapResources,
       ...dynamicCodebaseResources,
-    },
-  },
-  testing: {
-    agentDefaults: {
-      maxAutoRepairs: 5,
-    },
-    resources: {
-      tsc: {
-        type: "shell",
-        name: "Typescript Check",
-        command: "npx tsc --noEmit",
-        projectDirectory: "./",
-      },
-      vitest: {
-        type: "shell",
-        name: "Vitest Testing",
-        command: "set -o pipefail && vitest run --no-color --reporter tap-flat --silent | grep -v '^ok'",
-        projectDirectory: "./",
-        timeoutSeconds: 60,
-        cropOutput: 20000,
-      },
     },
   },
 };
