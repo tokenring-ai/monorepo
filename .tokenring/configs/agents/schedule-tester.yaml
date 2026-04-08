@@ -3,7 +3,7 @@ agents:
     displayName: Scheduling agent
     description: This agent is designed to test the scheduler
     category: Testing
-    minimumRunning: 1
+    minimumRunning: 0
     chat:
       compaction:
         policy: automatic
