@@ -8,5 +8,5 @@ workflows:
       - /list @packages = getPackageDirectories()
       - |
         /for $pkg in @packages {
-          /eval /agent run --type code-quality-engineer Search for all the files in $pkg/, analyze code for common refactoring opportunities, code smells, complexity issues, architectural improvements, outdated patterns and practices - and save those ideas in a 'design/code-quality/{idea_name}.md' file
+          /eval /agent run --neverFail --type code-quality-engineer Search for all the files in $pkg/, analyze code for common refactoring opportunities, code smells, complexity issues, architectural improvements, outdated patterns and practices - and save those ideas in a 'design/code-quality/{idea_name}.md' file
         }

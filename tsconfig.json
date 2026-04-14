@@ -10,6 +10,7 @@
   "allowJs": true,
   "checkJs": true,
   "noEmit": true,
+  //"noUncheckedIndexedAccess": true,
   "jsx": "preserve",
   "allowImportingTsExtensions": true,
   "types": [
@@ -25,7 +26,6 @@
   "frontend/**/*.tsx",
   "pkg/**/*.ts",
   "pkg/**/*.tsx",
-   ".tokenring/configs/agents/*.ts"
  ],
  "exclude": [
   "node_modules",
@@ -39,6 +39,5 @@
   "pkg/**/hooks/**",
   "pkg/inquirer-command-prompt/examples/**",
   "pkg/inquirer-tree-selector/rollup.config.js",
-  "**/vitest.config.*"
  ]
 }

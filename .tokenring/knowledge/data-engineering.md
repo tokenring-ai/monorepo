@@ -294,7 +294,7 @@ class CodeBaseService implements TokenRingService {
 - **Abstract Interface**: Unified API for file operations across different backends
 - **Provider Pattern**: `FileSystemProvider` for implementing different storage backends
 - **Agent Integration**: File selection, memory injection, and chat integration
-- **Tools**: file_write, file_search, file_patch, terminal_bash
+- **Tools**: file_write, file_search, file_patch, shell_bash
 - **Commands**: `/file`, `/foreach` for batch processing
 
 **@tokenring-ai/local-filesystem**:

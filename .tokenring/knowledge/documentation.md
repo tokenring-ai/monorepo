@@ -14,15 +14,13 @@ This file maintains knowledge about documentation standards, patterns, and struc
 - **Individual README.md files**: Each of the 50+ packages has its own detailed README
 - **Consistent structure across all packages**:
  - Overview/Purpose
- - Installation
  - Features
- - Core Components/API
- - Usage Examples
+ - Chat Commands (optional)
+ - Tools (optional)
  - Configuration
- - Dependencies
+   - Sampling Configuration in YAML format
+   - ENV Variables (optional)
  - License
-- **Testing**: Packages use vitest for unit testing
-- **Examples**: When creating examples, use bun as the interpreter
 
 ### Application-Level Documentation
 - **app/coder/README.md**: Comprehensive developer assistant application (50-package ecosystem)
@@ -32,71 +30,29 @@ This file maintains knowledge about documentation standards, patterns, and struc
 ### Plugin Documentation
 - **Website Documentation**: `docs/docs/plugins/<package-name>.md`
 - **Consistent structure across all plugins**:
- - Overview and Purpose
- - Key Features
- - Core Components
- - Services: Documentation of TokenRingService implementations
- - Provider Documentation: If applicable, document provider interfaces
- - RPC Endpoints: If applicable, document RPC endpoints
- - Chat Commands: Document slash-prefixed commands available in the interface
- - Configuration
- - Integration
- - Usage Examples
- - Best Practices
- - Testing and Development
- - Dependencies
- - Related Components
+ - User Guide: 
+   - Overview and Purpose
+   - Key Features
+   - Chat Commands: Document slash-prefixed commands available in the package
+   - Tools: Document tools available in the package
+   - Configuration
+   - Sampling Configuration in YAML format
+   - ENV Variables (optional)
+ - Developer Reference:
+   - Core Components
+   - Services: Documentation of TokenRingService implementations
+   - Provider Documentation: If applicable, document provider interfaces
+   - RPC Endpoints: If applicable, document RPC endpoints
+   - Usage Examples
 
-## 2. Documentation Categories and Patterns
-
-### Core Foundation Packages
-Pattern: Focus on architecture and service management
-- **@tokenring-ai/agent**: Central orchestration system with agent teams and state management
-- **@tokenring-ai/ai-client**: Multi-provider AI integration with model registry and capabilities
-- **@tokenring-ai/app**: Base application framework with service management and plugin architecture
-- **@tokenring-ai/utility**: Shared utilities and helpers
-
-**Documentation Pattern:**
-- Architecture overview with component diagrams
-- Service interfaces and API references
-- Integration examples with other packages
-- Configuration schemas and type definitions
-- Event system and streaming capabilities
-- Command system and human interaction handling
-- JSON-RPC API endpoints and WebSocket communication
-- State management and persistence patterns
-
-### Plugin Documentation Pattern
-Pattern: Focus on functionality and integration
-- **@tokenring-ai/scheduler**: Automated scheduling service with task management
-- **@tokenring-ai/image-generation**: AI-powered image generation with metadata management
-- **@tokenring-ai/audio**: Voice recording, playback, and speech processing
-- **@tokenring-ai/web-host**: Web server for serving resources and APIs
-
-**Documentation Pattern:**
-- Overview and purpose with key features
-- Core components and service architecture
-- API reference with method signatures
-- Configuration examples and schema definitions
-- Usage examples with integration patterns
-- Chat command documentation and examples
-- Error handling and monitoring capabilities
-- Integration with agent system
-- Testing setup and development information
-
-## 3. Documentation Writing Standards
+## 2. Documentation Writing Standards
 
 ### Technical Writing Standards
 - **Consistent Terminology**: Uses "Agent", "Service", "Tool", "Command" consistently across all documentation
 - **Type-Safe Examples**: All code examples use proper TypeScript types and imports
-- **Comprehensive API Reference**: Detailed method signatures with parameters and return types
-- **Real-world Usage**: Practical examples showing integration patterns between packages
+- **YAML Configuration**: Consistent use of YAML for configuration examples
 - **Tech Stack**: Packages use bun, vitest, and typescript
-- **Event-Driven Architecture**: Clear documentation of event systems and streaming capabilities
-- **Human Interface Patterns**: Documentation of human interaction requests and responses
-- **State Management**: Comprehensive coverage of state persistence and restoration
 - **Command Systems**: Detailed documentation of chat command patterns and usage
-- **JSON-RPC APIs**: Clear documentation of remote procedure call endpoints
 
 ### 1. Documentation standards for README.md
 ```markdown
@@ -114,32 +70,19 @@ Pattern: Focus on functionality and integration
 ## Features
 - Bullet-point list of main capabilities
 
-## Core Components/API
-- Core classes, interfaces, and functions
-- Method signatures with parameters and return types
-- Configuration examples
+## Chat Commands
+- Include this section if the package defines slash commands
+- Markdown table with commands
 
-## Usage Examples
-- Multiple usage examples demonstrating different scenarios
-- Show both basic and advanced usage patterns
+## Tools
+- Include this section if the package defines tools
+- Markdown table with tools
 
 ## Configuration
+- Include this section if the package defines configuration
+- Markdown table with any ENV Variables (optional)
 - Configuration options and schemas
-- Configuration example
-
-## Integration
-- Integration with other packages
-- Plugin registration
-- Service registration
-
-## RPC Endpoints
-- Include this section if the package defines RPC endpoints
-- Markdown table with endpoints, with name, request params, response params
-
-## State Management
-- State slice documentation
-- Persistence and restoration patterns
-- Checkpoint generation and recovery
+- Configuration example (YAML)
 
 ## License
 
@@ -153,72 +96,47 @@ Each package will maintain up-to-date user documentation on the documentation we
 - **Package overview**: `docs/docs/plugins/<package-name>.md`
 - **Consistent naming**: Use hyphenated lowercase names (e.g., `token-ring-app.md`)
 - **CLI Plugin**: `cli.md` (not `cli-plugin.md` or `command-line-interface.md`)
-
+  
 #### Content Structure
-Each documentation file should follow this structure:
-1. **Title and Overview**: Clear title and brief description
-2. **Key Features**: Bullet-point list of main capabilities
-3. **Core Components**: Detailed breakdown of main classes, interfaces, and functions
-4. **Services**: Documentation of TokenRingService implementations
-5. **Provider Documentation**: If applicable, document provider interfaces
-6. **RPC Endpoints**: If applicable, document RPC endpoints
-7. **Chat Commands**: Document slash-prefixed commands available in the interface
-8. **Configuration**: Configuration options and schemas
-9. **Integration**: How the component integrates with other packages
-10. **Usage Examples**: Practical code examples
-11. **Best Practices**: Recommendations for usage
-12. **Testing**: Testing setup and examples
-13. **Dependencies**: Package dependencies and version requirements
-14. **Related Components**: Cross-references to related components
+Each documentation file should follow a two-part structure, with a **User Guide** and a **Developer Reference** section:
+- **User Guide**:
+ 1. **Title and Overview**: Clear title and brief description
+ 2. **Key Features**: Bullet-point list of main capabilities
+ 3. **Chat Commands**: Document slash-prefixed commands available in the interface
+ 4. **Tools**: Document tools available in the package
+ 5. **Configuration**: Configuration options and schemas
+ 6. **Integration**: How the component integrates with other packages
+ 7. **Best Practices**: Recommendations for usage
+- **Developer Reference**:
+ 1. **Core Components**: Detailed breakdown of main classes, interfaces, and functions
+ 2. **Services**: Documentation of TokenRingService implementations
+ 3. **Provider Documentation**: If applicable, document provider interfaces
+ 4. **RPC Endpoints**: If applicable, document RPC endpoints
+ 5. **Usage Examples**: Practical code examples
+ 6. **Testing**: Testing setup and examples
+ 7. **Dependencies**: Package dependencies and version requirements
+ 8. **Related Components**: Cross-references to related components
 
 #### Code Examples
 - Use TypeScript syntax with proper imports
-- Include error handling in examples
-- Show both basic and advanced usage patterns
-- Include event handling examples
-- Show configuration examples
-- Demonstrate integration with other packages
-- For CLI packages, show both plugin and manual usage patterns
-- For provider-based packages, show both registration patterns
-- For provider extension packages, document both direct instantiation and plugin registration patterns
-- For web-host packages, document both HTTP and WebSocket RPC clients
-- For terminal packages, show session lifecycle and output collection examples
-- For POSIX packages, document sandboxing modes and isolation levels
-- For escalation packages, document communication channel patterns with async generators
-- For chat packages, document context handlers and their usage patterns
-- For template packages, document template chaining workflows and tool state management
+- Use YAML for configuration examples
 
-#### Provider Documentation
-For packages with provider architecture:
-- Document provider interface definitions
-- Show provider configuration schemas
-- Include examples for both plugin-based and programmatic registration
-- Document provider-specific options and capabilities
-- Explain the KeyedRegistry pattern for provider management
+#### Markdown Formatting Guidelines
+- **Line Length**: Keep lines under 80 characters where practical for readability (MD013)
+- **Table Formatting**: 
+  - Use compact style with spaces around pipe characters: `| Column | Column |`
+  - Align table columns consistently (MD060)
+  - Ensure header, separator, and data rows align properly
+- **Fenced Code Blocks**: Always specify language identifier (e.g., ` ```typescript `, ` ```yaml `) (MD040)
+- **Headings**: Avoid duplicate heading text within the same document (MD024)
+  - If duplicate headings are necessary, make them unique (e.g., "Error Handling" vs "Error Handling in Tools")
 
-### API Documentation
-- Include method signatures with parameters and return types
-- Document parameter descriptions and types
-- Show example usage for each method
-- Include error handling documentation
-- Document event types and their usage
-- Include configuration schema documentation
-
-#### Integration Documentation
-- Show how the component integrates with the agent system
-- Document service registration patterns
-- Show command and tool registration examples
-- Include event handling integration
-- Document human interface request patterns
-- Show state management integration
-- Document plugin installation and configuration
-
-#### Testing and Development
-- Include testing setup and examples
-- Show build and development instructions
-- Document package structure
-- Include dependencies and version information
-- Provide license and copyright information
+#### Schema Documentation
+When documenting schema definitions:
+- Include all exported Zod schemas with their purpose
+- Document complex schemas by grouping related fields (e.g., "Core identification fields", "Price fields")
+- Provide code examples showing schema definitions
+- Include notes about automatic transformations or conversions
 
 ### 3. Documentation Maintenance
 

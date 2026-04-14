@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "typescript"
+  ],
+  "ignorePatterns": [
+    "**/node_modules",
+    "**/dist",
+    "**/*.test.*",
+    "pkg/**/test/**",
+    "**/frontend/chat/assets",
+    "scripts/**",
+    "deps/**"
+  ],
+  "options": {
+    "typeAware": true,
+    "typeCheck": true
+  },
+  "rules": {
+    "typescript/no-base-to-string": "error",
+    "typescript/no-implied-eval": "off",
+    "eslint/no-unsafe-finally": "off",
+    "eslint/no-control-regex": "off",
+    "typescript/restrict-template-expressions": [
+      "error",
+      {
+        "allowNumber": true,
+        "allowArray": false
+      }
+    ]
+  },
+  "env": {
+    "builtin": true
+  }
+}

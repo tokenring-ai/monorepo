@@ -8,5 +8,5 @@ workflows:
       - /list @packages = getPackageDirectories()
       - |
         /for $pkg in @packages {
-          /eval /agent run --type test-engineer Scan the source code in $pkg/, run the test suite with 'bun run vitest', remove any tests that are no longer relevant, and add new tests where necessary to match the current code
+          /eval /agent run --neverFail --type test-engineer Scan the source code in $pkg/, run the test suite with 'bun run vitest', remove any tests that are no longer relevant, and add new tests where necessary to match the current code
         }

@@ -330,3 +330,7 @@
 	path = pkg/todo
 	url = git@github.com:tokenring-ai/todo.git
 	branch = main
+[submodule "pkg/markdown"]
+	path = pkg/markdown
+	url = git@github.com:tokenring-ai/markdown.git
+	branch = main

@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const rootDir = path.resolve(import.meta.dirname, "../");
 
@@ -55,8 +55,8 @@ function makeWholeFileEntry(pkgRoot: string, dir: string, resources: Record<stri
 }
 
 const packageRoots = ["pkg", "app", "frontend"];
-let dynamicCodebaseResources = {};
-let dynamicRepoMapResources = {};
+const dynamicCodebaseResources = {};
+const dynamicRepoMapResources = {};
 
 for (const pkgRoot of packageRoots) {
  const dirs = getSubdirectories(pkgRoot);

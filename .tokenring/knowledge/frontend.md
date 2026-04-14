@@ -1166,6 +1166,7 @@ const { isOnline, lastActivity, recordActivity } = useConnectionStatus();
 - Smooth enter animations
 - **Attachment display** - Shows file attachments below message content for `input.received` messages
 - **Question-response pairing** - Questions and responses displayed together as coherent units
+- **'From' field display** - Shows input source at the top of `input.received` messages
 
 **Question-Response Display:**
 - Questions shown with cyan `?` icon and cyan-tinted background
@@ -1207,6 +1208,13 @@ className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emera
 - Download button for each attachment
 - Flex-wrapped layout for multiple attachments
 - Hover state shows MIME type information
+
+**'From' Field Display:**
+- The 'from' field (input source) is displayed at the **top** of `input.received` messages
+- Shows the source of the input (e.g., 'web', 'cli', 'api')
+- Styled as muted text with monospace font for consistency (`text-xs text-muted font-mono`)
+- Only shown when `msg.input.from` is present
+- Positioned above the message content and below attachments area
 
 ---
 
@@ -1382,6 +1390,7 @@ className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emera
 12. **Pair questions with responses** - Display questions and their answers together as coherent units
 13. **Hide unanswered questions** - Only show questions once they have been answered
 14. **Use semantic colors** - Cyan for questions, emerald for responses, indigo for user input
+15. **Display input source** - Show 'from' field at the top of `input.received` messages for context
 
 ---
 

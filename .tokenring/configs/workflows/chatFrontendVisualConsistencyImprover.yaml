@@ -8,5 +8,5 @@ workflows:
       - /list @files = getChatTsxFiles()
       - |
         /for $file in @files {
-          /eval /agent run --type ui-ux-designer Review $file for visual inconsistencies such as mismatched typography, inconsistent border styles, misaligned elements, or conflicting visual patterns. Also check how it visually relates to its parent and child components — look for inconsistencies in sizing, borders, shadows, and overall visual language. Implement fixes for any issues found.
+          /eval /agent run --neverFail --type ui-ux-designer Review $file for visual inconsistencies such as mismatched typography, inconsistent border styles, misaligned elements, or conflicting visual patterns. Also check how it visually relates to its parent and child components — look for inconsistencies in sizing, borders, shadows, and overall visual language. Implement fixes for any issues found.
         }

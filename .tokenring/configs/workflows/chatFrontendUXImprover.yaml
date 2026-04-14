@@ -8,5 +8,5 @@ workflows:
       - /list @files = getChatTsxFiles()
       - |
         /for $file in @files {
-          /eval /agent run --type ui-ux-designer Review $file and identify one small, focused user experience improvement that can be made, then implement it
+          /eval /agent run --neverFail --type ui-ux-designer Review $file and identify one small, focused user experience improvement that can be made, then implement it
         }

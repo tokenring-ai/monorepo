@@ -8,5 +8,5 @@ workflows:
       - /list @packages = getPackageDirectories()
       - |
         /for $pkg in @packages {
-          /eval /agent run product-design-engineer Search for all the files in $pkg/, understand the current functionality of the package, and create or update $pkg/BRAINSTORM.md with brainstormed new features that would enhance this package
+          /eval /agent run --neverFail product-design-engineer Search for all the files in $pkg/, understand the current functionality of the package, and create or update $pkg/BRAINSTORM.md with brainstormed new features that would enhance this package
         }

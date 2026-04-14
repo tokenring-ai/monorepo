@@ -8,5 +8,5 @@ workflows:
       - /list @files = getChatTsxFiles()
       - |
         /for $file in @files {
-          /eval /agent run --type ui-ux-designer Review the colors used in $file — backgrounds, text, borders, and accents. Ensure they align with the design systems color palette, maintain sufficient contrast ratios for accessibility, and are visually coherent with parent and child components. Replace any hardcoded or off-palette colors with the correct design tokens or Tailwind classes.
+          /eval /agent run --neverFail --type ui-ux-designer Review the colors used in $file — backgrounds, text, borders, and accents. Ensure they align with the design systems color palette, maintain sufficient contrast ratios for accessibility, and are visually coherent with parent and child components. Replace any hardcoded or off-palette colors with the correct design tokens or Tailwind classes.
         }

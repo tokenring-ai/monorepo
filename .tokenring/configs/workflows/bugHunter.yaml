@@ -8,5 +8,5 @@ workflows:
       - /list @packages = getPackageDirectories()
       - |
         /for $pkg in @packages {
-          /eval /agent run --type code-quality-engineer Search for all the files in $pkg/, identify 3 small bugs in the package code, and fix each one
+          /eval /agent run --neverFail --type code-quality-engineer Search for all the files in $pkg/, identify 3 small bugs in the package code, and fix each one
         }

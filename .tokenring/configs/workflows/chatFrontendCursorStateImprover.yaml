@@ -8,5 +8,5 @@ workflows:
       - /list @files = getChatTsxFiles()
       - |
         /for $file in @files {
-          /eval /agent run --type ui-ux-designer Audit $file for all interactive elements — buttons, anchors, clickable divs, icons, and any element with onClick or onHover handlers. Check that each has an appropriate cursor style (e.g. cursor-pointer), visible hover/focus states, and active press feedback. Implement any missing or incorrect states.
+          /eval /agent run --neverFail --type ui-ux-designer Audit $file for all interactive elements — buttons, anchors, clickable divs, icons, and any element with onClick or onHover handlers. Check that each has an appropriate cursor style (e.g. cursor-pointer), visible hover/focus states, and active press feedback. Implement any missing or incorrect states.
         }

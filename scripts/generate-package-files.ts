@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 import {glob} from 'glob';
-import path from 'path';
+import path from 'node:path';
 
 
 const baseDir = path.resolve(import.meta.dir, "../")
@@ -38,7 +38,7 @@ async function main(): Promise<void> {
             try {
               await fs.copyFile(src, dst);
               console.log(`  -> Copied ${file}`);
-            } catch (err) {
+            } catch (err: unknown) {
               console.error(`  [!] Failed to copy ${file} to ${packageDir}:`, err);
             }
           }
@@ -123,19 +123,19 @@ async function main(): Promise<void> {
               await fs.writeFile(packageJsonPath, JSON.stringify(packageData, null, 2));
               console.log(`  -> Updated package.json`);
             }
-          } catch (err) {
+          } catch (err: unknown) {
             console.error(`  [!] Failed to update package.json in ${packageDir}:`, err);
           }
 
           console.log('');
-        } catch (err) {
+        } catch (err: unknown) {
           console.error(`Error processing directory ${packageDir}:`, err);
         }
       }
     }
 
     console.log('Done!');
-  } catch (err) {
+  } catch (err: unknown) {
     console.error('Fatal error:', err);
     process.exit(1);
   }

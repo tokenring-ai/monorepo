@@ -1,0 +1,49 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
+  "files": {
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "!**/dist/**",
+      "!**/dist-ts/**",
+      "!**/node_modules/**",
+      "!**/*.test.ts",
+      "!**/*.config.ts",
+      "!**/test/**"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": false,
+      "style": {
+        "useTemplate": "off",
+        "useConst": "error",
+        "useNodejsImportProtocol": "error",
+        "useImportType": "error"
+      },
+
+      "correctness": {
+        "noUnusedVariables": "error",
+        "noUnsafeFinally": "off",
+        "noUnusedFunctionParameters": "error",
+        "noUnusedImports": "error",
+        "noSwitchDeclarations": "error",
+        "useYield": "error"
+      },
+      "suspicious": {
+        "noControlCharactersInRegex": "off",
+        "useIterableCallbackReturn": "error",
+        "noConfusingVoidType": "off",
+        "noAssignInExpressions": "off",
+        "noExplicitAny": "off",
+        "useAwait": "error"
+      },
+      "complexity": {
+        "useOptionalChain": "error",
+        "useFlatMap": "error",
+        "noUselessConstructor": "error"
+      }
+    }
+  }
+}
