@@ -1,6 +1,6 @@
 workflows:
   chatFrontendColorPaletteImprover:
-    name: "Chat Frontend Color Palette Improver"
+    displayName: "Chat Frontend Color Palette Improver"
     description: "Reviews and improves color usage in chat frontend components for consistency and proper contrast with parent and child components"
     agentType: "leader"
     steps:

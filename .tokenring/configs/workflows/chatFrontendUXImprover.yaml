@@ -1,6 +1,6 @@
 workflows:
   chatFrontendUXImprover:
-    name: "Chat Frontend UX Improver"
+    displayName: "Chat Frontend UX Improver"
     description: "This agent will find and implement a small UX improvement for each .tsx file in the chat frontend"
     agentType: "leader"
     steps:

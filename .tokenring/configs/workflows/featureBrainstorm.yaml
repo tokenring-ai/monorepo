@@ -1,6 +1,6 @@
 workflows:
   featureBrainstorm:
-    name: "All-Package Feature Brainstorm"
+    displayName: "All-Package Feature Brainstorm"
     description: "This agent will automatically create BRAINSTORM.md files in each package directory, brainstorming new features"
     agentType: "leader"
     steps:

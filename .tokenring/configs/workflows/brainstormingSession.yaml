@@ -1,6 +1,6 @@
 workflows:
   brainstormingSession:
-    name: "All-Package Brainstorming Session"
+    displayName: "All-Package Brainstorming Session"
     description: "This agent will automatically run a brainstorming session for each package in the TokenRing monorepo"
     agentType: "leader"
     steps:

@@ -1,6 +1,6 @@
 workflows:
   chatFrontendCursorStateImprover:
-    name: "Chat Frontend Cursor & Hover State Improver"
+    displayName: "Chat Frontend Cursor & Hover State Improver"
     description: "Audits and improves cursor, hover, and pointer states across interactive elements in the chat frontend"
     agentType: "leader"
     steps:

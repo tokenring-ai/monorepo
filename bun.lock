@@ -830,6 +830,7 @@
         "@tokenring-ai/email": "0.2.0",
         "@tokenring-ai/filesystem": "0.2.0",
         "@tokenring-ai/utility": "0.2.0",
+        "@tokenring-ai/vault": "0.2.0",
         "@tokenring-ai/web-host": "0.2.0",
         "googleapis": "^171.4.0",
         "zod": "^4.3.6",

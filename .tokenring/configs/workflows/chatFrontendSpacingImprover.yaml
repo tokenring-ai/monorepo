@@ -1,6 +1,6 @@
 workflows:
   chatFrontendSpacingImprover:
-    name: "Chat Frontend Spacing Improver"
+    displayName: "Chat Frontend Spacing Improver"
     description: "Reviews and improves component spacing (padding, margin, gaps) for consistency with parent components in the chat frontend"
     agentType: "leader"
     steps:

@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
   "plugins": [
-    "typescript"
+    "import",
+    "typescript",
+    "unicorn",
+    "oxc"
   ],
   "ignorePatterns": [
     "**/node_modules",
@@ -15,6 +18,9 @@
   "options": {
     "typeAware": true,
     "typeCheck": true
+  },
+  "categories": {
+    "correctness": "error"
   },
   "rules": {
     "typescript/no-base-to-string": "error",

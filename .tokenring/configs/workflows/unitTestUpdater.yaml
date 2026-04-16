@@ -1,6 +1,6 @@
 workflows:
   unitTestUpdater:
-    name: "All-Package Unit Test Updater"
+    displayName: "All-Package Unit Test Updater"
     description: "This agent automatically updates unit tests for each package in the TokenRing monorepo using the testEngineer agent."
     agentType: "leader"
     steps:
