@@ -1,10 +1,12 @@
 # TokenRing AI Monorepo
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://typescriptlang.org)
-[![Bun](https://img.shields.io/badge/Bun-1.0+-black?logo=bun)](https://bun.sh)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/tokenring-ai/tokenring/main.yml?branch=main)](https://github.com/tokenring-ai/tokenring/actions)
-[![Open Issues](https://img.shields.io/github/issues/tokenring-ai/tokenring)](https://github.com/tokenring-ai/tokenring/issues)
+[![Version](https://img.shields.io/github/package-json/v/tokenring-ai/monorepo)](https://github.com/tokenring-ai/monorepo)
+[![Downloads](https://img.shields.io/npm/dy/%40tokenring-ai%2Fcoder)](https://www.npmjs.com/package/@tokenring-ai/coder)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/tokenring-ai/monorepo/publish.yml)](https://github.com/tokenring-ai/tokenring/actions)
+[![Open Issues](https://img.shields.io/github/issues/tokenring-ai/monorepo)](https://github.com/tokenring-ai/tokenring/issues)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)](https://typescriptlang.org)
+[![Bun](https://img.shields.io/badge/Bun-1.3+-black?logo=bun)](https://bun.sh)
 
 <img src="assets/logo.png" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
 
@@ -18,7 +20,7 @@ TokenRing AI is a modular TypeScript monorepo hosting two flagship applicationsâ
 
 ### Prerequisites
 
-- [Bun](https://bun.sh) runtime (v1.0+)
+- [Bun](https://bun.sh) runtime (v1.3+)
 - Git
 - API keys for AI providers (OpenAI, Anthropic, etc.)
 

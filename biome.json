@@ -15,7 +15,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
+      "recommended": true,
       "style": {
         "useTemplate": "off",
         "useConst": "error",
@@ -23,7 +23,12 @@
         "useImportType": "error"
       },
 
+      "a11y": {
+        "noSvgWithoutTitle": "error",
+        "useButtonType": "error"
+      },
       "correctness": {
+        "useExhaustiveDependencies": "off",
         "noUnusedVariables": "error",
         "noUnsafeFinally": "off",
         "noUnusedFunctionParameters": "error",
@@ -32,6 +37,7 @@
         "useYield": "error"
       },
       "suspicious": {
+        "noDoubleEquals": "error",
         "noControlCharactersInRegex": "off",
         "useIterableCallbackReturn": "error",
         "noConfusingVoidType": "off",
@@ -40,6 +46,7 @@
         "useAwait": "error"
       },
       "complexity": {
+        "useLiteralKeys": "error",
         "useOptionalChain": "error",
         "useFlatMap": "error",
         "noUselessConstructor": "error"

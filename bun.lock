@@ -20,7 +20,7 @@
     },
     "app/coder": {
       "name": "@tokenring-ai/coder",
-      "version": "0.2.41",
+      "version": "0.2.42",
       "devDependencies": {
         "@tokenring-ai/acp": "workspace:*",
         "@tokenring-ai/agent": "workspace:*",
@@ -90,7 +90,7 @@
     },
     "app/writer": {
       "name": "@tokenring-ai/writer",
-      "version": "0.2.41",
+      "version": "0.2.42",
       "devDependencies": {
         "@tokenring-ai/acp": "workspace:*",
         "@tokenring-ai/agent": "workspace:*",
@@ -433,6 +433,7 @@
       "dependencies": {
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/filesystem": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
       },
       "devDependencies": {
         "typescript": "^6.0.2",
@@ -716,6 +717,7 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/chat": "0.2.0",
         "@tokenring-ai/filesystem": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
         "date-fns": "^4.1.0",
         "esbuild": "^0.28.0",
         "esbuild-plugin-external-global": "^1.0.1",
