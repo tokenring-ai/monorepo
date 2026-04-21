@@ -27,7 +27,7 @@ jobs:
         run: bun install
 
       - name: Build naudiodon3
-        run: node-gyp rebuild
+        run: bun run install
         working-directory: ./deps/naudiodon3
       
       - name: Build coder binary
@@ -80,7 +80,7 @@ jobs:
         run: bun install
 
       - name: Build naudiodon3
-        run: node-gyp rebuild
+        run: bun run install
         working-directory: ./deps/naudiodon3
 
       - name: Build chat frontend
