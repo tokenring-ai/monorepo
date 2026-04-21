@@ -25,6 +25,10 @@ jobs:
       
       - name: Install dependencies
         run: bun install
+
+      - name: Build naudiodon3
+        run: node-gyp rebuild
+        working-directory: ./deps/naudiodon3
       
       - name: Build coder binary
         run: bun build --compile ./src/tr-coder.ts --outfile coder-macos-arm64
@@ -74,6 +78,10 @@ jobs:
       
       - name: Install dependencies
         run: bun install
+
+      - name: Build naudiodon3
+        run: node-gyp rebuild
+        working-directory: ./deps/naudiodon3
 
       - name: Build chat frontend
         run: bun run build
