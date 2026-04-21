@@ -935,7 +935,7 @@ const handleKeyDown = (e: React.KeyboardEvent) => {
 className="... focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
 
 // Gradient pattern
-className="bg-gradient-to-br from-cyan-500 to-purple-600"
+className="bg-linear-to-br from-cyan-500 to-purple-600"
 
 // Disabled state
 className="... disabled:opacity-50 disabled:cursor-not-allowed"
@@ -1050,7 +1050,7 @@ useEffect(() => {
    ```tsx
    <div className="flex items-center gap-1 sm:gap-4 overflow-x-hidden">
      {/* Mobile menu button - hidden on desktop */}
-     <button onClick={onMenuClick} className="md:hidden p-1.5 flex-shrink-0">
+     <button onClick={onMenuClick} className="md:hidden p-1.5 shrink-0">
        <Menu size={18} />
      </button>
    </div>

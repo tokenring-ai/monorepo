@@ -799,7 +799,7 @@ Across all interfaces, consistent command structures:
 - **Typography**: `text-sm` for both title and message (consistent body text sizing per section 21)
 - **Accessibility**: Maintained `focus-ring` utility, proper ARIA labels (`role="alert"`, `aria-live`)
 - **Shadow**: Uses `shadow-lg` for proper toast elevation per shadow hierarchy (section 21)
-- **Layout**: `min-w-[300px] max-w-md` for responsive width constraints
+- **Layout**: `min-w-75 max-w-md` for responsive width constraints
 
 #### Visual Consistency Checklist
 

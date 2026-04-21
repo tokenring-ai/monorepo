@@ -375,7 +375,7 @@ className="rounded-button" // Custom utility for rounded-lg
     {/* Mobile menu button */}
     <button
       onClick={toggleMobileSidebar}
-      className="md:hidden w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/10 active:scale-95 transition-transform focus-ring"
+      className="md:hidden w-8 h-8 rounded-lg bg-linear-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/10 active:scale-95 transition-transform focus-ring"
       aria-label="Toggle sidebar menu"
     >
       <Zap className="w-4 h-4 text-white" fill="currentColor"/>
@@ -898,7 +898,7 @@ const events: Record<AgentEventEnvelope['type'], EventConfig> = {
   exit={{ opacity: 0, x: 100, scale: 0.95 }}
   transition={{ duration: 0.2, ease: 'easeOut' }}
   className={cn(
-    'flex items-start gap-3 px-4 py-3 rounded-lg border shadow-lg min-w-[300px] max-w-md',
+    'flex items-start gap-3 px-4 py-3 rounded-lg border shadow-lg min-w-75 max-w-md',
     toastStyles[type]
   )}
   role="alert"
@@ -907,7 +907,7 @@ const events: Record<AgentEventEnvelope['type'], EventConfig> = {
   <Icon className="w-5 h-5 shrink-0 mt-0.5" />
   <div className="flex-1 min-w-0">
     {title && <h4 className="font-medium text-sm mb-1">{title}</h4>}
-    <p className="text-sm leading-relaxed break-words">{message}</p>
+    <p className="text-sm leading-relaxed wrap-break-word">{message}</p>
   </div>
   {onClose && (
     <button
@@ -1698,7 +1698,7 @@ const packageColors: Record<string, string> = {
       className="flex items-center gap-3 cursor-pointer group"
       onClick={isSidebarExpanded ? () => navigateAndClose('/') : toggleSidebar}
     >
-      <div className={`w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/10 shrink-0 transition-transform duration-200 ${!isSidebarExpanded ? 'group-hover:scale-110' : ''}`}>
+      <div className={`w-8 h-8 rounded-lg bg-linear-to-br from-cyan-500 to-purple-600 flex items-center justify-center shadow-lg shadow-cyan-500/10 shrink-0 transition-transform duration-200 ${!isSidebarExpanded ? 'group-hover:scale-110' : ''}`}>
         <Zap className="w-5 h-5 text-white" fill="currentColor" />
       </div>
       {isSidebarExpanded && (
@@ -1988,7 +1988,7 @@ const packageColors: Record<string, string> = {
   <div
     role="tree"
     aria-label="File browser"
-    className="max-h-[300px] overflow-y-auto custom-scrollbar border border-primary/50 rounded-lg bg-primary p-2"
+    className="max-h-75 overflow-y-auto custom-scrollbar border border-primary/50 rounded-lg bg-primary p-2"
   >
     {files.has('.') ? renderTree('.', 0) : (
       <div className="text-center text-muted text-sm py-8">Loading files...</div>
@@ -2056,7 +2056,7 @@ const packageColors: Record<string, string> = {
   <div
     role="tree"
     aria-label="Select from tree"
-    className="max-h-[300px] overflow-y-auto custom-scrollbar border border-primary/50 rounded-lg bg-primary"
+    className="max-h-75 overflow-y-auto custom-scrollbar border border-primary/50 rounded-lg bg-primary"
   >
     {question.tree.map((root, index) => (
       <CompactTreeNode
@@ -2147,7 +2147,7 @@ const packageColors: Record<string, string> = {
   )}
 
   {/* Field content */}
-  <div className="min-h-[150px] flex flex-col">
+  <div className="min-h-37.5 flex flex-col">
     {field.type === 'text' && (
       <div className="flex-1 flex flex-col space-y-2">
         <label className="block text-sm text-primary" htmlFor={`form-field-${fieldKey}`}>
@@ -2177,7 +2177,7 @@ const packageColors: Record<string, string> = {
     )}
 
     {field.type === 'treeSelect' && (
-      <div className="flex-1 flex flex-col space-y-2 min-h-[150px]">
+      <div className="flex-1 flex flex-col space-y-2 min-h-37.5">
         <label className="block text-sm text-primary">{field.label}</label>
         <div className="border border-primary/50 rounded-lg flex-1 flex flex-col overflow-hidden">
           <TreeInlineQuestion question={field} agentId={agentId} requestId={requestId} onClose={() => handleFieldSubmit(null)} autoFocus={autoFocus} />
@@ -2186,7 +2186,7 @@ const packageColors: Record<string, string> = {
     )}
 
     {field.type === 'fileSelect' && (
-      <div className="flex-1 flex flex-col space-y-2 min-h-[150px]">
+      <div className="flex-1 flex flex-col space-y-2 min-h-37.5">
         <label className="block text-sm text-primary">{field.label}</label>
         {field.description && <p className="text-xs text-muted">{field.description}</p>}
         <div className="border border-primary/50 rounded-lg flex-1 flex flex-col overflow-hidden">
@@ -2757,7 +2757,7 @@ className="text-xs sm:text-sm md:text-base"
 
 ```tsx
 // Mobile menu button
-<button onClick={onMenuClick} className="md:hidden p-1.5 flex-shrink-0">
+<button onClick={onMenuClick} className="md:hidden p-1.5 shrink-0">
   <Menu size={18} />
 </button>
 
