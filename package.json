@@ -23,7 +23,8 @@
     "writer": "bun --env app/writer/src/tr-writer.js",
     "test": "bun run test",
     "prepare": "husky",
-    "update-all-dependencies-latest": "bun update --latest"
+    "update-all-dependencies-latest": "bun update --latest",
+    "lint": "biome lint"
   },
   "type": "module",
   "workspaces": {

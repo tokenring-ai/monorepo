@@ -2,54 +2,57 @@
   "$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
   "files": {
     "includes": [
-      "**/*.ts",
-      "**/*.tsx",
-      "!**/dist/**",
-      "!**/dist-ts/**",
-      "!**/node_modules/**",
+      "{pkg,app,frontend}/**/*.ts",
+      "{pkg,app,frontend}/**/*.tsx",
+      "!**/dist",
+      "!**/dist-ts",
+      "!**/node_modules",
       "!**/*.test.ts",
       "!**/*.config.ts",
-      "!**/test/**"
+      "!**/test"
     ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "arrowParentheses": "asNeeded",
+      "lineWidth": 160
+    }
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
+      "a11y": {
+        "noAutofocus": "off",
+        "useSemanticElements": "off",
+        "useKeyWithClickEvents": "off",
+        "noStaticElementInteractions": "off",
+        "noLabelWithoutControl": "off"
+      },
       "style": {
         "useTemplate": "off",
-        "useConst": "error",
-        "useNodejsImportProtocol": "error",
-        "useImportType": "error"
-      },
-
-      "a11y": {
-        "noSvgWithoutTitle": "error",
-        "useButtonType": "error"
+        "noNonNullAssertion": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off",
-        "noUnusedVariables": "error",
-        "noUnsafeFinally": "off",
-        "noUnusedFunctionParameters": "error",
-        "noUnusedImports": "error",
-        "noSwitchDeclarations": "error",
-        "useYield": "error"
-      },
-      "suspicious": {
-        "noDoubleEquals": "error",
-        "noControlCharactersInRegex": "off",
-        "useIterableCallbackReturn": "error",
-        "noConfusingVoidType": "off",
-        "noAssignInExpressions": "off",
-        "noExplicitAny": "off",
-        "useAwait": "error"
+        "noVoidTypeReturn": "off",
+        "noUnsafeFinally": "off"
       },
       "complexity": {
-        "useLiteralKeys": "error",
-        "useOptionalChain": "error",
-        "useFlatMap": "error",
-        "noUselessConstructor": "error"
+        "noBannedTypes": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      },
+      "suspicious": {
+        "noArrayIndexKey": "off",
+        "noControlCharactersInRegex": "off",
+        "noConfusingVoidType": "off",
+        "noAssignInExpressions": "off",
+        "noExplicitAny": "off"
       }
     }
   }

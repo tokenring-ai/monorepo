@@ -779,6 +779,7 @@
         "@tokenring-ai/app": "0.2.0",
         "@tokenring-ai/blog": "0.2.0",
         "@tokenring-ai/cdn": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
         "@tryghost/admin-api": "^1.14.7",
         "form-data": "^4.0.5",
         "uuid": "^13.0.0",
@@ -1148,6 +1149,7 @@
       "dependencies": {
         "@aws-sdk/client-s3": "^3.1025.0",
         "@tokenring-ai/app": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
         "zod": "^4.3.6",
       },
       "devDependencies": {
@@ -1526,6 +1528,7 @@
       "dependencies": {
         "@tokenring-ai/agent": "0.2.0",
         "@tokenring-ai/app": "0.2.0",
+        "@tokenring-ai/utility": "0.2.0",
         "zod": "^4.3.6",
       },
       "devDependencies": {

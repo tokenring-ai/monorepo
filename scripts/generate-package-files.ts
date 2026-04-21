@@ -65,17 +65,17 @@ async function main(): Promise<void> {
               packageData.devDependencies.vitest = '^4.0.18';
             }*/
 
-            if (packageData.scripts.test != 'vitest run') {
+            if (packageData.scripts.test !== 'vitest run') {
               modified = true;
               packageData.scripts.test = 'vitest run';
             }
 
-            if (packageData.scripts['test:watch'] != 'vitest') {
+            if (packageData.scripts['test:watch'] !== 'vitest') {
               modified = true;
               packageData.scripts['test:watch'] = 'vitest';
             }
 
-            if (packageData.scripts['test:coverage'] != 'vitest run --coverage') {
+            if (packageData.scripts['test:coverage'] !== 'vitest run --coverage') {
               modified = true;
               packageData.scripts['test:coverage'] = 'vitest run --coverage';
             }
@@ -87,7 +87,7 @@ async function main(): Promise<void> {
 */
 
             if (packageDir.includes('/pkg/')) {
-              if (packageData.scripts.build != 'tsc --noEmit') {
+              if (packageData.scripts.build !== 'tsc --noEmit') {
                 modified = true;
                 packageData.scripts.build = 'tsc --noEmit';
               }
