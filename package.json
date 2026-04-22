@@ -24,7 +24,8 @@
     "test": "bun run test",
     "prepare": "husky",
     "update-all-dependencies-latest": "bun update --latest",
-    "lint": "biome lint"
+    "biome": "biome check --fix",
+    "lint": "oxlint -f stylish --fix"
   },
   "type": "module",
   "workspaces": {

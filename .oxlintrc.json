@@ -23,6 +23,8 @@
     "correctness": "error"
   },
   "rules": {
+    "typescript/no-floating-promises": "error",
+    "typescript/no-unsafe-assignment": "warn",
     "typescript/no-base-to-string": "error",
     "typescript/no-implied-eval": "off",
     "eslint/no-unsafe-finally": "off",
