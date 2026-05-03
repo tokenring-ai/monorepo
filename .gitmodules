@@ -1,336 +1,336 @@
 [submodule "app/coder"]
 	path = app/coder
-	url = git@github.com:tokenring-ai/coder.git
+	url = ../coder.git
 	branch = main
 [submodule "app/writer"]
 	path = app/writer
-	url = git@github.com:tokenring-ai/writer.git
+	url = ../writer.git
 	branch = main
 [submodule "pkg/ai-client"]
 	path = pkg/ai-client
-	url = git@github.com:tokenring-ai/ai-client
+	url = ../ai-client
 	branch = main
 [submodule "pkg/aws"]
 	path = pkg/aws
-	url = git@github.com:tokenring-ai/aws
+	url = ../aws
 	branch = main
 [submodule "pkg/blog"]
 	path = pkg/blog
-	url = git@github.com:tokenring-ai/blog.git
+	url = ../blog.git
 	branch = main
 [submodule "pkg/chrome"]
 	path = pkg/chrome
-	url = git@github.com:tokenring-ai/chrome
+	url = ../chrome
 	branch = main
 [submodule "pkg/cli"]
 	path = pkg/cli
-	url = git@github.com:tokenring-ai/cli
+	url = ../cli
 	branch = main
 [submodule "pkg/cloudquote"]
 	path = pkg/cloudquote
-	url = git@github.com:tokenring-ai/cloudquote.git
+	url = ../cloudquote.git
 	branch = main
 [submodule "pkg/code-watch"]
 	path = pkg/code-watch
-	url = git@github.com:tokenring-ai/code-watch
+	url = ../code-watch
 	branch = main
 [submodule "pkg/codebase"]
 	path = pkg/codebase
-	url = git@github.com:tokenring-ai/codebase
+	url = ../codebase
 	branch = main
 [submodule "pkg/database"]
 	path = pkg/database
-	url = git@github.com:tokenring-ai/database
+	url = ../database
 	branch = main
 [submodule "pkg/docker"]
 	path = pkg/docker
-	url = git@github.com:tokenring-ai/docker
+	url = ../docker
 	branch = main
 [submodule "pkg/feedback"]
 	path = pkg/feedback
-	url = git@github.com:tokenring-ai/feedback
+	url = ../feedback
 	branch = main
 [submodule "pkg/file-index"]
 	path = pkg/file-index
-	url = git@github.com:tokenring-ai/file-index
+	url = ../file-index
 	branch = main
 [submodule "pkg/filesystem"]
 	path = pkg/filesystem
-	url = git@github.com:tokenring-ai/filesystem
+	url = ../filesystem
 	branch = main
 [submodule "pkg/ghost-io"]
 	path = pkg/ghost-io
-	url = git@github.com:tokenring-ai/ghost-io.git
+	url = ../ghost-io.git
 	branch = main
 [submodule "pkg/git"]
 	path = pkg/git
-	url = git@github.com:tokenring-ai/git
+	url = ../git
 	branch = main
 [submodule "pkg/javascript"]
 	path = pkg/javascript
-	url = git@github.com:tokenring-ai/javascript
+	url = ../javascript
 	branch = main
 [submodule "pkg/kubernetes"]
 	path = pkg/kubernetes
-	url = git@github.com:tokenring-ai/kubernetes
+	url = ../kubernetes
 	branch = main
 [submodule "pkg/memory"]
 	path = pkg/memory
-	url = git@github.com:tokenring-ai/memory
+	url = ../memory
 	branch = main
 [submodule "pkg/queue"]
 	path = pkg/queue
-	url = git@github.com:tokenring-ai/queue
+	url = ../queue
 	branch = main
 [submodule "pkg/testing"]
 	path = pkg/testing
-	url = git@github.com:tokenring-ai/testing
+	url = ../testing
 	branch = main
 [submodule "pkg/utility"]
 	path = pkg/utility
-	url = git@github.com:tokenring-ai/utility.git
+	url = ../utility.git
 	branch = main
 [submodule "pkg/serper"]
 	path = pkg/serper
-	url = git@github.com:tokenring-ai/serper.git
+	url = ../serper.git
 	branch = main
 [submodule "pkg/scraperapi"]
 	path = pkg/scraperapi
-	url = git@github.com:tokenring-ai/scraperapi.git
+	url = ../scraperapi.git
 	branch = main
 [submodule "pkg/newsrpm"]
 	path = pkg/newsrpm
-	url = git@github.com:tokenring-ai/newsrpm.git
+	url = ../newsrpm.git
 	branch = main
 [submodule "pkg/websearch"]
 	path = pkg/websearch
-	url = git@github.com:tokenring-ai/websearch.git
+	url = ../websearch.git
 	branch = main
 [submodule "pkg/wikipedia"]
 	path = pkg/wikipedia
-	url = git@github.com:tokenring-ai/wikipedia.git
+	url = ../wikipedia.git
 	branch = main
 [submodule "pkg/wordpress"]
 	path = pkg/wordpress
-	url = git@github.com:tokenring-ai/wordpress.git
+	url = ../wordpress.git
 	branch = main
 [submodule "pkg/mysql"]
 	path = pkg/mysql
-	url = git@github.com:tokenring-ai/mysql.git
+	url = ../mysql.git
 	branch = main
 [submodule "pkg/reddit"]
 	path = pkg/reddit
-	url = git@github.com:tokenring-ai/reddit.git
+	url = ../reddit.git
 	branch = main
 [submodule "pkg/research"]
 	path = pkg/research
-	url = git@github.com:tokenring-ai/research.git
+	url = ../research.git
 	branch = main
 [submodule "pkg/sandbox"]
 	path = pkg/sandbox
-	url = git@github.com:tokenring-ai/sandbox.git
+	url = ../sandbox.git
 	branch = main
 [submodule "pkg/s3"]
 	path = pkg/s3
-	url = git@github.com:tokenring-ai/s3.git
+	url = ../s3.git
 	branch = main
 [submodule "pkg/cdn"]
 	path = pkg/cdn
-	url = git@github.com:tokenring-ai/cdn.git
+	url = ../cdn.git
 	branch = main
 [submodule "pkg/template"]
 	path = pkg/template
-	url = git@github.com:tokenring-ai/template.git
+	url = ../template.git
 	branch = main
 [submodule "pkg/tasks"]
 	path = pkg/tasks
-	url = git@github.com:tokenring-ai/tasks.git
+	url = ../tasks.git
 	branch = main
 [submodule "pkg/vault"]
 	path = pkg/vault
-	url = git@github.com:tokenring-ai/vault.git
+	url = ../vault.git
 	branch = main
 [submodule "pkg/linux-audio"]
 	path = pkg/linux-audio
-	url = git@github.com:tokenring-ai/linux-audio.git
+	url = ../linux-audio.git
 	branch = main
 [submodule "deps/naudiodon3"]
 	path = deps/naudiodon3
-	url = git@github.com:tokenring-ai/naudiodon3.git
+	url = ../naudiodon3.git
 	branch = main
 [submodule "pkg/mcp"]
 	path = pkg/mcp
-	url = git@github.com:tokenring-ai/mcp.git
+	url = ../mcp.git
 	branch = main
 [submodule "pkg/checkpoint"]
 	path = pkg/checkpoint
-	url = git@github.com:tokenring-ai/checkpoint.git
+	url = ../checkpoint.git
 	branch = main
 [submodule "pkg/iterables"]
 	path = pkg/iterables
-	url = git@github.com:tokenring-ai/iterables.git
+	url = ../iterables.git
 	branch = main
 [submodule "pkg/scripting"]
 	path = pkg/scripting
-	url = git@github.com:tokenring-ai/scripting.git
+	url = ../scripting.git
 	branch = main
 [submodule "pkg/slack"]
 	path = pkg/slack
-	url = git@github.com:tokenring-ai/slack.git
+	url = ../slack.git
 	branch = main
 [submodule "pkg/telegram"]
 	path = pkg/telegram
-	url = git@github.com:tokenring-ai/telegram.git
+	url = ../telegram.git
 	branch = main
 [submodule "pkg/web-host"]
 	path = pkg/web-host
-	url = git@github.com:tokenring-ai/web-host.git
+	url = ../web-host.git
 	branch = main
 [submodule "pkg/drizzle-storage"]
 	path = pkg/drizzle-storage
-	url = git@github.com:tokenring-ai/drizzle-storage.git
+	url = ../drizzle-storage.git
 	branch = main
 [submodule "pkg/chat"]
 	path = pkg/chat
-	url = git@github.com:tokenring-ai/chat.git
+	url = ../chat.git
 	branch = main
 [submodule "pkg/app"]
 	path = pkg/app
-	url = git@github.com:tokenring-ai/app.git
+	url = ../app.git
 	branch = main
 [submodule "pkg/cli-ink"]
 	path = pkg/cli-ink
-	url = git@github.com:tokenring-ai/cli-ink.git
+	url = ../cli-ink.git
 	branch = main
 [submodule "pkg/audio"]
 	path = pkg/audio
-	url = git@github.com:tokenring-ai/audio.git
+	url = ../audio.git
 	branch = main
 [submodule "deps/ink"]
 	path = deps/ink
-	url = git@github.com:tokenring-ai/ink
+	url = ../ink
 	branch = tall-mode
 [submodule "pkg/discord"]
 	path = pkg/discord
-	url = git@github.com:tokenring-ai/discord.git
+	url = ../discord.git
 	branch = main
 [submodule "pkg/browser-file-system"]
 	path = pkg/browser-file-system
-	url = git@github.com:tokenring-ai/browser-file-system.git
+	url = ../browser-file-system.git
 	branch = main
 [submodule "app/webterminal"]
 	path = frontend/webterminal
-	url = git@github.com:tokenring-ai/webterminal.git
+	url = ../webterminal.git
 	branch = main
 [submodule "frontend/chat"]
 	path = frontend/chat
-	url = git@github.com:tokenring-ai/chat-frontend.git
+	url = ../chat-frontend.git
 	branch = main
 [submodule "pkg/agent"]
 	path = pkg/agent
-	url = git@github.com:tokenring-ai/agent.git
+	url = ../agent.git
 	branch = main
 [submodule "docs"]
 	path = docs
-	url = git@github.com:tokenring-ai/website-docs.git
+	url = ../website-docs.git
 	branch = main
 [submodule "pkg/scheduler"]
 	path = pkg/scheduler
-	url = git@github.com:tokenring-ai/scheduler.git
+	url = ../scheduler.git
 	branch = main
 [submodule "pkg/workflow"]
 	path = pkg/workflow
-	url = git@github.com:tokenring-ai/workflow.git
+	url = ../workflow.git
 	branch = main
 [submodule "pkg/thinking"]
 	path = pkg/thinking
-	url = git@github.com:tokenring-ai/thinking.git
+	url = ../thinking.git
 	branch = main
 [submodule "pkg/image-generation"]
 	path = pkg/image-generation
-	url = git@github.com:tokenring-ai/image-generation.git
+	url = ../image-generation.git
 	branch = main
 [submodule "frontend/electron"]
 	path = frontend/electron
-	url = git@github.com:tokenring-ai/electron-frontend.git
+	url = ../electron-frontend.git
 	branch = main
 [submodule "pkg/polymarket"]
 	path = pkg/polymarket
-	url = git@github.com:tokenring-ai/polymarket.git
+	url = ../polymarket.git
 	branch = main
 [submodule "pkg/kalshi"]
 	path = pkg/kalshi
-	url = git@github.com:tokenring-ai/kalshi.git
+	url = ../kalshi.git
 	branch = main
 [submodule "pkg/rpc"]
 	path = pkg/rpc
-	url = git@github.com:tokenring-ai/rpc.git
+	url = ../rpc.git
 	branch = main
 [submodule "pkg/terminal"]
 	path = pkg/terminal
-	url = git@github.com:tokenring-ai/terminal.git
+	url = ../terminal.git
 	branch = main
 [submodule "pkg/posix-system"]
 	path = pkg/posix-system
-	url = git@github.com:tokenring-ai/posix-system.git
+	url = ../posix-system.git
 	branch = main
 [submodule "pkg/escalation"]
 	path = pkg/escalation
-	url = git@github.com:tokenring-ai/escalation.git
+	url = ../escalation.git
 	branch = main
 [submodule "pkg/typescript"]
 	path = pkg/typescript
-	url = git@github.com:tokenring-ai/typescript.git
+	url = ../typescript.git
 	branch = main
 [submodule "pkg/browser-storage"]
 	path = pkg/browser-storage
-	url = git@github.com:tokenring-ai/browser-storage.git
+	url = ../browser-storage.git
 	branch = main
 [submodule "pkg/google"]
 	path = pkg/google
-	url = git@github.com:tokenring-ai/google
+	url = ../google
 	branch = main
 [submodule "pkg/calendar"]
 	path = pkg/calendar
-	url = git@github.com:tokenring-ai/calendar
+	url = ../calendar
 	branch = main
 [submodule "pkg/email"]
 	path = pkg/email
-	url = git@github.com:tokenring-ai/email
+	url = ../email
 	branch = main
 [submodule "pkg/github"]
 	path = pkg/github
-	url = git@github.com:tokenring-ai/github.git
+	url = ../github.git
 	branch = main
 [submodule "pkg/skills"]
 	path = pkg/skills
-	url = git@github.com:tokenring-ai/skills.git
+	url = ../skills.git
 	branch = main
 [submodule "pkg/metrics"]
 	path = pkg/metrics
-	url = git@github.com:tokenring-ai/metrics.git
+	url = ../metrics.git
 	branch = main
 [submodule "pkg/lifecycle"]
 	path = pkg/lifecycle
-	url = git@github.com:tokenring-ai/lifecycle.git
+	url = ../lifecycle.git
 	branch = main
 [submodule "pkg/acp"]
 	path = pkg/acp
-	url = git@github.com:tokenring-ai/acp.git
+	url = ../acp.git
 	branch = main
 [submodule "pkg/social"]
 	path = pkg/social
-	url = git@github.com:tokenring-ai/social.git
+	url = ../social.git
 	branch = main
 [submodule "pkg/x"]
 	path = pkg/x
-	url = git@github.com:tokenring-ai/x.git
+	url = ../x.git
 	branch = main
 [submodule "pkg/todo"]
 	path = pkg/todo
-	url = git@github.com:tokenring-ai/todo.git
+	url = ../todo.git
 	branch = main
 [submodule "pkg/markdown"]
 	path = pkg/markdown
-	url = git@github.com:tokenring-ai/markdown.git
+	url = ../markdown.git
 	branch = main

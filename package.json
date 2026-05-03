@@ -33,8 +33,7 @@
       "pkg/*",
       "app/*",
       "frontend/*",
-      "deps/*",
-      "docs"
+      "deps/*"
     ]
   }
 }

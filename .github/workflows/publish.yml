@@ -94,19 +94,27 @@ jobs:
           path: ./frontend/chat/dist
       
       - name: Build coder binary
-        run: bun build --compile ./src/tr-coder.ts --outfile coder-linux-x64
+        run: bun build --compile --target=bun-linux-x64 ./src/tr-coder.ts --outfile coder-linux-x64
         working-directory: ./app/coder
 
       - name: Check that coder can start
         run: ./coder-linux-x64 -h
         working-directory: ./app/coder
 
+      - name: Build coder arm64 binary
+        run: bun build --compile --target=bun-linux-arm64 ./src/tr-coder.ts --outfile coder-linux-arm64
+        working-directory: ./app/coder
+
       - name: Build writer binary
-        run: bun build --compile ./src/tr-writer.ts --outfile writer-linux-x64
+        run: bun build --compile --target=bun-linux-x64 ./src/tr-writer.ts --outfile writer-linux-x64
         working-directory: ./app/writer
 
       - name: Check that writer can start
         run: ./writer-linux-x64 -h
+        working-directory: ./app/writer
+
+      - name: Build writer arm64 binary
+        run: bun build --compile --target=bun-linux-arm64 ./src/tr-writer.ts --outfile writer-linux-arm64
         working-directory: ./app/writer
 
       - name: Upload coder binary
@@ -115,11 +123,23 @@ jobs:
           name: coder-linux-x64
           path: ./app/coder/coder-linux-x64
 
+      - name: Upload coder arm64 binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: coder-linux-arm64
+          path: ./app/coder/coder-linux-arm64
+
       - name: Upload writer binary
         uses: actions/upload-artifact@v4
         with:
           name: writer-linux-x64
           path: ./app/writer/writer-linux-x64
+
+      - name: Upload writer arm64 binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: writer-linux-arm64
+          path: ./app/writer/writer-linux-arm64
 
   publish-coder-npm:
     runs-on: ubuntu-latest
@@ -223,6 +243,8 @@ jobs:
         include:
           - os: ubuntu-latest
             arch: linux-x64
+          - os: ubuntu-24.04-arm
+            arch: linux-arm64
           - os: macos-latest
             arch: darwin-arm64
     runs-on: ${{ matrix.os }}
@@ -282,11 +304,13 @@ jobs:
       - name: Prepare Docker builds
         run: |
           mkdir -p app/coder/dist/frontend app/writer/dist/frontend
-          cp artifacts/coder-linux-x64 app/coder/dist/tr-coder
-          cp artifacts/writer-linux-x64 app/writer/dist/tr-writer
+          cp artifacts/coder-linux-x64 app/coder/dist/tr-coder-linux-amd64
+          cp artifacts/coder-linux-arm64 app/coder/dist/tr-coder-linux-arm64
+          cp artifacts/writer-linux-x64 app/writer/dist/tr-writer-linux-amd64
+          cp artifacts/writer-linux-arm64 app/writer/dist/tr-writer-linux-arm64
           cp -r artifacts/chat-frontend app/coder/dist/frontend/chat
           cp -r artifacts/chat-frontend app/writer/dist/frontend/chat
-          chmod +x app/coder/dist/tr-coder app/writer/dist/tr-writer
+          chmod +x app/coder/dist/tr-coder-linux-* app/writer/dist/tr-writer-linux-*
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -294,6 +318,9 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -317,6 +344,7 @@ jobs:
         with:
           context: ./app/coder
           file: ./app/coder/docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-coder.outputs.tags }}
           labels: ${{ steps.meta-coder.outputs.labels }}
@@ -342,6 +370,7 @@ jobs:
         with:
           context: ./app/writer
           file: ./app/writer/docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta-writer.outputs.tags }}
           labels: ${{ steps.meta-writer.outputs.labels }}
