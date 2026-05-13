@@ -31,7 +31,7 @@ jobs:
         working-directory: ./deps/naudiodon3
 
       - name: Build One binary
-        run: bun build --compile ./src/tokenring.ts --outfile tokenring-macos-arm64
+        run: bun build --compile ./tokenring.ts --outfile tokenring-macos-arm64
         working-directory: ./app/one
 
       - name: Copy portaudio lib to One directory
@@ -77,7 +77,7 @@ jobs:
           path: ./frontend/chat/dist
 
       - name: Build One binary
-        run: bun build --compile --target=bun-linux-x64 ./src/tokenring.ts --outfile tokenring-linux-x64
+        run: bun build --compile --target=bun-linux-x64 ./tokenring.ts --outfile tokenring-linux-x64
         working-directory: ./app/one
 
       - name: Check that One can start
@@ -85,7 +85,7 @@ jobs:
         working-directory: ./app/one
 
       - name: Build One arm64 binary
-        run: bun build --compile --target=bun-linux-arm64 ./src/tokenring.ts --outfile tokenring-linux-arm64
+        run: bun build --compile --target=bun-linux-arm64 ./tokenring.ts --outfile tokenring-linux-arm64
         working-directory: ./app/one
 
       - name: Upload One binary

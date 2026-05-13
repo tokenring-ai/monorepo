@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "build-docs": "cd docs && bun run build",
-    "tokenring": "bun --env app/one/src/tokenring.js",
+    "tokenring": "bun --env app/one/tokenring.js",
     "test": "bun run test",
     "prepare": "husky",
     "update-all-dependencies-latest": "bun update --latest",
