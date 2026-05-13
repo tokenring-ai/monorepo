@@ -1,4 +1,7 @@
 [install]
 # Only install package versions published at least 5 days ago
 minimumReleaseAge = 432000
+minimumReleaseAgeExcludes = ["hono", "fast-uri"]
 ignoreScripts = true
+linkWorkspacePackages = false
+linker = "hoisted"

@@ -175,9 +175,17 @@ jobs:
 
       - name: Prepare coder platform package
         run: |
-          cp artifacts/coder-* app/coder/packages/npm/coder/
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder/
-          chmod +x app/coder/packages/npm/coder/coder*
+          mkdir -p \
+            app/coder/packages/npm/coder/bin/darwin-arm64 \
+            app/coder/packages/npm/coder/bin/linux-x64 \
+            app/coder/packages/npm/coder/bin/linux-arm64
+          cp artifacts/coder-macos-arm64 app/coder/packages/npm/coder/bin/darwin-arm64/coder
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder/bin/darwin-arm64/
+          cp artifacts/coder-linux-x64 app/coder/packages/npm/coder/bin/linux-x64/coder
+          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/coder/packages/npm/coder/bin/linux-x64/
+          cp artifacts/coder-linux-arm64 app/coder/packages/npm/coder/bin/linux-arm64/coder
+          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/coder/packages/npm/coder/bin/linux-arm64/
+          chmod +x app/coder/packages/npm/coder/bin/*/coder
           mkdir -p app/coder/packages/npm/coder/frontend/chat
           cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder/frontend/chat
 
@@ -222,9 +230,17 @@ jobs:
 
       - name: Prepare writer platform package
         run: |
-          cp artifacts/writer-* app/writer/packages/npm/writer/
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer/
-          chmod +x app/writer/packages/npm/writer/writer*
+          mkdir -p \
+            app/writer/packages/npm/writer/bin/darwin-arm64 \
+            app/writer/packages/npm/writer/bin/linux-x64 \
+            app/writer/packages/npm/writer/bin/linux-arm64
+          cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer/bin/darwin-arm64/writer
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer/bin/darwin-arm64/
+          cp artifacts/writer-linux-x64 app/writer/packages/npm/writer/bin/linux-x64/writer
+          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/writer/packages/npm/writer/bin/linux-x64/
+          cp artifacts/writer-linux-arm64 app/writer/packages/npm/writer/bin/linux-arm64/writer
+          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/writer/packages/npm/writer/bin/linux-arm64/
+          chmod +x app/writer/packages/npm/writer/bin/*/writer
           mkdir -p app/writer/packages/npm/writer/frontend/chat
           cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer/frontend/chat
 
