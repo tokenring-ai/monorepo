@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/tokenring-ai/monorepo)](https://github.com/tokenring-ai/monorepo)
-[![Downloads](https://img.shields.io/npm/dy/%40tokenring-ai%2Fcoder)](https://www.npmjs.com/package/@tokenring-ai/coder)
+[![Downloads](https://img.shields.io/npm/dy/%40tokenring-ai%2Fone)](https://www.npmjs.com/package/@tokenring-ai/one)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/tokenring-ai/monorepo/publish.yml)](https://github.com/tokenring-ai/tokenring/actions)
 [![Open Issues](https://img.shields.io/github/issues/tokenring-ai/monorepo)](https://github.com/tokenring-ai/tokenring/issues)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)](https://typescriptlang.org)
@@ -10,9 +10,9 @@
 
 <img src="assets/logo.png" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
 
-**A comprehensive AI-powered development and content creation ecosystem**
+**A comprehensive AI-powered development, content creation, and workflow automation ecosystem**
 
-TokenRing AI is a modular TypeScript monorepo hosting two flagship applications—**TokenRing Coder** and **TokenRing Writer**—built on a foundation of 50+ specialized packages. The ecosystem provides AI-assisted coding, content creation, and workflow automation through a unified agent-based architecture.
+TokenRing AI is a modular TypeScript monorepo centered on **TokenRing One**, a single AI assistant application built on a foundation of 50+ specialized packages. TokenRing One brings coding, content creation, research, publishing, and workflow automation into a unified agent-based architecture.
 
 ---
 
@@ -58,75 +58,43 @@ export OPENROUTER_API_KEY=...
 export SERPER_API_KEY=...
 ```
 
-### Running Applications
-
-#### TokenRing Coder
+### Running TokenRing One
 
 ```bash
 # Run with npx
-npx @tokenring-ai/coder
+npx @tokenring-ai/one
 
 # Run locally
-bun run coder
+bun run tokenring
 
 # Run with Docker
-docker pull ghcr.io/tokenring-ai/coder:latest
+docker pull ghcr.io/tokenring-ai/one:latest
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/coder:latest
-```
-
-#### TokenRing Writer
-
-```bash
-# Run with npx
-npx @tokenring-ai/writer
-
-# Run locally
-bun run writer
-
-# Run with Docker
-docker pull ghcr.io/tokenring-ai/writer:latest
-docker run -ti --rm \
-  -v ./your-content:/repo:rw \
-  -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/writer:latest
+  ghcr.io/tokenring-ai/one:latest
 ```
 
 ---
 
-## Applications
+## Application
 
-### TokenRing Coder
+### TokenRing One
 
-An AI-powered coding assistant with a comprehensive 50+ package ecosystem for local development. Supports multiple AI providers, multi-agent workflows, and advanced development tools including code intelligence, testing, git integration, and cloud services.
+An AI-powered assistant with a comprehensive 50+ package ecosystem for local development, research, content work, and automation. Supports multiple AI providers, multi-agent workflows, and advanced tools including code intelligence, testing, git integration, publishing, cloud services, and browser automation.
 
 **Key Features:**
 - Multiple AI providers (OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek)
-- Multi-agent orchestration with specialized roles (frontend, backend, DevOps, testing)
+- Multi-agent orchestration with specialized roles for engineering, research, writing, publishing, and operations
 - Code intelligence with Tree-sitter integration
 - Git operations with auto-commit
 - Docker and Kubernetes integration
 - Database support (MySQL, SQLite, PostgreSQL)
+- Content publishing integration with Ghost.io, WordPress, and more
 - Audio processing and transcription
 - Web search and browser automation
 
-[Full Coder Documentation](https://github.com/tokenring-ai/coder)
-
-### TokenRing Writer
-
-A unified platform for writing and managing news articles and blog posts. Leverages AI to assist with writing, editing, research, and publishing workflows.
-
-**Key Features:**
-- Specialized content creation agents (writer, editor, researcher, publisher)
-- Interactive chat interface for content assistance
-- Persistent content history in SQLite
-- Publishing integration with Ghost.io, WordPress, and more
-- Research capabilities with web search and Wikipedia
-- Multi-model AI support
-
-[Full Writer Documentation](https://github.com/tokenring-ai/writer)
+[Full TokenRing One Documentation](https://github.com/tokenring-ai/one)
 
 ---
 
@@ -225,10 +193,10 @@ The TokenRing ecosystem follows a modular, agent-centric architecture:
 ```
 +----------------------------------------------------------------+
 |                      Applications Layer                        |
-|  +----------------------+    +----------------------+          |
-|  |  TokenRing Coder     |    |  TokenRing Writer    |          |
-|  |  (Development AI)    |    |  (Content Creation)  |          |
-|  +----------------------+    +----------------------+          |
+|  +----------------------------------------------------------+  |
+|  |  TokenRing One                                           |  |
+|  |  Development, Content Creation, Research, Automation     |  |
+|  +----------------------------------------------------------+  |
 +----------------------------------------------------------------+
                               |
 +----------------------------------------------------------------+
@@ -236,7 +204,7 @@ The TokenRing ecosystem follows a modular, agent-centric architecture:
 |  +----------------------------------------------------------+  |
 |  |  Agent Team (Multi-Agent Orchestration)                  |  |
 |  |  - Team Leader  - Frontend  - Backend  - DevOps          |  |
-|  |  - Writer  - Editor  - Researcher  - Publisher           |  |
+|  |  - Writing  - Editing  - Research  - Publishing          |  |
 |  +----------------------------------------------------------+  |
 +----------------------------------------------------------------+
                               |
@@ -272,8 +240,7 @@ The TokenRing ecosystem follows a modular, agent-centric architecture:
 ```
 tokenring/
 |-- app/                    # Applications
-|   |-- coder/             # TokenRing Coder
-|   |-- writer/            # TokenRing Writer
+|   |-- one/               # TokenRing One
 |-- pkg/                   # Packages
 |   |-- agent/            # Core agent system
 |   |-- ai-client/        # AI integration
@@ -380,22 +347,14 @@ bun test --coverage
 
 ## Docker
 
-Both applications are available as Docker images:
+TokenRing One is available as a Docker image:
 
 ```bash
-# TokenRing Coder
-docker pull ghcr.io/tokenring-ai/coder:latest
+docker pull ghcr.io/tokenring-ai/one:latest
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/coder:latest
-
-# TokenRing Writer
-docker pull ghcr.io/tokenring-ai/writer:latest
-docker run -ti --rm \
-  -v ./your-content:/repo:rw \
-  -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/writer:latest
+  ghcr.io/tokenring-ai/one:latest
 ```
 
 ### Docker Compose
@@ -403,8 +362,8 @@ docker run -ti --rm \
 ```yaml
 version: '3.8'
 services:
-  tokenring-coder:
-    image: ghcr.io/tokenring-ai/coder:latest
+  tokenring-one:
+    image: ghcr.io/tokenring-ai/one:latest
     volumes:
       - ./project:/repo:rw
     environment:
@@ -413,22 +372,15 @@ services:
     ports:
       - "3000:3000"
     command: ["--http", "0.0.0.0:3000"]
-
-  tokenring-writer:
-    image: ghcr.io/tokenring-ai/writer:latest
-    volumes:
-      - ./content:/repo:rw
-    environment:
-      - OPENAI_API_KEY
 ```
 
 ---
 
 ## Configuration
 
-Both applications use `.tokenring/` directory for configuration:
+TokenRing One uses the `.tokenring/` directory for configuration:
 
-### Coder Configuration (`.tokenring/coder-config.mjs`)
+### TokenRing One Configuration (`.tokenring/one-config.mjs`)
 
 ```javascript
 export default {
@@ -445,17 +397,6 @@ export default {
   storage: {
     type: "drizzle",
     providers: { sqlite: { file: "./data/tokenring.db" } }
-  }
-};
-```
-
-### Writer Configuration (`.tokenring/writer-config.js`)
-
-```javascript
-export default {
-  defaults: {
-    agent: "contentWriter",
-    model: "gpt-4o"
   },
   publishing: {
     ghost: {
@@ -470,8 +411,6 @@ export default {
 
 ## Available Agents
 
-### Coder Agents
-
 - **teamLeader** - Orchestrates full-stack projects
 - **fullStackDeveloper** - Implements complete features
 - **frontendDesign** - React/Vue components and UI
@@ -479,9 +418,6 @@ export default {
 - **testEngineer** - Testing and quality assurance
 - **devopsEngineer** - CI/CD and infrastructure
 - **securityReview** - Security assessments
-
-### Writer Agents
-
 - **contentWriter** - Creates engaging articles and blog posts
 - **managingEditor** - Coordinates content creation and assignments
 - **researcher** - Gathers information and sources
@@ -491,8 +427,7 @@ export default {
 
 ## Documentation
 
-- [Coder Documentation](https://github.com/tokenring-ai/coder) - Complete guide to TokenRing Coder
-- [Writer Documentation](https://github.com/tokenring-ai/writer) - Complete guide to TokenRing Writer
+- [TokenRing One Documentation](https://github.com/tokenring-ai/one) - Complete guide to TokenRing One
 - [Package Index](PACKAGES.md) - Detailed package documentation
 - [Dependency Graph](DEPENDENCIES.md) - Package dependencies and relationships
 - [API Documentation](https://docs.tokenring.ai) - API references and guides

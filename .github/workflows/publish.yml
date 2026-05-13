@@ -22,47 +22,30 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: 1.3.5
-      
+
       - name: Install dependencies
         run: bun install
 
       - name: Build naudiodon3
         run: bun run install
         working-directory: ./deps/naudiodon3
-      
-      - name: Build coder binary
-        run: bun build --compile ./src/tr-coder.ts --outfile coder-macos-arm64
-        working-directory: ./app/coder
 
-      - name: Copy portaudio lib to coder directory
+      - name: Build One binary
+        run: bun build --compile ./src/tokenring.ts --outfile tokenring-macos-arm64
+        working-directory: ./app/one
+
+      - name: Copy portaudio lib to One directory
         run: |
-          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/coder
-          cd app/coder
-          install_name_tool -add_rpath "@loader_path" coder-macos-arm64
-          ./coder-macos-arm64 -h
+          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/one
+          cd app/one
+          install_name_tool -add_rpath "@loader_path" tokenring-macos-arm64
+          ./tokenring-macos-arm64 -h
 
-      - name: Build writer binary
-        run: bun build --compile ./src/tr-writer.ts --outfile writer-macos-arm64
-        working-directory: ./app/writer
-
-      - name: Copy portaudio lib to writer directory
-        run: |
-          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/writer
-          cd app/writer
-          install_name_tool -add_rpath "@loader_path" writer-macos-arm64
-          ./writer-macos-arm64 -h
-
-      - name: Upload coder binary
+      - name: Upload One binary
         uses: actions/upload-artifact@v4
         with:
-          name: coder-macos-arm64
-          path: ./app/coder/coder-macos-arm64
-
-      - name: Upload writer binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: writer-macos-arm64
-          path: ./app/writer/writer-macos-arm64
+          name: tokenring-macos-arm64
+          path: ./app/one/tokenring-macos-arm64
 
   build-linux-x64:
     runs-on: ubuntu-latest
@@ -75,7 +58,7 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: 1.3.5
-      
+
       - name: Install dependencies
         run: bun install
 
@@ -86,62 +69,38 @@ jobs:
       - name: Build chat frontend
         run: bun run build
         working-directory: ./frontend/chat
-      
+
       - name: Upload chat frontend
         uses: actions/upload-artifact@v4
         with:
           name: chat-frontend
           path: ./frontend/chat/dist
-      
-      - name: Build coder binary
-        run: bun build --compile --target=bun-linux-x64 ./src/tr-coder.ts --outfile coder-linux-x64
-        working-directory: ./app/coder
 
-      - name: Check that coder can start
-        run: ./coder-linux-x64 -h
-        working-directory: ./app/coder
+      - name: Build One binary
+        run: bun build --compile --target=bun-linux-x64 ./src/tokenring.ts --outfile tokenring-linux-x64
+        working-directory: ./app/one
 
-      - name: Build coder arm64 binary
-        run: bun build --compile --target=bun-linux-arm64 ./src/tr-coder.ts --outfile coder-linux-arm64
-        working-directory: ./app/coder
+      - name: Check that One can start
+        run: ./tokenring-linux-x64 -h
+        working-directory: ./app/one
 
-      - name: Build writer binary
-        run: bun build --compile --target=bun-linux-x64 ./src/tr-writer.ts --outfile writer-linux-x64
-        working-directory: ./app/writer
+      - name: Build One arm64 binary
+        run: bun build --compile --target=bun-linux-arm64 ./src/tokenring.ts --outfile tokenring-linux-arm64
+        working-directory: ./app/one
 
-      - name: Check that writer can start
-        run: ./writer-linux-x64 -h
-        working-directory: ./app/writer
-
-      - name: Build writer arm64 binary
-        run: bun build --compile --target=bun-linux-arm64 ./src/tr-writer.ts --outfile writer-linux-arm64
-        working-directory: ./app/writer
-
-      - name: Upload coder binary
+      - name: Upload One binary
         uses: actions/upload-artifact@v4
         with:
-          name: coder-linux-x64
-          path: ./app/coder/coder-linux-x64
+          name: tokenring-linux-x64
+          path: ./app/one/tokenring-linux-x64
 
-      - name: Upload coder arm64 binary
+      - name: Upload One arm64 binary
         uses: actions/upload-artifact@v4
         with:
-          name: coder-linux-arm64
-          path: ./app/coder/coder-linux-arm64
+          name: tokenring-linux-arm64
+          path: ./app/one/tokenring-linux-arm64
 
-      - name: Upload writer binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: writer-linux-x64
-          path: ./app/writer/writer-linux-x64
-
-      - name: Upload writer arm64 binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: writer-linux-arm64
-          path: ./app/writer/writer-linux-arm64
-
-  publish-coder-npm:
+  publish-one-npm:
     runs-on: ubuntu-latest
     needs: [build-macos-arm64, build-linux-x64]
     permissions:
@@ -166,93 +125,38 @@ jobs:
           name: chat-frontend
           path: ./artifacts/chat-frontend
 
-      - name: Download coder binaries
+      - name: Download One binaries
         uses: actions/download-artifact@v4
         with:
-          pattern: coder-*
+          pattern: tokenring-*
           path: ./artifacts
           merge-multiple: true
 
-      - name: Prepare coder platform package
+      - name: Prepare One platform package
         run: |
           mkdir -p \
-            app/coder/packages/npm/coder/bin/darwin-arm64 \
-            app/coder/packages/npm/coder/bin/linux-x64 \
-            app/coder/packages/npm/coder/bin/linux-arm64
-          cp artifacts/coder-macos-arm64 app/coder/packages/npm/coder/bin/darwin-arm64/coder
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/coder/packages/npm/coder/bin/darwin-arm64/
-          cp artifacts/coder-linux-x64 app/coder/packages/npm/coder/bin/linux-x64/coder
-          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/coder/packages/npm/coder/bin/linux-x64/
-          cp artifacts/coder-linux-arm64 app/coder/packages/npm/coder/bin/linux-arm64/coder
-          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/coder/packages/npm/coder/bin/linux-arm64/
-          chmod +x app/coder/packages/npm/coder/bin/*/coder
-          mkdir -p app/coder/packages/npm/coder/frontend/chat
-          cp -r artifacts/chat-frontend/* app/coder/packages/npm/coder/frontend/chat
+            app/one/packages/npm/one/bin/darwin-arm64 \
+            app/one/packages/npm/one/bin/linux-x64 \
+            app/one/packages/npm/one/bin/linux-arm64
+          cp artifacts/tokenring-macos-arm64 app/one/packages/npm/one/bin/darwin-arm64/tokenring
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/one/packages/npm/one/bin/darwin-arm64/
+          cp artifacts/tokenring-linux-x64 app/one/packages/npm/one/bin/linux-x64/tokenring
+          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/one/packages/npm/one/bin/linux-x64/
+          cp artifacts/tokenring-linux-arm64 app/one/packages/npm/one/bin/linux-arm64/tokenring
+          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/one/packages/npm/one/bin/linux-arm64/
+          chmod +x app/one/packages/npm/one/bin/*/tokenring
+          mkdir -p app/one/packages/npm/one/frontend/chat
+          cp -r artifacts/chat-frontend/* app/one/packages/npm/one/frontend/chat
 
-      - name: Publish coder to NPM
+      - name: Publish One to NPM
         if: startsWith(github.ref, 'refs/tags/v')
         run: npm publish --provenance --access public --tag next
-        working-directory: ./app/coder/packages/npm/coder
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  publish-writer-npm:
-    runs-on: ubuntu-latest
-    needs: [build-macos-arm64, build-linux-x64]
-    permissions:
-      contents: read
-      id-token: write
-      packages: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Setup Node.js for npm publishing
-        uses: actions/setup-node@v6
-        with:
-          node-version: '24'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Download chat frontend
-        uses: actions/download-artifact@v4
-        with:
-          name: chat-frontend
-          path: ./artifacts/chat-frontend
-
-      - name: Download writer binaries
-        uses: actions/download-artifact@v4
-        with:
-          pattern: writer-*
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Prepare writer platform package
-        run: |
-          mkdir -p \
-            app/writer/packages/npm/writer/bin/darwin-arm64 \
-            app/writer/packages/npm/writer/bin/linux-x64 \
-            app/writer/packages/npm/writer/bin/linux-arm64
-          cp artifacts/writer-macos-arm64 app/writer/packages/npm/writer/bin/darwin-arm64/writer
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/writer/packages/npm/writer/bin/darwin-arm64/
-          cp artifacts/writer-linux-x64 app/writer/packages/npm/writer/bin/linux-x64/writer
-          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/writer/packages/npm/writer/bin/linux-x64/
-          cp artifacts/writer-linux-arm64 app/writer/packages/npm/writer/bin/linux-arm64/writer
-          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/writer/packages/npm/writer/bin/linux-arm64/
-          chmod +x app/writer/packages/npm/writer/bin/*/writer
-          mkdir -p app/writer/packages/npm/writer/frontend/chat
-          cp -r artifacts/chat-frontend/* app/writer/packages/npm/writer/frontend/chat
-
-      - name: Publish writer to NPM
-        if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --provenance --access public --tag next
-        working-directory: ./app/writer/packages/npm/writer
+        working-directory: ./app/one/packages/npm/one
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   verify-npm-publish:
-    needs: [ publish-coder-npm, publish-writer-npm ]
+    needs: [publish-one-npm]
     if: startsWith(github.ref, 'refs/tags/v')
     strategy:
       matrix:
@@ -278,15 +182,12 @@ jobs:
       - name: Wait for npm registry propagation
         run: sleep 30
 
-      - name: Test coder package
-        run: npx @tokenring-ai/coder@${{ steps.version.outputs.version }} -h
-
-      - name: Test writer package
-        run: npx @tokenring-ai/writer@${{ steps.version.outputs.version }} -h
+      - name: Test One package
+        run: npx @tokenring-ai/one@${{ steps.version.outputs.version }} -h
 
   publish-docker:
     runs-on: ubuntu-latest
-    needs: [ publish-coder-npm, publish-writer-npm ]
+    needs: [publish-one-npm]
     permissions:
       contents: read
       id-token: write
@@ -303,30 +204,20 @@ jobs:
           name: chat-frontend
           path: ./artifacts/chat-frontend
 
-      - name: Download coder binaries
+      - name: Download One binaries
         uses: actions/download-artifact@v4
         with:
-          pattern: coder-linux-*
+          pattern: tokenring-linux-*
           path: ./artifacts
           merge-multiple: true
 
-      - name: Download writer binaries
-        uses: actions/download-artifact@v4
-        with:
-          pattern: writer-linux-*
-          path: ./artifacts
-          merge-multiple: true
-
-      - name: Prepare Docker builds
+      - name: Prepare Docker build
         run: |
-          mkdir -p app/coder/dist/frontend app/writer/dist/frontend
-          cp artifacts/coder-linux-x64 app/coder/dist/tr-coder-linux-amd64
-          cp artifacts/coder-linux-arm64 app/coder/dist/tr-coder-linux-arm64
-          cp artifacts/writer-linux-x64 app/writer/dist/tr-writer-linux-amd64
-          cp artifacts/writer-linux-arm64 app/writer/dist/tr-writer-linux-arm64
-          cp -r artifacts/chat-frontend app/coder/dist/frontend/chat
-          cp -r artifacts/chat-frontend app/writer/dist/frontend/chat
-          chmod +x app/coder/dist/tr-coder-linux-* app/writer/dist/tr-writer-linux-*
+          mkdir -p app/one/dist/frontend
+          cp artifacts/tokenring-linux-x64 app/one/dist/tokenring-linux-amd64
+          cp artifacts/tokenring-linux-arm64 app/one/dist/tokenring-linux-arm64
+          cp -r artifacts/chat-frontend app/one/dist/frontend/chat
+          chmod +x app/one/dist/tokenring-linux-*
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3
@@ -341,11 +232,11 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Extract metadata for Coder
-        id: meta-coder
+      - name: Extract metadata for One
+        id: meta-one
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/tokenring-ai/coder
+          images: ${{ env.REGISTRY }}/tokenring-ai/one
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
@@ -354,41 +245,15 @@ jobs:
             type=sha,format=short
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push Coder Docker image
+      - name: Build and push One Docker image
 #        if: startsWith(github.ref, 'refs/tags/v')
         uses: docker/build-push-action@v5
         with:
-          context: ./app/coder
-          file: ./app/coder/docker/Dockerfile
+          context: ./app/one
+          file: ./app/one/docker/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ steps.meta-coder.outputs.tags }}
-          labels: ${{ steps.meta-coder.outputs.labels }}
-          cache-from: type=gha,scope=coder
-          cache-to: type=gha,mode=max,scope=coder
-
-      - name: Extract metadata for Writer
-        id: meta-writer
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/tokenring-ai/writer
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,format=short
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push Writer Docker image
-#        if: startsWith(github.ref, 'refs/tags/v')
-        uses: docker/build-push-action@v5
-        with:
-          context: ./app/writer
-          file: ./app/writer/docker/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta-writer.outputs.tags }}
-          labels: ${{ steps.meta-writer.outputs.labels }}
-          cache-from: type=gha,scope=writer
-          cache-to: type=gha,mode=max,scope=writer
+          tags: ${{ steps.meta-one.outputs.tags }}
+          labels: ${{ steps.meta-one.outputs.labels }}
+          cache-from: type=gha,scope=one
+          cache-to: type=gha,mode=max,scope=one

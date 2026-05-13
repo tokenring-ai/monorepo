@@ -1,10 +1,6 @@
-[submodule "app/coder"]
-	path = app/coder
-	url = ../coder.git
-	branch = main
-[submodule "app/writer"]
-	path = app/writer
-	url = ../writer.git
+[submodule "app/one"]
+	path = app/one
+	url = https://github.com/tokenring-ai/one.git
 	branch = main
 [submodule "pkg/ai-client"]
 	path = pkg/ai-client
