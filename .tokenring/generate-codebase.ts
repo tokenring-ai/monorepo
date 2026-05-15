@@ -1,3 +1,4 @@
+import { YAML } from "bun";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -13,42 +14,43 @@ function getSubdirectories(srcPath: string) {
 }
 
 function makeFileTreeEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
- const name = `fileTree/${dir}`;
+ const name = `fileTree/${pkgRoot}/${dir}`;
  resources[name] = {
   type: "fileTree",
   description: `${pkgRoot}/${dir} File Tree`,
   items: [
    {
     path: `./${pkgRoot}/${dir}`,
-    include: /\.(prisma|graphql|txt|js|jsx|md|json)$/,
+    include: "\.(txt|tsx?|jsx?|md|json|yaml)$",
    },
   ],
  };
 }
 
 function makeRepoMapEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
- const name = `repoMap/${dir}`;
+ const name = `repoMap/${pkgRoot}/${dir}`;
  resources[name] = {
   type: "repoMap",
   description: `${pkgRoot}/${dir} Repo Map`,
   items: [
    {
     path: `./${pkgRoot}/${dir}`,
-    include: /\.(prisma|graphql|txt|js|jsx|md|json)$/,
+    include: "\\.(txt|tsx?|jsx?|md|json|yaml)$",
    },
   ],
  };
 }
 
 function makeWholeFileEntry(pkgRoot: string, dir: string, resources: Record<string, any>) {
- const name = `wholeFile/${dir}`;
+ const name = `wholeFile/${pkgRoot}/${dir}`;
  resources[name] = {
   type: "wholeFile",
   description: `${pkgRoot}/${dir} Source Files`,
   items: [
    {
     path: `./${pkgRoot}/${dir}`,
-    include: /\.(prisma|graphql|txt|js|jsx|md|json)$/,
+    include: "\\.(txt|tsx?|jsx?|md|json)$",
+    exclude: "/test/|\\.test\\."
    },
   ],
  };
@@ -67,41 +69,13 @@ for (const pkgRoot of packageRoots) {
  }
 }
 
-export default {
-  /*websearch: {
-    defaultProvider: "serper",
-    providers: {
-      serper: {
-        type: "serper",
-        apiKey: process.env.SERPER_API_KEY,
-      },
-      scraperapi: {
-        type: "scraperapi",
-        apiKey: process.env.SCRAPERAPI_API_KEY,
-      },
-    }
-  },*/
-  /*filesystem: {
-    providers: {
-      local: {
-        type: "posix",
-        indexedFiles: [
-          {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-          {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-          {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-        ],
-        watchedFiles: [
-          {path: "./pkg", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-          {path: "./app", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-          {path: "./frontend", include: /.(js|ts|jsx|tsx|md|sql|txt)$/},
-        ],
-      }
-    }
-  },*/
+const configFile = path.resolve(import.meta.dir, "configs/codebase.yaml")
+
+fs.writeFileSync(configFile, YAML.stringify({
   codebase: {
     resources: {
       ...dynamicRepoMapResources,
       ...dynamicCodebaseResources,
     },
   },
-};
+}, null, 2));

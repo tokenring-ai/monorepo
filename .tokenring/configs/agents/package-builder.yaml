@@ -11,7 +11,7 @@ agents:
       context:
         initial:
           - type: system-message
-          - type: tool-context
+          - type: codebase-context
           - type: search-files
           - type: current-message
       systemPrompt: |

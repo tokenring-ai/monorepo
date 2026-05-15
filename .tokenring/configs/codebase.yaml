@@ -1,0 +1,1503 @@
+codebase: 
+  resources: 
+    repoMap/pkg/acp: 
+      type: repoMap
+      description: pkg/acp Repo Map
+      items: 
+        - path: ./pkg/acp
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/agent: 
+      type: repoMap
+      description: pkg/agent Repo Map
+      items: 
+        - path: ./pkg/agent
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/ai-client: 
+      type: repoMap
+      description: pkg/ai-client Repo Map
+      items: 
+        - path: ./pkg/ai-client
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/app: 
+      type: repoMap
+      description: pkg/app Repo Map
+      items: 
+        - path: ./pkg/app
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/audio: 
+      type: repoMap
+      description: pkg/audio Repo Map
+      items: 
+        - path: ./pkg/audio
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/aws: 
+      type: repoMap
+      description: pkg/aws Repo Map
+      items: 
+        - path: ./pkg/aws
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/blog: 
+      type: repoMap
+      description: pkg/blog Repo Map
+      items: 
+        - path: ./pkg/blog
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/browser-file-system: 
+      type: repoMap
+      description: pkg/browser-file-system Repo Map
+      items: 
+        - path: ./pkg/browser-file-system
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/browser-storage: 
+      type: repoMap
+      description: pkg/browser-storage Repo Map
+      items: 
+        - path: ./pkg/browser-storage
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/calendar: 
+      type: repoMap
+      description: pkg/calendar Repo Map
+      items: 
+        - path: ./pkg/calendar
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/cdn: 
+      type: repoMap
+      description: pkg/cdn Repo Map
+      items: 
+        - path: ./pkg/cdn
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/chat: 
+      type: repoMap
+      description: pkg/chat Repo Map
+      items: 
+        - path: ./pkg/chat
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/checkpoint: 
+      type: repoMap
+      description: pkg/checkpoint Repo Map
+      items: 
+        - path: ./pkg/checkpoint
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/chrome: 
+      type: repoMap
+      description: pkg/chrome Repo Map
+      items: 
+        - path: ./pkg/chrome
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/cli: 
+      type: repoMap
+      description: pkg/cli Repo Map
+      items: 
+        - path: ./pkg/cli
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/cloudquote: 
+      type: repoMap
+      description: pkg/cloudquote Repo Map
+      items: 
+        - path: ./pkg/cloudquote
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/code-watch: 
+      type: repoMap
+      description: pkg/code-watch Repo Map
+      items: 
+        - path: ./pkg/code-watch
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/codebase: 
+      type: repoMap
+      description: pkg/codebase Repo Map
+      items: 
+        - path: ./pkg/codebase
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/database: 
+      type: repoMap
+      description: pkg/database Repo Map
+      items: 
+        - path: ./pkg/database
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/discord: 
+      type: repoMap
+      description: pkg/discord Repo Map
+      items: 
+        - path: ./pkg/discord
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/docker: 
+      type: repoMap
+      description: pkg/docker Repo Map
+      items: 
+        - path: ./pkg/docker
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/drizzle-storage: 
+      type: repoMap
+      description: pkg/drizzle-storage Repo Map
+      items: 
+        - path: ./pkg/drizzle-storage
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/email: 
+      type: repoMap
+      description: pkg/email Repo Map
+      items: 
+        - path: ./pkg/email
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/escalation: 
+      type: repoMap
+      description: pkg/escalation Repo Map
+      items: 
+        - path: ./pkg/escalation
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/feedback: 
+      type: repoMap
+      description: pkg/feedback Repo Map
+      items: 
+        - path: ./pkg/feedback
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/file-index: 
+      type: repoMap
+      description: pkg/file-index Repo Map
+      items: 
+        - path: ./pkg/file-index
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/filesystem: 
+      type: repoMap
+      description: pkg/filesystem Repo Map
+      items: 
+        - path: ./pkg/filesystem
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/ghost-io: 
+      type: repoMap
+      description: pkg/ghost-io Repo Map
+      items: 
+        - path: ./pkg/ghost-io
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/git: 
+      type: repoMap
+      description: pkg/git Repo Map
+      items: 
+        - path: ./pkg/git
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/github: 
+      type: repoMap
+      description: pkg/github Repo Map
+      items: 
+        - path: ./pkg/github
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/google: 
+      type: repoMap
+      description: pkg/google Repo Map
+      items: 
+        - path: ./pkg/google
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/image-generation: 
+      type: repoMap
+      description: pkg/image-generation Repo Map
+      items: 
+        - path: ./pkg/image-generation
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/iterables: 
+      type: repoMap
+      description: pkg/iterables Repo Map
+      items: 
+        - path: ./pkg/iterables
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/javascript: 
+      type: repoMap
+      description: pkg/javascript Repo Map
+      items: 
+        - path: ./pkg/javascript
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/kalshi: 
+      type: repoMap
+      description: pkg/kalshi Repo Map
+      items: 
+        - path: ./pkg/kalshi
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/kubernetes: 
+      type: repoMap
+      description: pkg/kubernetes Repo Map
+      items: 
+        - path: ./pkg/kubernetes
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/lifecycle: 
+      type: repoMap
+      description: pkg/lifecycle Repo Map
+      items: 
+        - path: ./pkg/lifecycle
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/linux-audio: 
+      type: repoMap
+      description: pkg/linux-audio Repo Map
+      items: 
+        - path: ./pkg/linux-audio
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/markdown: 
+      type: repoMap
+      description: pkg/markdown Repo Map
+      items: 
+        - path: ./pkg/markdown
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/mcp: 
+      type: repoMap
+      description: pkg/mcp Repo Map
+      items: 
+        - path: ./pkg/mcp
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/memory: 
+      type: repoMap
+      description: pkg/memory Repo Map
+      items: 
+        - path: ./pkg/memory
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/metrics: 
+      type: repoMap
+      description: pkg/metrics Repo Map
+      items: 
+        - path: ./pkg/metrics
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/mysql: 
+      type: repoMap
+      description: pkg/mysql Repo Map
+      items: 
+        - path: ./pkg/mysql
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/newsrpm: 
+      type: repoMap
+      description: pkg/newsrpm Repo Map
+      items: 
+        - path: ./pkg/newsrpm
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/polymarket: 
+      type: repoMap
+      description: pkg/polymarket Repo Map
+      items: 
+        - path: ./pkg/polymarket
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/posix-system: 
+      type: repoMap
+      description: pkg/posix-system Repo Map
+      items: 
+        - path: ./pkg/posix-system
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/queue: 
+      type: repoMap
+      description: pkg/queue Repo Map
+      items: 
+        - path: ./pkg/queue
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/reddit: 
+      type: repoMap
+      description: pkg/reddit Repo Map
+      items: 
+        - path: ./pkg/reddit
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/research: 
+      type: repoMap
+      description: pkg/research Repo Map
+      items: 
+        - path: ./pkg/research
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/rpc: 
+      type: repoMap
+      description: pkg/rpc Repo Map
+      items: 
+        - path: ./pkg/rpc
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/s3: 
+      type: repoMap
+      description: pkg/s3 Repo Map
+      items: 
+        - path: ./pkg/s3
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/sandbox: 
+      type: repoMap
+      description: pkg/sandbox Repo Map
+      items: 
+        - path: ./pkg/sandbox
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/scheduler: 
+      type: repoMap
+      description: pkg/scheduler Repo Map
+      items: 
+        - path: ./pkg/scheduler
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/scraperapi: 
+      type: repoMap
+      description: pkg/scraperapi Repo Map
+      items: 
+        - path: ./pkg/scraperapi
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/scripting: 
+      type: repoMap
+      description: pkg/scripting Repo Map
+      items: 
+        - path: ./pkg/scripting
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/serper: 
+      type: repoMap
+      description: pkg/serper Repo Map
+      items: 
+        - path: ./pkg/serper
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/skills: 
+      type: repoMap
+      description: pkg/skills Repo Map
+      items: 
+        - path: ./pkg/skills
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/slack: 
+      type: repoMap
+      description: pkg/slack Repo Map
+      items: 
+        - path: ./pkg/slack
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/social: 
+      type: repoMap
+      description: pkg/social Repo Map
+      items: 
+        - path: ./pkg/social
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/tasks: 
+      type: repoMap
+      description: pkg/tasks Repo Map
+      items: 
+        - path: ./pkg/tasks
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/telegram: 
+      type: repoMap
+      description: pkg/telegram Repo Map
+      items: 
+        - path: ./pkg/telegram
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/template: 
+      type: repoMap
+      description: pkg/template Repo Map
+      items: 
+        - path: ./pkg/template
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/terminal: 
+      type: repoMap
+      description: pkg/terminal Repo Map
+      items: 
+        - path: ./pkg/terminal
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/testing: 
+      type: repoMap
+      description: pkg/testing Repo Map
+      items: 
+        - path: ./pkg/testing
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/thinking: 
+      type: repoMap
+      description: pkg/thinking Repo Map
+      items: 
+        - path: ./pkg/thinking
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/todo: 
+      type: repoMap
+      description: pkg/todo Repo Map
+      items: 
+        - path: ./pkg/todo
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/typescript: 
+      type: repoMap
+      description: pkg/typescript Repo Map
+      items: 
+        - path: ./pkg/typescript
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/utility: 
+      type: repoMap
+      description: pkg/utility Repo Map
+      items: 
+        - path: ./pkg/utility
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/vault: 
+      type: repoMap
+      description: pkg/vault Repo Map
+      items: 
+        - path: ./pkg/vault
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/web-host: 
+      type: repoMap
+      description: pkg/web-host Repo Map
+      items: 
+        - path: ./pkg/web-host
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/websearch: 
+      type: repoMap
+      description: pkg/websearch Repo Map
+      items: 
+        - path: ./pkg/websearch
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/wikipedia: 
+      type: repoMap
+      description: pkg/wikipedia Repo Map
+      items: 
+        - path: ./pkg/wikipedia
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/wordpress: 
+      type: repoMap
+      description: pkg/wordpress Repo Map
+      items: 
+        - path: ./pkg/wordpress
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/workflow: 
+      type: repoMap
+      description: pkg/workflow Repo Map
+      items: 
+        - path: ./pkg/workflow
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/x: 
+      type: repoMap
+      description: pkg/x Repo Map
+      items: 
+        - path: ./pkg/x
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/app/one: 
+      type: repoMap
+      description: app/one Repo Map
+      items: 
+        - path: ./app/one
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/frontend/chat: 
+      type: repoMap
+      description: frontend/chat Repo Map
+      items: 
+        - path: ./frontend/chat
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/frontend/electron: 
+      type: repoMap
+      description: frontend/electron Repo Map
+      items: 
+        - path: ./frontend/electron
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/frontend/webterminal: 
+      type: repoMap
+      description: frontend/webterminal Repo Map
+      items: 
+        - path: ./frontend/webterminal
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    fileTree/pkg/acp: 
+      type: fileTree
+      description: pkg/acp File Tree
+      items: 
+        - path: ./pkg/acp
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/acp: 
+      type: wholeFile
+      description: pkg/acp Source Files
+      items: 
+        - path: ./pkg/acp
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/agent: 
+      type: fileTree
+      description: pkg/agent File Tree
+      items: 
+        - path: ./pkg/agent
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/agent: 
+      type: wholeFile
+      description: pkg/agent Source Files
+      items: 
+        - path: ./pkg/agent
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/ai-client: 
+      type: fileTree
+      description: pkg/ai-client File Tree
+      items: 
+        - path: ./pkg/ai-client
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/ai-client: 
+      type: wholeFile
+      description: pkg/ai-client Source Files
+      items: 
+        - path: ./pkg/ai-client
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/app: 
+      type: fileTree
+      description: pkg/app File Tree
+      items: 
+        - path: ./pkg/app
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/app: 
+      type: wholeFile
+      description: pkg/app Source Files
+      items: 
+        - path: ./pkg/app
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/audio: 
+      type: fileTree
+      description: pkg/audio File Tree
+      items: 
+        - path: ./pkg/audio
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/audio: 
+      type: wholeFile
+      description: pkg/audio Source Files
+      items: 
+        - path: ./pkg/audio
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/aws: 
+      type: fileTree
+      description: pkg/aws File Tree
+      items: 
+        - path: ./pkg/aws
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/aws: 
+      type: wholeFile
+      description: pkg/aws Source Files
+      items: 
+        - path: ./pkg/aws
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/blog: 
+      type: fileTree
+      description: pkg/blog File Tree
+      items: 
+        - path: ./pkg/blog
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/blog: 
+      type: wholeFile
+      description: pkg/blog Source Files
+      items: 
+        - path: ./pkg/blog
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/browser-file-system: 
+      type: fileTree
+      description: pkg/browser-file-system File Tree
+      items: 
+        - path: ./pkg/browser-file-system
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/browser-file-system: 
+      type: wholeFile
+      description: pkg/browser-file-system Source Files
+      items: 
+        - path: ./pkg/browser-file-system
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/browser-storage: 
+      type: fileTree
+      description: pkg/browser-storage File Tree
+      items: 
+        - path: ./pkg/browser-storage
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/browser-storage: 
+      type: wholeFile
+      description: pkg/browser-storage Source Files
+      items: 
+        - path: ./pkg/browser-storage
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/calendar: 
+      type: fileTree
+      description: pkg/calendar File Tree
+      items: 
+        - path: ./pkg/calendar
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/calendar: 
+      type: wholeFile
+      description: pkg/calendar Source Files
+      items: 
+        - path: ./pkg/calendar
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/cdn: 
+      type: fileTree
+      description: pkg/cdn File Tree
+      items: 
+        - path: ./pkg/cdn
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/cdn: 
+      type: wholeFile
+      description: pkg/cdn Source Files
+      items: 
+        - path: ./pkg/cdn
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/chat: 
+      type: fileTree
+      description: pkg/chat File Tree
+      items: 
+        - path: ./pkg/chat
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/chat: 
+      type: wholeFile
+      description: pkg/chat Source Files
+      items: 
+        - path: ./pkg/chat
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/checkpoint: 
+      type: fileTree
+      description: pkg/checkpoint File Tree
+      items: 
+        - path: ./pkg/checkpoint
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/checkpoint: 
+      type: wholeFile
+      description: pkg/checkpoint Source Files
+      items: 
+        - path: ./pkg/checkpoint
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/chrome: 
+      type: fileTree
+      description: pkg/chrome File Tree
+      items: 
+        - path: ./pkg/chrome
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/chrome: 
+      type: wholeFile
+      description: pkg/chrome Source Files
+      items: 
+        - path: ./pkg/chrome
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/cli: 
+      type: fileTree
+      description: pkg/cli File Tree
+      items: 
+        - path: ./pkg/cli
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/cli: 
+      type: wholeFile
+      description: pkg/cli Source Files
+      items: 
+        - path: ./pkg/cli
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/cloudquote: 
+      type: fileTree
+      description: pkg/cloudquote File Tree
+      items: 
+        - path: ./pkg/cloudquote
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/cloudquote: 
+      type: wholeFile
+      description: pkg/cloudquote Source Files
+      items: 
+        - path: ./pkg/cloudquote
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/code-watch: 
+      type: fileTree
+      description: pkg/code-watch File Tree
+      items: 
+        - path: ./pkg/code-watch
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/code-watch: 
+      type: wholeFile
+      description: pkg/code-watch Source Files
+      items: 
+        - path: ./pkg/code-watch
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/codebase: 
+      type: fileTree
+      description: pkg/codebase File Tree
+      items: 
+        - path: ./pkg/codebase
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/codebase: 
+      type: wholeFile
+      description: pkg/codebase Source Files
+      items: 
+        - path: ./pkg/codebase
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/database: 
+      type: fileTree
+      description: pkg/database File Tree
+      items: 
+        - path: ./pkg/database
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/database: 
+      type: wholeFile
+      description: pkg/database Source Files
+      items: 
+        - path: ./pkg/database
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/discord: 
+      type: fileTree
+      description: pkg/discord File Tree
+      items: 
+        - path: ./pkg/discord
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/discord: 
+      type: wholeFile
+      description: pkg/discord Source Files
+      items: 
+        - path: ./pkg/discord
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/docker: 
+      type: fileTree
+      description: pkg/docker File Tree
+      items: 
+        - path: ./pkg/docker
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/docker: 
+      type: wholeFile
+      description: pkg/docker Source Files
+      items: 
+        - path: ./pkg/docker
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/drizzle-storage: 
+      type: fileTree
+      description: pkg/drizzle-storage File Tree
+      items: 
+        - path: ./pkg/drizzle-storage
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/drizzle-storage: 
+      type: wholeFile
+      description: pkg/drizzle-storage Source Files
+      items: 
+        - path: ./pkg/drizzle-storage
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/email: 
+      type: fileTree
+      description: pkg/email File Tree
+      items: 
+        - path: ./pkg/email
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/email: 
+      type: wholeFile
+      description: pkg/email Source Files
+      items: 
+        - path: ./pkg/email
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/escalation: 
+      type: fileTree
+      description: pkg/escalation File Tree
+      items: 
+        - path: ./pkg/escalation
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/escalation: 
+      type: wholeFile
+      description: pkg/escalation Source Files
+      items: 
+        - path: ./pkg/escalation
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/feedback: 
+      type: fileTree
+      description: pkg/feedback File Tree
+      items: 
+        - path: ./pkg/feedback
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/feedback: 
+      type: wholeFile
+      description: pkg/feedback Source Files
+      items: 
+        - path: ./pkg/feedback
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/file-index: 
+      type: fileTree
+      description: pkg/file-index File Tree
+      items: 
+        - path: ./pkg/file-index
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/file-index: 
+      type: wholeFile
+      description: pkg/file-index Source Files
+      items: 
+        - path: ./pkg/file-index
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/filesystem: 
+      type: fileTree
+      description: pkg/filesystem File Tree
+      items: 
+        - path: ./pkg/filesystem
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/filesystem: 
+      type: wholeFile
+      description: pkg/filesystem Source Files
+      items: 
+        - path: ./pkg/filesystem
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/ghost-io: 
+      type: fileTree
+      description: pkg/ghost-io File Tree
+      items: 
+        - path: ./pkg/ghost-io
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/ghost-io: 
+      type: wholeFile
+      description: pkg/ghost-io Source Files
+      items: 
+        - path: ./pkg/ghost-io
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/git: 
+      type: fileTree
+      description: pkg/git File Tree
+      items: 
+        - path: ./pkg/git
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/git: 
+      type: wholeFile
+      description: pkg/git Source Files
+      items: 
+        - path: ./pkg/git
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/github: 
+      type: fileTree
+      description: pkg/github File Tree
+      items: 
+        - path: ./pkg/github
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/github: 
+      type: wholeFile
+      description: pkg/github Source Files
+      items: 
+        - path: ./pkg/github
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/google: 
+      type: fileTree
+      description: pkg/google File Tree
+      items: 
+        - path: ./pkg/google
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/google: 
+      type: wholeFile
+      description: pkg/google Source Files
+      items: 
+        - path: ./pkg/google
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/image-generation: 
+      type: fileTree
+      description: pkg/image-generation File Tree
+      items: 
+        - path: ./pkg/image-generation
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/image-generation: 
+      type: wholeFile
+      description: pkg/image-generation Source Files
+      items: 
+        - path: ./pkg/image-generation
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/iterables: 
+      type: fileTree
+      description: pkg/iterables File Tree
+      items: 
+        - path: ./pkg/iterables
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/iterables: 
+      type: wholeFile
+      description: pkg/iterables Source Files
+      items: 
+        - path: ./pkg/iterables
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/javascript: 
+      type: fileTree
+      description: pkg/javascript File Tree
+      items: 
+        - path: ./pkg/javascript
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/javascript: 
+      type: wholeFile
+      description: pkg/javascript Source Files
+      items: 
+        - path: ./pkg/javascript
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/kalshi: 
+      type: fileTree
+      description: pkg/kalshi File Tree
+      items: 
+        - path: ./pkg/kalshi
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/kalshi: 
+      type: wholeFile
+      description: pkg/kalshi Source Files
+      items: 
+        - path: ./pkg/kalshi
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/kubernetes: 
+      type: fileTree
+      description: pkg/kubernetes File Tree
+      items: 
+        - path: ./pkg/kubernetes
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/kubernetes: 
+      type: wholeFile
+      description: pkg/kubernetes Source Files
+      items: 
+        - path: ./pkg/kubernetes
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/lifecycle: 
+      type: fileTree
+      description: pkg/lifecycle File Tree
+      items: 
+        - path: ./pkg/lifecycle
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/lifecycle: 
+      type: wholeFile
+      description: pkg/lifecycle Source Files
+      items: 
+        - path: ./pkg/lifecycle
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/linux-audio: 
+      type: fileTree
+      description: pkg/linux-audio File Tree
+      items: 
+        - path: ./pkg/linux-audio
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/linux-audio: 
+      type: wholeFile
+      description: pkg/linux-audio Source Files
+      items: 
+        - path: ./pkg/linux-audio
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/markdown: 
+      type: fileTree
+      description: pkg/markdown File Tree
+      items: 
+        - path: ./pkg/markdown
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/markdown: 
+      type: wholeFile
+      description: pkg/markdown Source Files
+      items: 
+        - path: ./pkg/markdown
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/mcp: 
+      type: fileTree
+      description: pkg/mcp File Tree
+      items: 
+        - path: ./pkg/mcp
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/mcp: 
+      type: wholeFile
+      description: pkg/mcp Source Files
+      items: 
+        - path: ./pkg/mcp
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/memory: 
+      type: fileTree
+      description: pkg/memory File Tree
+      items: 
+        - path: ./pkg/memory
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/memory: 
+      type: wholeFile
+      description: pkg/memory Source Files
+      items: 
+        - path: ./pkg/memory
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/metrics: 
+      type: fileTree
+      description: pkg/metrics File Tree
+      items: 
+        - path: ./pkg/metrics
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/metrics: 
+      type: wholeFile
+      description: pkg/metrics Source Files
+      items: 
+        - path: ./pkg/metrics
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/mysql: 
+      type: fileTree
+      description: pkg/mysql File Tree
+      items: 
+        - path: ./pkg/mysql
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/mysql: 
+      type: wholeFile
+      description: pkg/mysql Source Files
+      items: 
+        - path: ./pkg/mysql
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/newsrpm: 
+      type: fileTree
+      description: pkg/newsrpm File Tree
+      items: 
+        - path: ./pkg/newsrpm
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/newsrpm: 
+      type: wholeFile
+      description: pkg/newsrpm Source Files
+      items: 
+        - path: ./pkg/newsrpm
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/polymarket: 
+      type: fileTree
+      description: pkg/polymarket File Tree
+      items: 
+        - path: ./pkg/polymarket
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/polymarket: 
+      type: wholeFile
+      description: pkg/polymarket Source Files
+      items: 
+        - path: ./pkg/polymarket
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/posix-system: 
+      type: fileTree
+      description: pkg/posix-system File Tree
+      items: 
+        - path: ./pkg/posix-system
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/posix-system: 
+      type: wholeFile
+      description: pkg/posix-system Source Files
+      items: 
+        - path: ./pkg/posix-system
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/queue: 
+      type: fileTree
+      description: pkg/queue File Tree
+      items: 
+        - path: ./pkg/queue
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/queue: 
+      type: wholeFile
+      description: pkg/queue Source Files
+      items: 
+        - path: ./pkg/queue
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/reddit: 
+      type: fileTree
+      description: pkg/reddit File Tree
+      items: 
+        - path: ./pkg/reddit
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/reddit: 
+      type: wholeFile
+      description: pkg/reddit Source Files
+      items: 
+        - path: ./pkg/reddit
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/research: 
+      type: fileTree
+      description: pkg/research File Tree
+      items: 
+        - path: ./pkg/research
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/research: 
+      type: wholeFile
+      description: pkg/research Source Files
+      items: 
+        - path: ./pkg/research
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/rpc: 
+      type: fileTree
+      description: pkg/rpc File Tree
+      items: 
+        - path: ./pkg/rpc
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/rpc: 
+      type: wholeFile
+      description: pkg/rpc Source Files
+      items: 
+        - path: ./pkg/rpc
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/s3: 
+      type: fileTree
+      description: pkg/s3 File Tree
+      items: 
+        - path: ./pkg/s3
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/s3: 
+      type: wholeFile
+      description: pkg/s3 Source Files
+      items: 
+        - path: ./pkg/s3
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/sandbox: 
+      type: fileTree
+      description: pkg/sandbox File Tree
+      items: 
+        - path: ./pkg/sandbox
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/sandbox: 
+      type: wholeFile
+      description: pkg/sandbox Source Files
+      items: 
+        - path: ./pkg/sandbox
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/scheduler: 
+      type: fileTree
+      description: pkg/scheduler File Tree
+      items: 
+        - path: ./pkg/scheduler
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/scheduler: 
+      type: wholeFile
+      description: pkg/scheduler Source Files
+      items: 
+        - path: ./pkg/scheduler
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/scraperapi: 
+      type: fileTree
+      description: pkg/scraperapi File Tree
+      items: 
+        - path: ./pkg/scraperapi
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/scraperapi: 
+      type: wholeFile
+      description: pkg/scraperapi Source Files
+      items: 
+        - path: ./pkg/scraperapi
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/scripting: 
+      type: fileTree
+      description: pkg/scripting File Tree
+      items: 
+        - path: ./pkg/scripting
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/scripting: 
+      type: wholeFile
+      description: pkg/scripting Source Files
+      items: 
+        - path: ./pkg/scripting
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/serper: 
+      type: fileTree
+      description: pkg/serper File Tree
+      items: 
+        - path: ./pkg/serper
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/serper: 
+      type: wholeFile
+      description: pkg/serper Source Files
+      items: 
+        - path: ./pkg/serper
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/skills: 
+      type: fileTree
+      description: pkg/skills File Tree
+      items: 
+        - path: ./pkg/skills
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/skills: 
+      type: wholeFile
+      description: pkg/skills Source Files
+      items: 
+        - path: ./pkg/skills
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/slack: 
+      type: fileTree
+      description: pkg/slack File Tree
+      items: 
+        - path: ./pkg/slack
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/slack: 
+      type: wholeFile
+      description: pkg/slack Source Files
+      items: 
+        - path: ./pkg/slack
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/social: 
+      type: fileTree
+      description: pkg/social File Tree
+      items: 
+        - path: ./pkg/social
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/social: 
+      type: wholeFile
+      description: pkg/social Source Files
+      items: 
+        - path: ./pkg/social
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/tasks: 
+      type: fileTree
+      description: pkg/tasks File Tree
+      items: 
+        - path: ./pkg/tasks
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/tasks: 
+      type: wholeFile
+      description: pkg/tasks Source Files
+      items: 
+        - path: ./pkg/tasks
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/telegram: 
+      type: fileTree
+      description: pkg/telegram File Tree
+      items: 
+        - path: ./pkg/telegram
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/telegram: 
+      type: wholeFile
+      description: pkg/telegram Source Files
+      items: 
+        - path: ./pkg/telegram
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/template: 
+      type: fileTree
+      description: pkg/template File Tree
+      items: 
+        - path: ./pkg/template
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/template: 
+      type: wholeFile
+      description: pkg/template Source Files
+      items: 
+        - path: ./pkg/template
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/terminal: 
+      type: fileTree
+      description: pkg/terminal File Tree
+      items: 
+        - path: ./pkg/terminal
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/terminal: 
+      type: wholeFile
+      description: pkg/terminal Source Files
+      items: 
+        - path: ./pkg/terminal
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/testing: 
+      type: fileTree
+      description: pkg/testing File Tree
+      items: 
+        - path: ./pkg/testing
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/testing: 
+      type: wholeFile
+      description: pkg/testing Source Files
+      items: 
+        - path: ./pkg/testing
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/thinking: 
+      type: fileTree
+      description: pkg/thinking File Tree
+      items: 
+        - path: ./pkg/thinking
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/thinking: 
+      type: wholeFile
+      description: pkg/thinking Source Files
+      items: 
+        - path: ./pkg/thinking
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/todo: 
+      type: fileTree
+      description: pkg/todo File Tree
+      items: 
+        - path: ./pkg/todo
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/todo: 
+      type: wholeFile
+      description: pkg/todo Source Files
+      items: 
+        - path: ./pkg/todo
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/typescript: 
+      type: fileTree
+      description: pkg/typescript File Tree
+      items: 
+        - path: ./pkg/typescript
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/typescript: 
+      type: wholeFile
+      description: pkg/typescript Source Files
+      items: 
+        - path: ./pkg/typescript
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/utility: 
+      type: fileTree
+      description: pkg/utility File Tree
+      items: 
+        - path: ./pkg/utility
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/utility: 
+      type: wholeFile
+      description: pkg/utility Source Files
+      items: 
+        - path: ./pkg/utility
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/vault: 
+      type: fileTree
+      description: pkg/vault File Tree
+      items: 
+        - path: ./pkg/vault
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/vault: 
+      type: wholeFile
+      description: pkg/vault Source Files
+      items: 
+        - path: ./pkg/vault
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/web-host: 
+      type: fileTree
+      description: pkg/web-host File Tree
+      items: 
+        - path: ./pkg/web-host
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/web-host: 
+      type: wholeFile
+      description: pkg/web-host Source Files
+      items: 
+        - path: ./pkg/web-host
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/websearch: 
+      type: fileTree
+      description: pkg/websearch File Tree
+      items: 
+        - path: ./pkg/websearch
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/websearch: 
+      type: wholeFile
+      description: pkg/websearch Source Files
+      items: 
+        - path: ./pkg/websearch
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/wikipedia: 
+      type: fileTree
+      description: pkg/wikipedia File Tree
+      items: 
+        - path: ./pkg/wikipedia
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/wikipedia: 
+      type: wholeFile
+      description: pkg/wikipedia Source Files
+      items: 
+        - path: ./pkg/wikipedia
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/wordpress: 
+      type: fileTree
+      description: pkg/wordpress File Tree
+      items: 
+        - path: ./pkg/wordpress
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/wordpress: 
+      type: wholeFile
+      description: pkg/wordpress Source Files
+      items: 
+        - path: ./pkg/wordpress
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/workflow: 
+      type: fileTree
+      description: pkg/workflow File Tree
+      items: 
+        - path: ./pkg/workflow
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/workflow: 
+      type: wholeFile
+      description: pkg/workflow Source Files
+      items: 
+        - path: ./pkg/workflow
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/x: 
+      type: fileTree
+      description: pkg/x File Tree
+      items: 
+        - path: ./pkg/x
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/x: 
+      type: wholeFile
+      description: pkg/x Source Files
+      items: 
+        - path: ./pkg/x
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/app/one: 
+      type: fileTree
+      description: app/one File Tree
+      items: 
+        - path: ./app/one
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/app/one: 
+      type: wholeFile
+      description: app/one Source Files
+      items: 
+        - path: ./app/one
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/frontend/chat: 
+      type: fileTree
+      description: frontend/chat File Tree
+      items: 
+        - path: ./frontend/chat
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/frontend/chat: 
+      type: wholeFile
+      description: frontend/chat Source Files
+      items: 
+        - path: ./frontend/chat
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/frontend/electron: 
+      type: fileTree
+      description: frontend/electron File Tree
+      items: 
+        - path: ./frontend/electron
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/frontend/electron: 
+      type: wholeFile
+      description: frontend/electron Source Files
+      items: 
+        - path: ./frontend/electron
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/frontend/webterminal: 
+      type: fileTree
+      description: frontend/webterminal File Tree
+      items: 
+        - path: ./frontend/webterminal
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/frontend/webterminal: 
+      type: wholeFile
+      description: frontend/webterminal Source Files
+      items: 
+        - path: ./frontend/webterminal
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.

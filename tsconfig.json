@@ -23,8 +23,8 @@
   "rootDir": "."
  },
  "include": [
-  "app/*/src/*.ts",
-  "app/*/src/*.tsx",
+  "app/**/*.ts",
+  "app/**/*.tsx",
   "frontend/**/*.ts",
   "frontend/**/*.tsx",
   "pkg/**/*.ts",
