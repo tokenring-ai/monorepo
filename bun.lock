@@ -12,7 +12,7 @@
         "@typescript-eslint/parser": "^8.59.2",
         "eslint": "^10.3.0",
         "husky": "^9.1.7",
-        "oxlint": "^1.62.0",
+        "oxlint": "^1.63.0",
         "oxlint-tsgolint": "^0.22.1",
         "typescript": "^6.0.3",
         "typescript-eslint": "^8.59.2",
@@ -21,7 +21,7 @@
     },
     "app/one": {
       "name": "@tokenring-ai/one",
-      "version": "0.2.46",
+      "version": "0.2.47",
       "devDependencies": {
         "@tokenring-ai/acp": "workspace:*",
         "@tokenring-ai/agent": "workspace:*",
@@ -47,13 +47,14 @@
         "@tokenring-ai/filesystem": "workspace:*",
         "@tokenring-ai/git": "workspace:*",
         "@tokenring-ai/github": "workspace:*",
-        "@tokenring-ai/image-generation": "workspace:*",
+        "@tokenring-ai/image": "workspace:*",
         "@tokenring-ai/javascript": "workspace:*",
         "@tokenring-ai/kubernetes": "workspace:*",
         "@tokenring-ai/lifecycle": "workspace:*",
         "@tokenring-ai/linux-audio": "workspace:*",
         "@tokenring-ai/markdown": "workspace:*",
         "@tokenring-ai/mcp": "workspace:*",
+        "@tokenring-ai/media-library": "workspace:*",
         "@tokenring-ai/memory": "workspace:*",
         "@tokenring-ai/metrics": "workspace:*",
         "@tokenring-ai/mysql": "workspace:*",
@@ -78,6 +79,7 @@
         "@tokenring-ai/typescript": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "@tokenring-ai/vault": "workspace:*",
+        "@tokenring-ai/video": "workspace:*",
         "@tokenring-ai/web-host": "workspace:*",
         "@tokenring-ai/websearch": "workspace:*",
         "@tokenring-ai/workflow": "workspace:*",
@@ -125,6 +127,7 @@
         "@tokenring-ai/agent": "workspace:*",
         "@tokenring-ai/ai-client": "workspace:*",
         "@tokenring-ai/app": "workspace:*",
+        "@tokenring-ai/audio": "workspace:*",
         "@tokenring-ai/blog": "workspace:*",
         "@tokenring-ai/calendar": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
@@ -132,13 +135,15 @@
         "@tokenring-ai/cloudquote": "workspace:*",
         "@tokenring-ai/email": "workspace:*",
         "@tokenring-ai/filesystem": "workspace:*",
-        "@tokenring-ai/image-generation": "workspace:*",
+        "@tokenring-ai/image": "workspace:*",
         "@tokenring-ai/lifecycle": "workspace:*",
+        "@tokenring-ai/media-library": "workspace:*",
         "@tokenring-ai/newsrpm": "workspace:*",
         "@tokenring-ai/tasks": "workspace:*",
         "@tokenring-ai/terminal": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "@tokenring-ai/vault": "workspace:*",
+        "@tokenring-ai/video": "workspace:*",
         "@tokenring-ai/web-host": "workspace:*",
         "@tokenring-ai/workflow": "workspace:*",
         "@types/react": "^19.2.14",
@@ -247,7 +252,6 @@
       "version": "0.2.0",
       "dependencies": {
         "@ai-sdk/anthropic": "^3.0.67",
-        "@ai-sdk/azure": "^3.0.52",
         "@ai-sdk/cerebras": "^2.0.44",
         "@ai-sdk/deepseek": "^2.0.28",
         "@ai-sdk/elevenlabs": "^2.0.28",
@@ -267,7 +271,6 @@
         "@tokenring-ai/rpc": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "ai": "^6.0.149",
-        "ollama-ai-provider-v2": "^3.5.0",
         "zod": "^4.3.6",
       },
       "devDependencies": {
@@ -297,6 +300,8 @@
         "@tokenring-ai/ai-client": "workspace:*",
         "@tokenring-ai/app": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
+        "@tokenring-ai/media-library": "workspace:*",
+        "@tokenring-ai/rpc": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "zod": "^4.3.6",
       },
@@ -332,7 +337,7 @@
         "@tokenring-ai/cdn": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
         "@tokenring-ai/escalation": "workspace:*",
-        "@tokenring-ai/image-generation": "workspace:*",
+        "@tokenring-ai/image": "workspace:*",
         "@tokenring-ai/rpc": "workspace:*",
         "@tokenring-ai/scripting": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
@@ -761,8 +766,8 @@
         "vitest": "^4.1.1",
       },
     },
-    "pkg/image-generation": {
-      "name": "@tokenring-ai/image-generation",
+    "pkg/image": {
+      "name": "@tokenring-ai/image",
       "version": "0.2.0",
       "dependencies": {
         "@tokenring-ai/agent": "workspace:*",
@@ -770,11 +775,10 @@
         "@tokenring-ai/app": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
         "@tokenring-ai/filesystem": "workspace:*",
+        "@tokenring-ai/media-library": "workspace:*",
         "@tokenring-ai/rpc": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
-        "@tokenring-ai/web-host": "workspace:*",
         "exiftool-vendored": "^35.15.1",
-        "uuid": "14.0.0",
         "zod": "^4.3.6",
       },
       "devDependencies": {
@@ -880,7 +884,6 @@
         "@tokenring-ai/app": "workspace:*",
         "@tokenring-ai/filesystem": "workspace:*",
         "@tokenring-ai/lifecycle": "workspace:*",
-        "@tokenring-ai/utility": "workspace:*",
         "markdownlint": "^0.40.0",
         "zod": "^4.3.6",
       },
@@ -897,6 +900,24 @@
         "@modelcontextprotocol/sdk": "^1.29.0",
         "@tokenring-ai/app": "workspace:*",
         "@tokenring-ai/chat": "workspace:*",
+        "zod": "^4.3.6",
+      },
+      "devDependencies": {
+        "typescript": "^6.0.2",
+        "vitest": "^4.1.1",
+      },
+    },
+    "pkg/media-library": {
+      "name": "@tokenring-ai/media-library",
+      "version": "0.2.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "workspace:*",
+        "@tokenring-ai/app": "workspace:*",
+        "@tokenring-ai/chat": "workspace:*",
+        "@tokenring-ai/filesystem": "workspace:*",
+        "@tokenring-ai/utility": "workspace:*",
+        "@tokenring-ai/web-host": "workspace:*",
+        "exiftool-vendored": "^35.15.1",
         "zod": "^4.3.6",
       },
       "devDependencies": {
@@ -990,7 +1011,6 @@
         "@tokenring-ai/terminal": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "bun-pty": "^0.4.8",
-        "chokidar": "^5.0.0",
         "execa": "^9.6.1",
         "fs-extra": "^11.3.4",
         "zod": "^4.3.6",
@@ -1364,6 +1384,24 @@
         "vitest": "^4.1.1",
       },
     },
+    "pkg/video": {
+      "name": "@tokenring-ai/video",
+      "version": "0.2.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "workspace:*",
+        "@tokenring-ai/ai-client": "workspace:*",
+        "@tokenring-ai/app": "workspace:*",
+        "@tokenring-ai/chat": "workspace:*",
+        "@tokenring-ai/media-library": "workspace:*",
+        "@tokenring-ai/rpc": "workspace:*",
+        "@tokenring-ai/utility": "workspace:*",
+        "zod": "^4.3.6",
+      },
+      "devDependencies": {
+        "typescript": "^6.0.2",
+        "vitest": "^4.1.1",
+      },
+    },
     "pkg/web-host": {
       "name": "@tokenring-ai/web-host",
       "version": "0.2.0",
@@ -1484,8 +1522,6 @@
     "@agentclientprotocol/sdk": ["@agentclientprotocol/sdk@0.18.0", "", { "peerDependencies": { "zod": "^3.25.0 || ^4.0.0" } }, "sha512-JQGEi3EetQ38DLPpYxxnnz1fyo1/3qQEkKfUmj4JfiOJCEtjGWQ0nl54IH4LZceO7zIOrtUUxc+2cJRQbBOChA=="],
 
     "@ai-sdk/anthropic": ["@ai-sdk/anthropic@3.0.67", "", { "dependencies": { "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.23" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-FFX4P5Fd6lcQJc2OLngZQkbbJHa0IDDZi087Edb8qRZx6h90krtM61ArbMUL8us/7ZUwojCXnyJ/wQ2Eflx2jQ=="],
-
-    "@ai-sdk/azure": ["@ai-sdk/azure@3.0.52", "", { "dependencies": { "@ai-sdk/openai": "3.0.51", "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.23" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-SsRR97cT6QpGeFzt5kEnFz8aRCu09TGksjMtS2b48f7dQJ4dDvsMi5J29CkrjvTQWyFVajZpH+iHvYUHCcEdig=="],
 
     "@ai-sdk/cerebras": ["@ai-sdk/cerebras@2.0.44", "", { "dependencies": { "@ai-sdk/openai-compatible": "2.0.40", "@ai-sdk/provider": "3.0.8", "@ai-sdk/provider-utils": "4.0.23" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-J9fyXolhXOBW+X9jnaeSVMMSaf9Wj1v8dw7m/BB79lSA8tLtwtsXpQbjYv3JOqMSZH/vDaTD4E/pNYpZ9ExJog=="],
 
@@ -2177,7 +2213,7 @@
 
     "@tokenring-ai/google": ["@tokenring-ai/google@workspace:pkg/google"],
 
-    "@tokenring-ai/image-generation": ["@tokenring-ai/image-generation@workspace:pkg/image-generation"],
+    "@tokenring-ai/image": ["@tokenring-ai/image@workspace:pkg/image"],
 
     "@tokenring-ai/iterables": ["@tokenring-ai/iterables@workspace:pkg/iterables"],
 
@@ -2194,6 +2230,8 @@
     "@tokenring-ai/markdown": ["@tokenring-ai/markdown@workspace:pkg/markdown"],
 
     "@tokenring-ai/mcp": ["@tokenring-ai/mcp@workspace:pkg/mcp"],
+
+    "@tokenring-ai/media-library": ["@tokenring-ai/media-library@workspace:pkg/media-library"],
 
     "@tokenring-ai/memory": ["@tokenring-ai/memory@workspace:pkg/memory"],
 
@@ -2256,6 +2294,8 @@
     "@tokenring-ai/utility": ["@tokenring-ai/utility@workspace:pkg/utility"],
 
     "@tokenring-ai/vault": ["@tokenring-ai/vault@workspace:pkg/vault"],
+
+    "@tokenring-ai/video": ["@tokenring-ai/video@workspace:pkg/video"],
 
     "@tokenring-ai/web-host": ["@tokenring-ai/web-host@workspace:pkg/web-host"],
 
@@ -2595,7 +2635,7 @@
 
     "bun-pty": ["bun-pty@0.4.8", "", {}, "sha512-rO70Mrbr13+jxHHHu2YBkk2pNqrJE5cJn29WE++PUr+GFA0hq/VgtQPZANJ8dJo6d7XImvBk37Innt8GM7O28w=="],
 
-    "bun-types": ["bun-types@1.3.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-QXKeHLlOLqQX9LgYaHJfzdBaV21T63HhFJnvuRCcjZiaUDpbs5ED1MgxbMra71CsryN/1dAoXuJJJwIv/2drVA=="],
+    "bun-types": ["bun-types@1.3.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-4N0ig0fEomHt5R0KCFWjovxow98rIoRwKolrYdCcknNwMekCXRnWEUvgu5soYV8QXtVsrUD8B95MBOZGPvr6KQ=="],
 
     "bundle-name": ["bundle-name@4.1.0", "", { "dependencies": { "run-applescript": "^7.0.0" } }, "sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q=="],
 
@@ -2632,8 +2672,6 @@
     "character-entities-legacy": ["character-entities-legacy@3.0.0", "", {}, "sha512-RpPp0asT/6ufRm//AJVwpViZbGM/MkjQFxJccQRHmISF/22NBtsHqAWmL+/pmkPWoIUJdWyeVleTl1wydHATVQ=="],
 
     "character-reference-invalid": ["character-reference-invalid@2.0.1", "", {}, "sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw=="],
-
-    "chokidar": ["chokidar@5.0.0", "", { "dependencies": { "readdirp": "^5.0.0" } }, "sha512-TQMmc3w+5AxjpL8iIiwebF73dRDF4fBIieAqGn9RGCWaEVwQ6Fb2cGe31Yns0RRIzii5goJ1Y7xbMwo1TxMplw=="],
 
     "chownr": ["chownr@3.0.0", "", {}, "sha512-+IxzY9BZOQd/XuYPRmrvEVjF/nqj5kgT4kEq7VofrDoM1MxoRjEWkrCC3EtLi59TVawxTAn+orJwFQcrqEN1+g=="],
 
@@ -3603,8 +3641,6 @@
 
     "obug": ["obug@2.1.1", "", {}, "sha512-uTqF9MuPraAQ+IsnPf366RG4cP9RtUi7MLO1N3KEc+wb0a6yKpeL0lmk2IB1jY5KHPAlTc6T/JRdC/YqxHNwkQ=="],
 
-    "ollama-ai-provider-v2": ["ollama-ai-provider-v2@3.5.0", "", { "dependencies": { "@ai-sdk/provider": "^3.0.8", "@ai-sdk/provider-utils": "^4.0.19" }, "peerDependencies": { "ai": "^5.0.0 || ^6.0.0", "zod": "^4.0.16" } }, "sha512-+s/aYIYa91z2Vk3AkGAz3BaPAQ0flS2eFZD3BN2mD/N6W6YQbcookyu6pc2cbc8SP5VGpNB857WJ0eHDjKXsXw=="],
-
     "on-finished": ["on-finished@2.4.1", "", { "dependencies": { "ee-first": "1.1.1" } }, "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg=="],
 
     "once": ["once@1.4.0", "", { "dependencies": { "wrappy": "1" } }, "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w=="],
@@ -3792,8 +3828,6 @@
     "read-binary-file-arch": ["read-binary-file-arch@1.0.6", "", { "dependencies": { "debug": "^4.3.4" }, "bin": { "read-binary-file-arch": "cli.js" } }, "sha512-BNg9EN3DD3GsDXX7Aa8O4p92sryjkmzYYgmgTAc6CA4uGLEDzFfxOxugu21akOxpcXHiEgsYkC6nPsQvLLLmEg=="],
 
     "readable-stream": ["readable-stream@1.1.14", "", { "dependencies": { "core-util-is": "~1.0.0", "inherits": "~2.0.1", "isarray": "0.0.1", "string_decoder": "~0.10.x" } }, "sha512-+MeVjFf4L44XUkhM1eYbD8fyEsxcV81pqMSR5gblfcLCHfZvbrqy4/qYHE+/R5HoBUT11WV5O08Cr1n3YXkWVQ=="],
-
-    "readdirp": ["readdirp@5.0.0", "", {}, "sha512-9u/XQ1pvrQtYyMpZe7DXKv2p5CNvyVwzUB6uhLAnQwHMSgKMBR62lc7AHljaeteeHXn11XTAaLLUVZYVZyuRBQ=="],
 
     "reflect.getprototypeof": ["reflect.getprototypeof@1.0.10", "", { "dependencies": { "call-bind": "^1.0.8", "define-properties": "^1.2.1", "es-abstract": "^1.23.9", "es-errors": "^1.3.0", "es-object-atoms": "^1.0.0", "get-intrinsic": "^1.2.7", "get-proto": "^1.0.1", "which-builtin-type": "^1.2.1" } }, "sha512-00o4I+DVrefhv+nX0ulyi3biSHCPDe+yLv5o/p6d/UVlirijB8E16FtfwSAi4g3tcqrQ4lRAqQSoFEZJehYEcw=="],
 
@@ -4346,8 +4380,6 @@
     "@tailwindcss/oxide-wasm32-wasi/@tybys/wasm-util": ["@tybys/wasm-util@0.10.1", "", { "dependencies": { "tslib": "^2.4.0" }, "bundled": true }, "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg=="],
 
     "@tailwindcss/oxide-wasm32-wasi/tslib": ["tslib@2.8.1", "", { "bundled": true }, "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w=="],
-
-    "@types/bun/bun-types": ["bun-types@1.3.14", "", { "dependencies": { "@types/node": "*" } }, "sha512-4N0ig0fEomHt5R0KCFWjovxow98rIoRwKolrYdCcknNwMekCXRnWEUvgu5soYV8QXtVsrUD8B95MBOZGPvr6KQ=="],
 
     "ajv-formats/ajv": ["ajv@8.18.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A=="],
 

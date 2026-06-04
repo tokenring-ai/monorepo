@@ -1,14 +1,14 @@
 [submodule "app/one"]
 	path = app/one
-	url = ../one
+	url = ../one.git
 	branch = main
 [submodule "pkg/ai-client"]
 	path = pkg/ai-client
-	url = ../ai-client
+	url = ../ai-client.git
 	branch = main
 [submodule "pkg/aws"]
 	path = pkg/aws
-	url = ../aws
+	url = ../aws.git
 	branch = main
 [submodule "pkg/blog"]
 	path = pkg/blog
@@ -16,11 +16,11 @@
 	branch = main
 [submodule "pkg/chrome"]
 	path = pkg/chrome
-	url = ../chrome
+	url = ../chrome.git
 	branch = main
 [submodule "pkg/cli"]
 	path = pkg/cli
-	url = ../cli
+	url = ../cli.git
 	branch = main
 [submodule "pkg/cloudquote"]
 	path = pkg/cloudquote
@@ -28,31 +28,31 @@
 	branch = main
 [submodule "pkg/code-watch"]
 	path = pkg/code-watch
-	url = ../code-watch
+	url = ../code-watch.git
 	branch = main
 [submodule "pkg/codebase"]
 	path = pkg/codebase
-	url = ../codebase
+	url = ../codebase.git
 	branch = main
 [submodule "pkg/database"]
 	path = pkg/database
-	url = ../database
+	url = ../database.git
 	branch = main
 [submodule "pkg/docker"]
 	path = pkg/docker
-	url = ../docker
+	url = ../docker.git
 	branch = main
 [submodule "pkg/feedback"]
 	path = pkg/feedback
-	url = ../feedback
+	url = ../feedback.git
 	branch = main
 [submodule "pkg/file-index"]
 	path = pkg/file-index
-	url = ../file-index
+	url = ../file-index.git
 	branch = main
 [submodule "pkg/filesystem"]
 	path = pkg/filesystem
-	url = ../filesystem
+	url = ../filesystem.git
 	branch = main
 [submodule "pkg/ghost-io"]
 	path = pkg/ghost-io
@@ -60,27 +60,27 @@
 	branch = main
 [submodule "pkg/git"]
 	path = pkg/git
-	url = ../git
+	url = ../git.git
 	branch = main
 [submodule "pkg/javascript"]
 	path = pkg/javascript
-	url = ../javascript
+	url = ../javascript.git
 	branch = main
 [submodule "pkg/kubernetes"]
 	path = pkg/kubernetes
-	url = ../kubernetes
+	url = ../kubernetes.git
 	branch = main
 [submodule "pkg/memory"]
 	path = pkg/memory
-	url = ../memory
+	url = ../memory.git
 	branch = main
 [submodule "pkg/queue"]
 	path = pkg/queue
-	url = ../queue
+	url = ../queue.git
 	branch = main
 [submodule "pkg/testing"]
 	path = pkg/testing
-	url = ../testing
+	url = ../testing.git
 	branch = main
 [submodule "pkg/utility"]
 	path = pkg/utility
@@ -194,18 +194,10 @@
 	path = pkg/app
 	url = ../app.git
 	branch = main
-[submodule "pkg/cli-ink"]
-	path = pkg/cli-ink
-	url = ../cli-ink.git
-	branch = main
 [submodule "pkg/audio"]
 	path = pkg/audio
 	url = ../audio.git
 	branch = main
-[submodule "deps/ink"]
-	path = deps/ink
-	url = ../ink
-	branch = tall-mode
 [submodule "pkg/discord"]
 	path = pkg/discord
 	url = ../discord.git
@@ -242,9 +234,9 @@
 	path = pkg/thinking
 	url = ../thinking.git
 	branch = main
-[submodule "pkg/image-generation"]
-	path = pkg/image-generation
-	url = ../image-generation.git
+[submodule "pkg/image"]
+	path = pkg/image
+	url = ../image.git
 	branch = main
 [submodule "frontend/electron"]
 	path = frontend/electron
@@ -284,15 +276,15 @@
 	branch = main
 [submodule "pkg/google"]
 	path = pkg/google
-	url = ../google
+	url = ../google.git
 	branch = main
 [submodule "pkg/calendar"]
 	path = pkg/calendar
-	url = ../calendar
+	url = ../calendar.git
 	branch = main
 [submodule "pkg/email"]
 	path = pkg/email
-	url = ../email
+	url = ../email.git
 	branch = main
 [submodule "pkg/github"]
 	path = pkg/github
@@ -329,4 +321,12 @@
 [submodule "pkg/markdown"]
 	path = pkg/markdown
 	url = ../markdown.git
+	branch = main
+[submodule "pkg/video"]
+	path = pkg/video
+	url = ../video.git
+	branch = main
+[submodule "pkg/media-library"]
+	path = pkg/media-library
+	url = ../media-library.git
 	branch = main

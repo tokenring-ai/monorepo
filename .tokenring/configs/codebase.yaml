@@ -186,12 +186,6 @@ codebase:
       items: 
         - path: ./pkg/google
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/image-generation: 
-      type: repoMap
-      description: pkg/image-generation Repo Map
-      items: 
-        - path: ./pkg/image-generation
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/iterables: 
       type: repoMap
       description: pkg/iterables Repo Map
@@ -449,6 +443,24 @@ codebase:
       description: pkg/x Repo Map
       items: 
         - path: ./pkg/x
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/video: 
+      type: repoMap
+      description: pkg/video Repo Map
+      items: 
+        - path: ./pkg/video
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/media-library: 
+      type: repoMap
+      description: pkg/media-library Repo Map
+      items: 
+        - path: ./pkg/media-library
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/image: 
+      type: repoMap
+      description: pkg/image Repo Map
+      items: 
+        - path: ./pkg/image
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/app/one: 
       type: repoMap
@@ -875,19 +887,6 @@ codebase:
       description: pkg/google Source Files
       items: 
         - path: ./pkg/google
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/pkg/image-generation: 
-      type: fileTree
-      description: pkg/image-generation File Tree
-      items: 
-        - path: ./pkg/image-generation
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/image-generation: 
-      type: wholeFile
-      description: pkg/image-generation Source Files
-      items: 
-        - path: ./pkg/image-generation
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
     fileTree/pkg/iterables: 
@@ -1447,6 +1446,45 @@ codebase:
       description: pkg/x Source Files
       items: 
         - path: ./pkg/x
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/video: 
+      type: fileTree
+      description: pkg/video File Tree
+      items: 
+        - path: ./pkg/video
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/video: 
+      type: wholeFile
+      description: pkg/video Source Files
+      items: 
+        - path: ./pkg/video
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/media-library: 
+      type: fileTree
+      description: pkg/media-library File Tree
+      items: 
+        - path: ./pkg/media-library
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/media-library: 
+      type: wholeFile
+      description: pkg/media-library Source Files
+      items: 
+        - path: ./pkg/media-library
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
+    fileTree/pkg/image: 
+      type: fileTree
+      description: pkg/image File Tree
+      items: 
+        - path: ./pkg/image
+          include: .(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/image: 
+      type: wholeFile
+      description: pkg/image Source Files
+      items: 
+        - path: ./pkg/image
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
     fileTree/app/one: 
