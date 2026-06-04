@@ -1086,7 +1086,6 @@
       "name": "@tokenring-ai/s3",
       "version": "0.2.0",
       "dependencies": {
-        "@aws-sdk/client-s3": "^3.1025.0",
         "@tokenring-ai/app": "workspace:*",
         "@tokenring-ai/utility": "workspace:*",
         "zod": "^4.3.6",
