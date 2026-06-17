@@ -211,7 +211,7 @@
 	url = ../webterminal.git
 	branch = main
 [submodule "frontend/chat"]
-	path = frontend/chat
+	path = frontend/one
 	url = ../chat-frontend.git
 	branch = main
 [submodule "pkg/agent"]
