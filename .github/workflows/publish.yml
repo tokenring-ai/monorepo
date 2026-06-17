@@ -66,15 +66,15 @@ jobs:
         run: bun run install
         working-directory: ./deps/naudiodon3
 
-      - name: Build chat frontend
+      - name: Build TokenRing One web frontend
         run: bun run build
-        working-directory: ./frontend/chat
+        working-directory: ./frontend/one
 
-      - name: Upload chat frontend
+      - name: Upload TokenRing One web frontend
         uses: actions/upload-artifact@v4
         with:
-          name: chat-frontend
-          path: ./frontend/chat/dist
+          name: one-frontend
+          path: ./frontend/one/dist
 
       - name: Build One binary
         run: bun build --compile --target=bun-linux-x64 ./tokenring.ts --outfile tokenring-linux-x64
@@ -119,11 +119,11 @@ jobs:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Download chat frontend
+      - name: Download TokenRing One web frontend
         uses: actions/download-artifact@v4
         with:
-          name: chat-frontend
-          path: ./artifacts/chat-frontend
+          name: one-frontend
+          path: ./artifacts/one-frontend
 
       - name: Download One binaries
         uses: actions/download-artifact@v4
@@ -145,8 +145,8 @@ jobs:
           cp artifacts/tokenring-linux-arm64 app/one/packages/npm/one/bin/linux-arm64/tokenring
           cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/one/packages/npm/one/bin/linux-arm64/
           chmod +x app/one/packages/npm/one/bin/*/tokenring
-          mkdir -p app/one/packages/npm/one/frontend/chat
-          cp -r artifacts/chat-frontend/* app/one/packages/npm/one/frontend/chat
+          mkdir -p app/one/packages/npm/one/frontend/one
+          cp -r artifacts/one-frontend/* app/one/packages/npm/one/frontend/one
 
       - name: Publish One to NPM
         if: startsWith(github.ref, 'refs/tags/v')
@@ -198,11 +198,11 @@ jobs:
         with:
           submodules: true
 
-      - name: Download chat frontend
+      - name: Download TokenRing One web frontend
         uses: actions/download-artifact@v4
         with:
-          name: chat-frontend
-          path: ./artifacts/chat-frontend
+          name: one-frontend
+          path: ./artifacts/one-frontend
 
       - name: Download One binaries
         uses: actions/download-artifact@v4
@@ -216,7 +216,7 @@ jobs:
           mkdir -p app/one/dist/frontend
           cp artifacts/tokenring-linux-x64 app/one/dist/tokenring-linux-amd64
           cp artifacts/tokenring-linux-arm64 app/one/dist/tokenring-linux-arm64
-          cp -r artifacts/chat-frontend app/one/dist/frontend/chat
+          cp -r artifacts/one-frontend app/one/dist/frontend/one
           chmod +x app/one/dist/tokenring-linux-*
 
       - name: Log in to the Container registry

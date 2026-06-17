@@ -4,15 +4,12 @@
   "devDependencies": {
     "@biomejs/biome": "^2.4.14",
     "@types/bun": "^1.3.14",
-    "@typescript-eslint/eslint-plugin": "^8.59.2",
-    "@typescript-eslint/parser": "^8.59.2",
     "@tokenring-ai/ai-client": "workspace:*",
     "eslint": "^10.3.0",
     "husky": "^9.1.7",
     "oxlint": "^1.63.0",
     "oxlint-tsgolint": "^0.22.1",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.2",
     "vitest": "^4.1.5"
   },
   "description": "TokenRing Monorepo with all community apps and packages",

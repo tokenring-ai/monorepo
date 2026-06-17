@@ -21,7 +21,7 @@ function makeFileTreeEntry(pkgRoot: string, dir: string, resources: Record<strin
   items: [
    {
     path: `./${pkgRoot}/${dir}`,
-    include: "\.(txt|tsx?|jsx?|md|json|yaml)$",
+    include: "\\.(txt|tsx?|jsx?|md|json|yaml)$",
    },
   ],
  };

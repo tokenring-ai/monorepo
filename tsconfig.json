@@ -1,46 +1,47 @@
 {
- "compilerOptions": {
-  "target": "ES2022",
-  "module": "preserve",
-  "moduleResolution": "bundler",
-  "resolveJsonModule": true,
-  "esModuleInterop": true,
-  "skipLibCheck": true,
-  "strict": true,
-  "allowJs": true,
-  "checkJs": true,
-  "noEmit": true,
-  "exactOptionalPropertyTypes": true,
-   "noFallthroughCasesInSwitch": true,
-   "noImplicitAny": true,
-  //"noUncheckedIndexedAccess": true,
-  "jsx": "preserve",
-  "allowImportingTsExtensions": true,
-  "types": [
-   "bun"
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "useUnknownInCatchVariables": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    //"noUncheckedIndexedAccess": true,
+    "jsx": "preserve",
+    "allowImportingTsExtensions": true,
+    "types": [
+      "bun"
+    ],
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": [
+    "app/**/*.ts",
+    "app/**/*.tsx",
+    "frontend/**/*.ts",
+    "frontend/**/*.tsx",
+    "pkg/**/*.ts",
+    "pkg/**/*.tsx"
   ],
-  "outDir": "dist",
-  "rootDir": "."
- },
- "include": [
-  "app/**/*.ts",
-  "app/**/*.tsx",
-  "frontend/**/*.ts",
-  "frontend/**/*.tsx",
-  "pkg/**/*.ts",
-  "pkg/**/*.tsx",
- ],
- "exclude": [
-  "node_modules",
-  "**/dist",
-  "dist-ts",
-  "**/*.test.*",
-  "pkg/**/test/**",
-  "pkg/**/__tests__/**",
-  "pkg/**/examples/**",
-  "src/examples/**",
-  "pkg/**/hooks/**",
-  "pkg/inquirer-command-prompt/examples/**",
-  "pkg/inquirer-tree-selector/rollup.config.js",
- ]
+  "exclude": [
+    "node_modules",
+    "**/dist",
+    "dist-ts",
+    "**/*.test.*",
+    "pkg/**/test/**",
+    "pkg/**/__tests__/**",
+    "pkg/**/examples/**",
+    "src/examples/**",
+    "pkg/**/hooks/**",
+    "pkg/inquirer-command-prompt/examples/**",
+    "pkg/inquirer-tree-selector/rollup.config.js"
+  ]
 }

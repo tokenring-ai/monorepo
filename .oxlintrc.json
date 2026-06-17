@@ -11,7 +11,7 @@
     "**/dist",
     "**/*.test.*",
     "pkg/**/test/**",
-    "**/frontend/chat/assets",
+    "**/frontend/*/assets",
     "scripts/**",
     "deps/**"
   ],
