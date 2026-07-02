@@ -198,7 +198,6 @@ export default {
     enabledTools: ["@tokenring-ai/filesystem/*"],
     context: {
       initial: [
-        {type: "system-message"},
         {type: "task-plan"},
         {type: "tool-context"},
         {type: "search-files"},
@@ -547,7 +546,6 @@ socket.onmessage = (event) => {
   tools: ["@tokenring-ai/filesystem/*"],
   context: {
     initial: [
-      {type: "system-message"},
       {type: "task-plan"},
       {type: "tool-context"},
       {type: "search-files"},
@@ -567,7 +565,6 @@ socket.onmessage = (event) => {
   tools: ["@tokenring-ai/websearch/*", "@tokenring-ai/filesystem/*"],
   context: {
     initial: [
-      {type: "system-message"},
       {type: "task-plan"},
       {type: "tool-context"},
       {type: "search-files"},
@@ -587,7 +584,6 @@ socket.onmessage = (event) => {
   tools: ["@tokenring-ai/filesystem/*"],
   context: {
     initial: [
-      {type: "system-message"},
       {type: "task-plan"},
       {type: "tool-context"},
       {type: "search-files"},

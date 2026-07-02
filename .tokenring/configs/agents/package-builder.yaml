@@ -10,7 +10,6 @@ agents:
     chat:
       context:
         initial:
-          - type: system-message
           - type: codebase-context
           - type: search-files
           - type: current-message

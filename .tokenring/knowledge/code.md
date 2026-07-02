@@ -234,7 +234,6 @@ export default {
   chat: {
     context: {
       initial: [
-        {type: "system-message"},
         {type: "task-plan"},
         {type: "tool-context"},
         {type: "current-message"},

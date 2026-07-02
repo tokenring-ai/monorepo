@@ -1,8 +1,11 @@
 {
- "versionGroups": [
-  {
-   "dependencies": ["signal-exit"],
-   "pinVersion": "3.0.7"
-  }
- ]
+  "minimumReleaseAge": 432000,
+  "versionGroups": [
+    {
+      "dependencies": [
+        "signal-exit"
+      ],
+      "pinVersion": "3.0.7"
+    }
+  ]
 }
