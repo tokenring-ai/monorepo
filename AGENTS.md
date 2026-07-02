@@ -3,13 +3,11 @@ description: Repository Information Overview
 alwaysApply: true
 ---
 
-# TokenRing Coder Information
+# TokenRing One Information
 
 ## Summary
 
-TokenRing Coder is an interactive developer assistant tool designed to help developers work with codebases in a
-conversational manner. It provides a chat interface where users can ask questions, issue commands, and interact with
-source code, leveraging AI to assist with code edits, refactors, testing, and more.
+TokenRing One is a local-first, multi-agent workspace that bundles five purpose-built apps — coding, canvas, documents, media, and research — into a single product. Same agents, same ecosystem, same configuration across every surface. It provides a chat interface where users can ask questions, issue commands, and interact with source code and content, leveraging AI to assist with code edits, refactors, testing, research, writing, publishing, and more.
 
 ## Structure
 
@@ -53,7 +51,7 @@ bun install
 bun run build
 
 # Run the application
-bun src/tr-coder.js --source ./path-to-codebase
+bun src/tokenring.js --source ./path-to-codebase
 ```
 
 ## Docker
@@ -64,13 +62,13 @@ bun src/tr-coder.js --source ./path-to-codebase
 **Build Command**:
 
 ```bash
-docker build -t tokenring-ai/coder:latest -f docker/Dockerfile .
+docker build -t tokenring-ai/one:latest -f docker/Dockerfile .
 ```
 
 **Run Command**:
 
 ```bash
-docker run -ti --net host -v ./:/repo:rw tokenring-ai/coder:latest
+docker run -ti --net host -v ./:/repo:rw tokenring-ai/one:latest
 ```
 
 ## Testing
@@ -88,7 +86,7 @@ bun run test
 
 The project follows a modular architecture with a monorepo structure:
 
-- **Core Application**: Entry point in src/tr-coder.ts
+- **Core Application**: Entry point in src/tokenring.ts
 - **Package Modules**: Functionality split into specialized packages in pkg/
 - **Registry System**: Services, tools, and resources registered at runtime
 - **Plugin Support**: Extensible design with plugin capabilities

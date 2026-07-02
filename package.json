@@ -16,6 +16,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --noEmit",
+    "typecheck:tests": "tsc --noEmit -p tsconfig.tests.json",
     "build-deps": "cd deps/naudiodon3 && bun run install",
     "build-docs": "cd docs && bun run build",
     "tokenring": "bun --env --inspect=4000 app/one/tokenring.js",

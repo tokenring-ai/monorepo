@@ -22,7 +22,7 @@ To mock the agent, use the following method:
 
 ```typescript
 import createTestingAgent from "@tokenring-ai/agent/test/createTestingAgent";
-import createTestingApp from "@tokenring-ai/app/test/createTestingApp";
+import createTestingApp from "@tokenring-ai/app/test/createTestingApp.test";
 
 const app = createTestingApp();
 

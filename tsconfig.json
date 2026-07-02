@@ -33,15 +33,6 @@
   ],
   "exclude": [
     "node_modules",
-    "**/dist",
-    "dist-ts",
     "**/*.test.*",
-    "pkg/**/test/**",
-    "pkg/**/__tests__/**",
-    "pkg/**/examples/**",
-    "src/examples/**",
-    "pkg/**/hooks/**",
-    "pkg/inquirer-command-prompt/examples/**",
-    "pkg/inquirer-tree-selector/rollup.config.js"
   ]
 }
