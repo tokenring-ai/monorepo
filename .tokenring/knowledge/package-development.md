@@ -1019,7 +1019,7 @@ async function execute(input, agent) {
   try {
     const result = await performAction(input);
     return {type: "json", data: result};
-  } catch (err: any) {
+  } catch (err) {
     throw new Error(`[toolName] ${err.message}`);
   }
 }

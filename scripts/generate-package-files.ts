@@ -38,7 +38,7 @@ async function main(): Promise<void> {
             try {
               await fs.copyFile(src, dst);
               console.log(`  -> Copied ${file}`);
-            } catch (err: unknown) {
+            } catch (err) {
               console.error(`  [!] Failed to copy ${file} to ${packageDir}:`, err);
             }
           }
@@ -123,19 +123,19 @@ async function main(): Promise<void> {
               await fs.writeFile(packageJsonPath, JSON.stringify(packageData, null, 2));
               console.log(`  -> Updated package.json`);
             }
-          } catch (err: unknown) {
+          } catch (err) {
             console.error(`  [!] Failed to update package.json in ${packageDir}:`, err);
           }
 
           console.log('');
-        } catch (err: unknown) {
+        } catch (err) {
           console.error(`Error processing directory ${packageDir}:`, err);
         }
       }
     }
 
     console.log('Done!');
-  } catch (err: unknown) {
+  } catch (err) {
     console.error('Fatal error:', err);
     process.exit(1);
   }

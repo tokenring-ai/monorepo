@@ -14,7 +14,7 @@
     "exactOptionalPropertyTypes": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    //"noUncheckedIndexedAccess": true,
+    "noUncheckedIndexedAccess": true,
     "jsx": "preserve",
     "allowImportingTsExtensions": true,
     "types": [

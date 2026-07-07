@@ -182,10 +182,6 @@
 	path = pkg/web-host
 	url = ../web-host.git
 	branch = main
-[submodule "pkg/drizzle-storage"]
-	path = pkg/drizzle-storage
-	url = ../drizzle-storage.git
-	branch = main
 [submodule "pkg/chat"]
 	path = pkg/chat
 	url = ../chat.git
@@ -329,4 +325,8 @@
 [submodule "pkg/media-library"]
 	path = pkg/media-library
 	url = ../media-library.git
+	branch = main
+[submodule "pkg/bun-storage"]
+	path = pkg/bun-storage
+	url = ../bun-storage.git
 	branch = main

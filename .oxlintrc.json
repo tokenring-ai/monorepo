@@ -13,7 +13,8 @@
     "pkg/**/test/**",
     "**/frontend/*/assets",
     "scripts/**",
-    "deps/**"
+    "deps/**",
+    "docs/**"
   ],
   "options": {
     "typeAware": true,
@@ -23,6 +24,8 @@
     "correctness": "error"
   },
   "rules": {
+    "eslint/no-useless-assignment": "error",
+    "typescript/no-unnecessary-condition": "error",
     "typescript/no-floating-promises": "error",
     "typescript/no-unsafe-assignment": "warn",
     "typescript/no-base-to-string": "error",
