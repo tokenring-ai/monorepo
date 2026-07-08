@@ -202,13 +202,9 @@
 	path = pkg/browser-file-system
 	url = ../browser-file-system.git
 	branch = main
-[submodule "app/webterminal"]
-	path = frontend/webterminal
-	url = ../webterminal.git
-	branch = main
-[submodule "frontend/chat"]
+[submodule "frontend/one"]
 	path = frontend/one
-	url = ../chat-frontend.git
+	url = ../one-frontend.git
 	branch = main
 [submodule "pkg/agent"]
 	path = pkg/agent
