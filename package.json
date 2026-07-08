@@ -3,10 +3,11 @@
   "version": "0.2.48",
   "devDependencies": {
     "@biomejs/biome": "^2.5.1",
-    "@types/bun": "^1.3.14",
     "@tokenring-ai/ai-client": "workspace:*",
+    "@types/bun": "^1.3.14",
     "eslint": "^10.6.0",
     "husky": "^9.1.7",
+    "knip": "^6.24.0",
     "oxlint": "^1.72.0",
     "oxlint-tsgolint": "^0.24.0",
     "typescript": "^6.0.3",
@@ -15,16 +16,15 @@
   "description": "TokenRing Monorepo with all community apps and packages",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --noEmit",
-    "typecheck:tests": "tsc --noEmit -p tsconfig.tests.json",
-    "build-deps": "cd deps/naudiodon3 && bun run install",
-    "build-docs": "cd docs && bun run build",
-    "tokenring": "bun --env --inspect=4000 app/one/tokenring.js",
-    "test": "bun run test",
     "prepare": "husky",
-    "update-all-dependencies-latest": "bun update --latest",
-    "biome": "biome check --fix",
-    "lint": "oxlint -f stylish --fix"
+    "docs:build": "cd docs && bun run build",
+    "deps:update": "bun update --latest",
+    "deps:build": "cd deps/naudiodon3 && bun run install",
+    "check:biome": "biome check --fix",
+    "check:oxlint": "oxlint -f stylish --fix",
+    "check:knip": "knip",
+    "check:tsc": "tsc",
+    "check:tsc-tests": "tsc --noEmit -p tsconfig.tests.json"
   },
   "type": "module",
   "overrides": {

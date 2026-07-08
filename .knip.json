@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignore": [
+    "scripts/**",
+    ".tokenring/*",
+    "docs/**",
+    "deps/**",
+    "app/one/frontend/**",
+    "app/one/packages/**"
+  ],
+  "ignoreBinaries": [
+    "ffmpeg",
+    "electron-rebuild"
+  ],
+  "exclude": [
+    "dependencies",
+    "unlisted",
+    "unresolved",
+    "exports"
+  ],
+  "ignoreExportsUsedInFile": {
+    "type": true,
+    "interface": true
+  }
+}
