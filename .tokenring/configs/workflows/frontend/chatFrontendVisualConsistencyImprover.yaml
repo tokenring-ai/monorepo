@@ -1,5 +1,6 @@
 workflows:
   chatFrontendVisualConsistencyImprover:
+    category: "Frontend"
     displayName: "Chat Frontend Visual Consistency Improver"
     description: "Identifies and fixes visual inconsistencies in chat frontend components, including between parent and child components"
     agentType: "leader"
