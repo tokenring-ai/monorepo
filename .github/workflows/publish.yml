@@ -9,55 +9,48 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
+  BUN_VERSION: 1.3.14
 
 jobs:
-  build-macos-arm64:
-    runs-on: macos-latest
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            platform: darwin-arm64
+            bun_target: bun-darwin-arm64
+            artifact: tokenring-macos-arm64
+            binary: tokenring-macos-arm64
+            build_frontend: false
+          - os: macos-13
+            platform: darwin-x64
+            bun_target: bun-darwin-x64
+            artifact: tokenring-macos-x64
+            binary: tokenring-macos-x64
+            build_frontend: false
+          - os: ubuntu-latest
+            platform: linux-x64
+            bun_target: bun-linux-x64
+            artifact: tokenring-linux-x64
+            binary: tokenring-linux-x64
+            build_frontend: true
+          - os: ubuntu-24.04-arm
+            platform: linux-arm64
+            bun_target: bun-linux-arm64
+            artifact: tokenring-linux-arm64
+            binary: tokenring-linux-arm64
+            build_frontend: false
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 
-      - uses: oven-sh/setup-bun@v1
+      - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: 1.3.14
-
-      - name: Install dependencies
-        run: bun install
-
-      - name: Build naudiodon3
-        run: bun run install
-        working-directory: ./deps/naudiodon3
-
-      - name: Build One binary
-        run: bun build --compile ./tokenring.ts --outfile tokenring-macos-arm64
-        working-directory: ./app/one
-
-      - name: Copy portaudio lib to One directory
-        run: |
-          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/one
-          cd app/one
-          install_name_tool -add_rpath "@loader_path" tokenring-macos-arm64
-          ./tokenring-macos-arm64 -h
-
-      - name: Upload One binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: tokenring-macos-arm64
-          path: ./app/one/tokenring-macos-arm64
-
-  build-linux-x64:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: 1.3.5
+          bun-version: ${{ env.BUN_VERSION }}
 
       - name: Install dependencies
         run: bun install
@@ -67,49 +60,48 @@ jobs:
         working-directory: ./deps/naudiodon3
 
       - name: Build TokenRing One web frontend
+        if: matrix.build_frontend
         run: bun run build
         working-directory: ./frontend/one
 
       - name: Upload TokenRing One web frontend
-        uses: actions/upload-artifact@v4
+        if: matrix.build_frontend
+        uses: actions/upload-artifact@v7
         with:
           name: one-frontend
           path: ./frontend/one/dist
 
       - name: Build One binary
-        run: bun build --compile --target=bun-linux-x64 ./tokenring.ts --outfile tokenring-linux-x64
+        run: bun build --compile --target=${{ matrix.bun_target }} ./tokenring.ts --outfile ${{ matrix.binary }}
         working-directory: ./app/one
+
+      - name: Configure macOS rpath and PortAudio
+        if: runner.os == 'macOS'
+        run: |
+          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/one
+          cd app/one
+          install_name_tool -add_rpath "@loader_path" ${{ matrix.binary }}
 
       - name: Check that One can start
-        run: ./tokenring-linux-x64 -h
-        working-directory: ./app/one
-
-      - name: Build One arm64 binary
-        run: bun build --compile --target=bun-linux-arm64 ./tokenring.ts --outfile tokenring-linux-arm64
+        run: ./${{ matrix.binary }} -h
         working-directory: ./app/one
 
       - name: Upload One binary
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: tokenring-linux-x64
-          path: ./app/one/tokenring-linux-x64
-
-      - name: Upload One arm64 binary
-        uses: actions/upload-artifact@v4
-        with:
-          name: tokenring-linux-arm64
-          path: ./app/one/tokenring-linux-arm64
+          name: ${{ matrix.artifact }}
+          path: ./app/one/${{ matrix.binary }}
 
   publish-one-npm:
     runs-on: ubuntu-latest
-    needs: [build-macos-arm64, build-linux-x64]
+    needs: [build]
     permissions:
       contents: read
       id-token: write
       packages: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           submodules: true
 
@@ -120,13 +112,13 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Download TokenRing One web frontend
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: one-frontend
           path: ./artifacts/one-frontend
 
       - name: Download One binaries
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           pattern: tokenring-*
           path: ./artifacts
@@ -135,25 +127,164 @@ jobs:
       - name: Prepare One platform package
         run: |
           mkdir -p \
-            app/one/packages/npm/one/bin/darwin-arm64 \
-            app/one/packages/npm/one/bin/linux-x64 \
-            app/one/packages/npm/one/bin/linux-arm64
-          cp artifacts/tokenring-macos-arm64 app/one/packages/npm/one/bin/darwin-arm64/tokenring
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib app/one/packages/npm/one/bin/darwin-arm64/
-          cp artifacts/tokenring-linux-x64 app/one/packages/npm/one/bin/linux-x64/tokenring
-          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 app/one/packages/npm/one/bin/linux-x64/
-          cp artifacts/tokenring-linux-arm64 app/one/packages/npm/one/bin/linux-arm64/tokenring
-          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 app/one/packages/npm/one/bin/linux-arm64/
-          chmod +x app/one/packages/npm/one/bin/*/tokenring
-          mkdir -p app/one/packages/npm/one/frontend/one
-          cp -r artifacts/one-frontend/* app/one/packages/npm/one/frontend/one
+            packaging/npm/one/bin/darwin-arm64 \
+            packaging/npm/one/bin/darwin-x64 \
+            packaging/npm/one/bin/linux-x64 \
+            packaging/npm/one/bin/linux-arm64
+          cp artifacts/tokenring-macos-arm64 packaging/npm/one/bin/darwin-arm64/tokenring
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib packaging/npm/one/bin/darwin-arm64/
+          cp artifacts/tokenring-macos-x64 packaging/npm/one/bin/darwin-x64/tokenring
+          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib packaging/npm/one/bin/darwin-x64/
+          cp artifacts/tokenring-linux-x64 packaging/npm/one/bin/linux-x64/tokenring
+          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 packaging/npm/one/bin/linux-x64/
+          cp artifacts/tokenring-linux-arm64 packaging/npm/one/bin/linux-arm64/tokenring
+          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 packaging/npm/one/bin/linux-arm64/
+          chmod +x packaging/npm/one/bin/*/tokenring
+          mkdir -p packaging/npm/one/frontend/one
+          cp -r artifacts/one-frontend/* packaging/npm/one/frontend/one
 
       - name: Publish One to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --provenance --access public --tag next
-        working-directory: ./app/one/packages/npm/one
+        run: npm stage publish --provenance --access public
+        working-directory: ./packaging/npm/one
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  package-deb:
+    runs-on: ubuntu-latest
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            binary: tokenring-linux-x64
+          - arch: arm64
+            binary: tokenring-linux-arm64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Resolve package version
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$(jq -r .version packaging/npm/one/package.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download One binary
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ matrix.binary }}
+          path: ./artifacts
+
+      - name: Download TokenRing One web frontend
+        uses: actions/download-artifact@v7
+        with:
+          name: one-frontend
+          path: ./artifacts/one-frontend
+
+      - name: Build .deb package
+        run: |
+          ./packaging/deb/one/build-deb.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --arch "${{ matrix.arch }}" \
+            --binary "./artifacts/${{ matrix.binary }}" \
+            --frontend "./artifacts/one-frontend" \
+            --outdir ./artifacts/deb
+
+      - name: Upload .deb package
+        uses: actions/upload-artifact@v7
+        with:
+          name: tokenring-one-deb-${{ matrix.arch }}
+          path: ./artifacts/deb/tokenring-one_${{ steps.version.outputs.version }}_${{ matrix.arch }}.deb
+
+  package-rpm:
+    runs-on: ubuntu-latest
+    needs: [build]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            binary: tokenring-linux-x64
+          - arch: aarch64
+            binary: tokenring-linux-arm64
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Install rpmbuild
+        run: sudo apt-get update && sudo apt-get install -y rpm
+
+      - name: Resolve package version
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=$(jq -r .version packaging/npm/one/package.json)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download One binary
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ matrix.binary }}
+          path: ./artifacts
+
+      - name: Download TokenRing One web frontend
+        uses: actions/download-artifact@v7
+        with:
+          name: one-frontend
+          path: ./artifacts/one-frontend
+
+      - name: Build .rpm package
+        run: |
+          ./packaging/rpm/one/build-rpm.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --arch "${{ matrix.arch }}" \
+            --binary "./artifacts/${{ matrix.binary }}" \
+            --frontend "./artifacts/one-frontend" \
+            --outdir ./artifacts/rpm
+
+      - name: Upload .rpm package
+        uses: actions/upload-artifact@v7
+        with:
+          name: tokenring-one-rpm-${{ matrix.arch }}
+          path: ./artifacts/rpm/tokenring-one_${{ steps.version.outputs.version }}_${{ matrix.arch }}.rpm
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: [publish-one-npm, package-deb, package-rpm]
+    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: write
+    steps:
+      - name: Download release assets
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            artifacts/tokenring-macos-arm64
+            artifacts/tokenring-macos-x64
+            artifacts/tokenring-linux-x64
+            artifacts/tokenring-linux-arm64
+            artifacts/tokenring-one_*_amd64.deb
+            artifacts/tokenring-one_*_arm64.deb
+            artifacts/tokenring-one_*_x86_64.rpm
+            artifacts/tokenring-one_*_aarch64.rpm
 
   verify-npm-publish:
     needs: [publish-one-npm]
@@ -167,6 +298,8 @@ jobs:
             arch: linux-arm64
           - os: macos-latest
             arch: darwin-arm64
+          - os: macos-13
+            arch: darwin-x64
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup Node.js
@@ -186,55 +319,65 @@ jobs:
         run: npx @tokenring-ai/one@${{ steps.version.outputs.version }} -h
 
   publish-docker:
-    runs-on: ubuntu-latest
-    needs: [publish-one-npm]
+    needs: [build]
     permissions:
       contents: read
       id-token: write
       packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            platform: linux/amd64
+            docker_arch: amd64
+            binary: tokenring-linux-x64
+          - runner: ubuntu-24.04-arm
+            platform: linux/arm64
+            docker_arch: arm64
+            binary: tokenring-linux-arm64
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
+        uses: actions/checkout@v7
+
+      - name: Prepare platform pair
+        run: |
+          platform=${{ matrix.platform }}
+          echo "PLATFORM_PAIR=${platform//\//-}" >> "$GITHUB_ENV"
 
       - name: Download TokenRing One web frontend
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: one-frontend
           path: ./artifacts/one-frontend
 
-      - name: Download One binaries
-        uses: actions/download-artifact@v4
+      - name: Download One binary
+        uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-linux-*
+          name: ${{ matrix.binary }}
           path: ./artifacts
-          merge-multiple: true
 
-      - name: Prepare Docker build
+      - name: Prepare Docker build context
         run: |
-          mkdir -p app/one/dist/frontend
-          cp artifacts/tokenring-linux-x64 app/one/dist/tokenring-linux-amd64
-          cp artifacts/tokenring-linux-arm64 app/one/dist/tokenring-linux-arm64
-          cp -r artifacts/one-frontend app/one/dist/frontend/one
-          chmod +x app/one/dist/tokenring-linux-*
+          mkdir -p packaging/docker/one/dist/frontend
+          cp "artifacts/${{ matrix.binary }}" "packaging/docker/one/dist/tokenring-linux-${{ matrix.docker_arch }}"
+          cp -r artifacts/one-frontend packaging/docker/one/dist/frontend/one
+          chmod +x "packaging/docker/one/dist/tokenring-linux-${{ matrix.docker_arch }}"
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Extract metadata for One
         id: meta-one
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.REGISTRY }}/tokenring-ai/one
           tags: |
@@ -245,15 +388,78 @@ jobs:
             type=sha,format=short
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push One Docker image
-#        if: startsWith(github.ref, 'refs/tags/v')
-        uses: docker/build-push-action@v5
+      - name: Build and push by digest
+        id: build
+        uses: docker/build-push-action@v7
         with:
-          context: ./app/one
-          file: ./app/one/docker/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ${{ steps.meta-one.outputs.tags }}
+          context: ./packaging/docker/one
+          file: ./packaging/docker/one/Dockerfile
+          platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta-one.outputs.labels }}
-          cache-from: type=gha,scope=one
-          cache-to: type=gha,mode=max,scope=one
+          outputs: type=image,name=${{ env.REGISTRY }}/tokenring-ai/one,push-by-digest=true,name-canonical=true,push=true
+          cache-from: type=gha,scope=one-${{ matrix.docker_arch }}
+          cache-to: type=gha,mode=max,scope=one-${{ matrix.docker_arch }}
+
+      - name: Export digest
+        run: |
+          mkdir -p "${{ runner.temp }}/digests"
+          digest="${{ steps.build.outputs.digest }}"
+          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v7
+        with:
+          name: digests-${{ env.PLATFORM_PAIR }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  publish-docker-manifest:
+    runs-on: ubuntu-latest
+    needs: [publish-docker]
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - name: Download digests
+        uses: actions/download-artifact@v7
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-*
+          merge-multiple: true
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v4
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Extract metadata for One
+        id: meta-one
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.REGISTRY }}/tokenring-ai/one
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,format=short
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Create multi-arch manifest and push
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          docker buildx imagetools create \
+            $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+            $(printf '${{ env.REGISTRY }}/tokenring-ai/one@sha256:%s ' *)
+
+      - name: Inspect image
+        run: |
+          docker buildx imagetools inspect \
+            "${{ env.REGISTRY }}/tokenring-ai/one:${{ steps.meta-one.outputs.version }}"

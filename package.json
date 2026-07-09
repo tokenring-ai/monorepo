@@ -20,6 +20,8 @@
     "docs:build": "cd docs && bun run build",
     "deps:update": "bun update --latest",
     "deps:build": "cd deps/naudiodon3 && bun run install",
+    "package:one:frontend": "bun run --cwd packaging/npm/one stage:frontend",
+    "package:one:docker": "bun run --cwd packaging/docker/one build",
     "check:biome": "biome check --fix",
     "check:oxlint": "oxlint -f stylish --fix",
     "check:knip": "knip",
