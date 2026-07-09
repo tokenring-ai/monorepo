@@ -23,7 +23,7 @@ jobs:
             artifact: tokenring-macos-arm64
             binary: tokenring-macos-arm64
             build_frontend: false
-          - os: macos-13
+          - os: macos-15-intel
             platform: darwin-x64
             bun_target: bun-darwin-x64
             artifact: tokenring-macos-x64
@@ -51,6 +51,14 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
+
+      # linux-arm64 links against system PortAudio (no aarch64 prebuilt in naudiodon3).
+      # linux-x64 uses the vendored .so; headers are still useful for a consistent toolchain.
+      - name: Install PortAudio (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libportaudio2 portaudio19-dev
 
       - name: Install dependencies
         run: bun install
@@ -82,6 +90,23 @@ jobs:
           cd app/one
           install_name_tool -add_rpath "@loader_path" ${{ matrix.binary }}
 
+      # linux-arm64 has no vendored aarch64 PortAudio in-repo; copy the system .so used at
+      # link time so the npm package can ship it (tokenring.js sets LD_LIBRARY_PATH).
+      - name: Bundle PortAudio shared library (linux-arm64)
+        if: matrix.platform == 'linux-arm64'
+        run: |
+          # Debian ships libportaudio.so.2 as a symlink; resolve to the real object.
+          so="$(ldconfig -p | awk '/libportaudio\.so\.2/ { print $NF; exit }')"
+          if [ -z "$so" ] || [ ! -e "$so" ]; then
+            so="$(find /usr/lib /lib -name 'libportaudio.so.2' 2>/dev/null | head -n1)"
+          fi
+          if [ -z "$so" ] || [ ! -e "$so" ]; then
+            echo "Could not locate libportaudio.so.2 on the runner" >&2
+            exit 1
+          fi
+          echo "Bundling $so ($(file -b "$so"))"
+          cp -L "$so" ./app/one/libportaudio.so.2
+
       - name: Check that One can start
         run: ./${{ matrix.binary }} -h
         working-directory: ./app/one
@@ -91,6 +116,15 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
           path: ./app/one/${{ matrix.binary }}
+
+      # Separate artifact so publish packaging can pick the aarch64 .so without
+      # colliding with other platforms under merge-multiple.
+      - name: Upload linux-arm64 PortAudio
+        if: matrix.platform == 'linux-arm64'
+        uses: actions/upload-artifact@v7
+        with:
+          name: libportaudio-linux-arm64
+          path: ./app/one/libportaudio.so.2
 
   publish-one-npm:
     runs-on: ubuntu-latest
@@ -117,12 +151,28 @@ jobs:
           name: one-frontend
           path: ./artifacts/one-frontend
 
+      # Do not use pattern tokenring-*: it also matches package artifacts
+      # (tokenring-one-deb-*) and Docker Buildx GHA cache blobs
+      # (tokenring-ai~monorepo~*.dockerbuild), which can fail to extract.
       - name: Download One binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-*
+          pattern: tokenring-linux-*
           path: ./artifacts
           merge-multiple: true
+
+      - name: Download One binaries (macOS)
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-macos-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download linux-arm64 PortAudio
+        uses: actions/download-artifact@v7
+        with:
+          name: libportaudio-linux-arm64
+          path: ./artifacts/libportaudio-linux-arm64
 
       - name: Prepare One platform package
         run: |
@@ -138,7 +188,8 @@ jobs:
           cp artifacts/tokenring-linux-x64 packaging/npm/one/bin/linux-x64/tokenring
           cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 packaging/npm/one/bin/linux-x64/
           cp artifacts/tokenring-linux-arm64 packaging/npm/one/bin/linux-arm64/tokenring
-          cp deps/naudiodon3/portaudio/bin_armhf/libportaudio.so.2 packaging/npm/one/bin/linux-arm64/
+          # Use aarch64 .so from the arm64 build runner (bin_armhf is 32-bit ARM, not arm64).
+          cp artifacts/libportaudio-linux-arm64/libportaudio.so.2 packaging/npm/one/bin/linux-arm64/
           chmod +x packaging/npm/one/bin/*/tokenring
           mkdir -p packaging/npm/one/frontend/one
           cp -r artifacts/one-frontend/* packaging/npm/one/frontend/one
@@ -201,8 +252,10 @@ jobs:
           name: tokenring-one-deb-${{ matrix.arch }}
           path: ./artifacts/deb/tokenring-one_${{ steps.version.outputs.version }}_${{ matrix.arch }}.deb
 
+  # rpmbuild refuses foreign-arch packages ("No compatible architectures found
+  # for build"), unlike dpkg-deb. Build each RPM on a runner that matches the
+  # package arch (x86_64 on ubuntu-latest, aarch64 on ubuntu-24.04-arm).
   package-rpm:
-    runs-on: ubuntu-latest
     needs: [build]
     strategy:
       fail-fast: false
@@ -210,8 +263,11 @@ jobs:
         include:
           - arch: x86_64
             binary: tokenring-linux-x64
+            runner: ubuntu-latest
           - arch: aarch64
             binary: tokenring-linux-arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -262,10 +318,33 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Download release assets
+      # Narrow patterns: avoid Docker Buildx GHA cache artifacts named
+      # tokenring-ai~monorepo~*.dockerbuild (match tokenring-* and often fail download).
+      - name: Download Linux binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-*
+          pattern: tokenring-linux-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download macOS binaries
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-macos-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download deb packages
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-one-deb-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download rpm packages
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-one-rpm-*
           path: ./artifacts
           merge-multiple: true
 
@@ -298,7 +377,7 @@ jobs:
             arch: linux-arm64
           - os: macos-latest
             arch: darwin-arm64
-          - os: macos-13
+          - os: macos-15-intel
             arch: darwin-x64
     runs-on: ${{ matrix.os }}
     steps:
