@@ -1,6 +1,6 @@
 {
   "name": "@tokenring-ai/monorepo",
-  "version": "0.2.48",
+  "version": "0.2.49",
   "devDependencies": {
     "@biomejs/biome": "^2.5.1",
     "@tokenring-ai/ai-client": "workspace:*",
