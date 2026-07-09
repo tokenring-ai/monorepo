@@ -1,6 +1,6 @@
 {
   "name": "@tokenring-ai/one",
-  "version": "0.2.49",
+  "version": "0.2.50",
   "description": "TokenRing One — local-first multi-agent AI workspace for coding, research, and automation",
   "license": "MIT",
   "bin": {
