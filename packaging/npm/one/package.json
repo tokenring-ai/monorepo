@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/one",
   "version": "0.2.49",
-  "description": "TokenRing One Application",
+  "description": "TokenRing One — local-first multi-agent AI workspace for coding, research, and automation",
   "license": "MIT",
   "bin": {
     "tokenring": "tokenring.js"
@@ -17,9 +17,22 @@
     "stage:frontend": "bun run build:frontend && rm -rf frontend && mkdir -p frontend/one && cp -a ../../../frontend/one/dist/. frontend/one/",
     "prepack": "if [ ! -d frontend/one ] || [ -z \"$(ls -A frontend/one 2>/dev/null)\" ]; then bun run stage:frontend; fi"
   },
+  "keywords": [
+    "tokenring",
+    "ai",
+    "agent",
+    "coding-assistant",
+    "cli",
+    "local-first",
+    "multi-agent"
+  ],
+  "homepage": "https://github.com/tokenring-ai/monorepo/tree/main/packaging/npm/one#readme",
+  "bugs": {
+    "url": "https://github.com/tokenring-ai/monorepo/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tokenring-ai/monorepo",
+    "url": "git+https://github.com/tokenring-ai/monorepo.git",
     "directory": "packaging/npm/one"
   }
 }

@@ -1,2 +1,6 @@
+tsc
+biome check --fix
+oxlint --fix
+
 #docker run --rm -v "$(pwd):/workdir" -i --rm trufflesecurity/trufflehog:latest git file:///workdir --since-commit HEAD --results=verified,unknown --fail
 #npm test
