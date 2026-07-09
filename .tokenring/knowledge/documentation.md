@@ -18,7 +18,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
  - Chat Commands (optional)
  - Tools (optional)
  - Configuration
-   - Sampling Configuration in YAML format
+   - Sample Configuration in YAML format
    - ENV Variables (optional)
  - License
 
@@ -36,7 +36,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
    - Chat Commands: Document slash-prefixed commands available in the package
    - Tools: Document tools available in the package
    - Configuration
-   - Sampling Configuration in YAML format
+   - Sample Configuration in YAML format
    - ENV Variables (optional)
  - Developer Reference:
    - Core Components
@@ -137,6 +137,39 @@ When documenting schema definitions:
 - Document complex schemas by grouping related fields (e.g., "Core identification fields", "Price fields")
 - Provide code examples showing schema definitions
 - Include notes about automatic transformations or conversions
+
+#### Scripting Functions Documentation
+When a package registers global functions with the ScriptingService:
+- Document each function with its signature and parameters
+- Include example usage in Javascript contexts
+- Note that functions are automatically registered by the plugin
+- Document return types and any error conditions
+
+#### Command Aliases Documentation
+When commands have aliases (defined via the `alias` property in command definitions):
+- Document the primary command name in the table
+- List aliases in the description column (e.g., "Alias: `/func delete`")
+- Include the most commonly used alias in examples if it differs from the primary name
+- Document all aliases to ensure users can find the command regardless of which name they use
+
+#### Table Cell Escaping
+When table cells contain pipe characters (`|`):
+- Use `\x7C` to represent pipe characters within table cells to avoid breaking the table structure
+- Example: `/echo text\x7C$var` instead of `/echo text|$var`
+- This prevents the pipe from being interpreted as a column separator
+
+#### Artifact Output Documentation
+When a package generates artifacts (e.g., research results, search results):
+- Document the artifact properties (name, encoding, mimeType, body)
+- Provide the artifact structure or format
+- Explain when and how artifacts are generated
+
+#### State Management Documentation
+When documenting service state:
+- Document whether the service maintains persistent state
+- List any state that is maintained and how it is managed
+- Document state serialization/deserialization if applicable
+- Note if the service is stateless (each request processed independently)
 
 ### 3. Documentation Maintenance
 
