@@ -1,5 +1,4 @@
 {
-
   "compilerOptions": {
     "target": "ES2022",
     "module": "preserve",
@@ -33,7 +32,6 @@
     "pkg/**/*.tsx"
   ],
   "exclude": [
-    "node_modules",
-    "**/*.test.*",
+    "node_modules"
   ]
 }

@@ -5,3 +5,10 @@ ignoreScripts = true
 linkWorkspacePackages = false
 linker = "hoisted"
 minimumReleaseAgeExcludes = ["oxlint","oxlint-tsgolint"]
+
+
+[test]
+# Multiple patterns
+pathIgnorePatterns = [
+    "frontend/one/**"
+]

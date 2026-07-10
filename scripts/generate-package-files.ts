@@ -1,29 +1,64 @@
 #!/usr/bin/env bun
-import fs from 'node:fs/promises';
-import {glob} from 'glob';
+import fs from 'node:fs';
 import path from 'node:path';
 
+const baseDir = path.resolve(import.meta.dir, "../");
 
-const baseDir = path.resolve(import.meta.dir, "../")
 // Configuration
 const sourceDir = `${baseDir}/scripts/boilerplate`;
 const targetPatterns = ['pkg/*', 'app/*', 'frontend/*'];
 
+function getBoilerplateFiles(dir: string, relativePath = ''): string[] {
+  const results: string[] = [];
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    const relativeEntry = path.join(relativePath, entry.name);
+    
+    if (entry.isDirectory()) {
+      results.push(...getBoilerplateFiles(fullPath, relativeEntry));
+    } else {
+      results.push(relativeEntry);
+    }
+  }
+  
+  return results;
+}
+
+function expandGlobPattern(pattern: string, cwd: string): string[] {
+  const parts = pattern.split('/');
+  const results: string[] = [];
+  
+  const parentDir = path.join(cwd, parts[0].replace('*', ''));
+  if (!fs.existsSync(parentDir)) {
+    return [];
+  }
+  
+  const entries = fs.readdirSync(parentDir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (entry.isDirectory()) {
+      results.push(path.join(parentDir, entry.name));
+    }
+  }
+  
+  return results;
+}
+
 async function main(): Promise<void> {
   try {
     // Get the list of boilerplate files
-    const files = await glob("*", { cwd: sourceDir, absolute: false, dot: true});
+    const files = getBoilerplateFiles(sourceDir);
     
     console.log(`Found ${files.length} boilerplate files to sync.\n`);
 
     // Process each pattern
     for (const pattern of targetPatterns) {
-      // Use glob to expand the directories (e.g., pkg/*)
-      const dirs = await glob(pattern, {cwd: baseDir, absolute: true, nodir: false});
+      const dirs = expandGlobPattern(pattern, baseDir);
 
       for (const packageDir of dirs) {
         try {
-          const stats = await fs.stat(packageDir);
+          const stats = fs.statSync(packageDir);
           if (!stats.isDirectory()) {
             continue;
           }
@@ -36,7 +71,7 @@ async function main(): Promise<void> {
             const dst = path.join(packageDir, file);
 
             try {
-              await fs.copyFile(src, dst);
+              fs.copyFileSync(src, dst);
               console.log(`  -> Copied ${file}`);
             } catch (err) {
               console.error(`  [!] Failed to copy ${file} to ${packageDir}:`, err);
@@ -46,7 +81,7 @@ async function main(): Promise<void> {
           // Handle package.json modifications
           const packageJsonPath = path.join(packageDir, 'package.json');
           try {
-            const packageJsonContent = await fs.readFile(packageJsonPath, 'utf-8');
+            const packageJsonContent = fs.readFileSync(packageJsonPath, 'utf-8');
             const packageData = JSON.parse(packageJsonContent);
 
             let modified = false;
@@ -59,32 +94,31 @@ async function main(): Promise<void> {
             }
 
 
-            /*
-            if (packageData.devDependencies.vitest == 'catalog:') {
+            if (packageData.scripts.test !== 'bun test') {
               modified = true;
-              packageData.devDependencies.vitest = '^4.0.18';
-            }*/
-
-            if (packageData.scripts.test !== 'vitest run') {
-              modified = true;
-              packageData.scripts.test = 'vitest run';
+              packageData.scripts.test = 'bun test';
             }
 
-            if (packageData.scripts['test:watch'] !== 'vitest') {
+            if (packageData.scripts['test:watch'] !== 'bun test --watch') {
               modified = true;
-              packageData.scripts['test:watch'] = 'vitest';
+              packageData.scripts['test:watch'] = 'bun test --watch';
             }
 
-            if (packageData.scripts['test:coverage'] !== 'vitest run --coverage') {
+            if (packageData.scripts['test:coverage'] !== 'bun test --coverage') {
               modified = true;
-              packageData.scripts['test:coverage'] = 'vitest run --coverage';
+              packageData.scripts['test:coverage'] = 'bun test --coverage';
             }
-/*
-            if (packageData.devDependencies.typescript == 'catalog:') {
+
+            // Remove vitest devDependencies if present
+            if (packageData.devDependencies.vitest) {
               modified = true;
-              packageData.devDependencies.typescript = '^5.9.3';
+              delete packageData.devDependencies.vitest;
             }
-*/
+
+            if (packageData.devDependencies['@vitest/coverage-v8']) {
+              modified = true;
+              delete packageData.devDependencies['@vitest/coverage-v8'];
+            }
 
             if (packageDir.includes('/pkg/')) {
               if (packageData.scripts.build !== 'tsc --noEmit') {
@@ -118,13 +152,37 @@ async function main(): Promise<void> {
               packageData.type = 'module';
             }
 
+            // Remove vitest-specific scripts
+            if (packageData.scripts['test:ui'] && packageData.scripts['test:ui'].includes('vitest')) {
+              modified = true;
+              delete packageData.scripts['test:ui'];
+            }
+
+            if (packageData.scripts['test:run'] && packageData.scripts['test:run'].includes('vitest')) {
+              modified = true;
+              delete packageData.scripts['test:run'];
+            }
+
             if (modified) {
               // Write the updated package.json back
-              await fs.writeFile(packageJsonPath, JSON.stringify(packageData, null, 2));
+              fs.writeFileSync(packageJsonPath, JSON.stringify(packageData, null, 2));
               console.log(`  -> Updated package.json`);
             }
           } catch (err) {
             console.error(`  [!] Failed to update package.json in ${packageDir}:`, err);
+          }
+
+console.log('');
+
+          // Remove old vitest.config.ts if it exists
+          const vitestConfigPath = path.join(packageDir, 'vitest.config.ts');
+          if (fs.existsSync(vitestConfigPath)) {
+            try {
+              fs.unlinkSync(vitestConfigPath);
+              console.log(`  -> Removed vitest.config.ts`);
+            } catch (err) {
+              console.error(`  [!] Failed to remove vitest.config.ts from ${packageDir}:`, err);
+            }
           }
 
           console.log('');

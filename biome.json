@@ -7,9 +7,7 @@
       "!**/dist",
       "!**/dist-ts",
       "!**/node_modules",
-      "!**/*.test.ts",
-      "!**/*.config.ts",
-      "!**/test"
+      "!**/*.config.ts"
     ]
   },
   "formatter": {

@@ -10,8 +10,7 @@
     "knip": "^6.24.0",
     "oxlint": "^1.72.0",
     "oxlint-tsgolint": "^0.24.0",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.9"
+    "typescript": "^6.0.3"
   },
   "description": "TokenRing Monorepo with all community apps and packages",
   "license": "MIT",
@@ -25,8 +24,7 @@
     "check:biome": "biome check --fix",
     "check:oxlint": "oxlint -f stylish --fix",
     "check:knip": "knip",
-    "check:tsc": "tsc",
-    "check:tsc-tests": "tsc --noEmit -p tsconfig.tests.json"
+    "check:tsc": "tsc"
   },
   "type": "module",
   "overrides": {
