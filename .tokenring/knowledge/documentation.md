@@ -5,7 +5,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
 ## 1. Documentation Hierarchy and Structure
 
 ### Root Level Documentation
-- **README.md**: Main project overview with applications (Coder/Writer), quick start, package ecosystem overview
+- **README.md**: Main project overview with the TokenRing One application, quick start, package ecosystem overview
 - **PACKAGES.md**: Comprehensive package index with 50+ packages organized by category
 - **DEPENDENCIES.md**: Dependency graph and relationships
 - **AGENTS.md**: Agent definitions and capabilities
@@ -23,8 +23,7 @@ This file maintains knowledge about documentation standards, patterns, and struc
  - License
 
 ### Application-Level Documentation
-- **app/coder/README.md**: Comprehensive developer assistant application (50-package ecosystem)
-- **app/writer/README.md**: Content creation and management application
+- **app/one/README.md**: Comprehensive TokenRing One application (coding, content creation, research, automation; 50-package ecosystem)
 - **app/webterminal/README.md**: Lightweight coding terminal interface
 
 ### Plugin Documentation

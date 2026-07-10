@@ -10,7 +10,7 @@ The TokenRing project appears to be a large-scale AI agent ecosystem with the fo
 
 - **Scale**: 50+ packages in a monorepo structure
 - **Technology Stack**: TypeScript/Bun
-- **Applications**: Two main applications - Coder and Writer
+- **Application**: TokenRing One — a single unified app (merged from the former Coder and Writer apps)
 - **Architecture Pattern**: Agent-centric, modular design
 - **Structure**: Monorepo with shared package ecosystem
 
@@ -25,7 +25,7 @@ The TokenRing project appears to be a large-scale AI agent ecosystem with the fo
 
 #### 1. **Scale and Project Structure**
 - **50+ specialized packages** organized in functional categories
-- **Two flagship applications**: TokenRing Coder (development) and TokenRing Writer (content creation)
+- **Single flagship application**: TokenRing One (coding, content creation, research, and automation) — unified from the former TokenRing Coder and TokenRing Writer apps
 - **Monorepo structure** with shared package ecosystem
 - **TypeScript/Bun technology stack** for performance and type safety
 
@@ -105,16 +105,13 @@ const command = {
 
 #### 5. **Application Architecture**
 
-##### TokenRing Coder
-- **Development Focus**: AI-powered coding assistant
-- **45-package ecosystem** for comprehensive development workflows
-- **Multi-agent teams** with specialized roles (frontend, backend, DevOps, testing)
-- **Advanced integration** with development tools (Git, Docker, Kubernetes)
-
-##### TokenRing Writer
-- **Content Creation Focus**: AI-powered writing and publishing platform
-- **Publishing workflows** with multiple platform integrations
+##### TokenRing One
+- **Unified AI Assistant**: A single application covering coding, content creation, research, and automation (merging the former TokenRing Coder and TokenRing Writer apps)
+- **50+ package ecosystem** for comprehensive development and content workflows
+- **Multi-agent teams** with specialized roles (frontend, backend, DevOps, testing, writing, editing, publishing)
+- **Advanced integration** with development tools (Git, Docker, Kubernetes) and publishing platforms (Ghost.io, WordPress)
 - **Research capabilities** with web search and Wikipedia
+- **Publishing workflows** with multiple platform integrations
 - **Content management** with persistent storage
 
 #### 6. **Shared Package Ecosystem**
@@ -410,7 +407,7 @@ The TokenRing project appears to be a large-scale AI agent ecosystem with the fo
 
 - **Scale**: 25+ packages in a monorepo structure
 - **Technology Stack**: TypeScript/Bun
-- **Applications**: Two main applications - Coder and Writer
+- **Application**: TokenRing One — a single unified app (merged from the former Coder and Writer apps)
 - **Architecture Pattern**: Agent-centric, modular design
 - **Structure**: Monorepo with shared package ecosystem
 

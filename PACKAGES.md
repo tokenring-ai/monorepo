@@ -230,4 +230,4 @@ Agent
 
 ## Quick Start
 
-See the root [README.md](README.md) for monorepo setup and running the Coder CLI.
+See the root [README.md](README.md) for monorepo setup and running the One CLI.

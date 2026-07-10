@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-TokenRing AI is a comprehensive monorepo featuring two flagship applications built on a shared 45-package ecosystem. **TokenRing Coder** serves developers as an AI-powered coding assistant, while **TokenRing Writer** provides content creators with a unified platform for writing and managing articles. Both applications leverage a sophisticated agent-centric architecture with plugin-based extensibility, designed for local-first execution with optional cloud integrations.
+TokenRing AI is a comprehensive monorepo centered on a single application, **TokenRing One**, built on a shared 50+ package ecosystem. TokenRing One is a unified AI assistant that merges the former **TokenRing Coder** (developer coding assistant) and **TokenRing Writer** (content creation platform) into one product, covering coding, content creation, research, publishing, and workflow automation. The application leverages a sophisticated agent-centric architecture with plugin-based extensibility, designed for local-first execution with optional cloud integrations.
 
 ## Project Architecture Overview
 
@@ -10,9 +10,8 @@ TokenRing AI is a comprehensive monorepo featuring two flagship applications bui
 ```
 tokenring-ai/
 ├── app/
-│   ├── coder/          # AI-powered coding assistant
-│   └── writer/         # Content creation platform
-├── pkg/                # 45 shared packages (@tokenring-ai/*)
+│   └── one/            # TokenRing One — unified AI assistant (coding + content)
+├── pkg/                # 50+ shared packages (@tokenring-ai/*)
 └── deps/               # External dependencies
 ```
 
@@ -49,7 +48,9 @@ tokenring-ai/
 
 ## Application-Specific Requirements
 
-### TokenRing Coder - AI-Powered Coding Assistant
+### TokenRing One - Unified AI Assistant
+
+> TokenRing One merges the former TokenRing Coder (development) and TokenRing Writer (content) capabilities into a single application. The requirements below cover both development and content-creation use cases.
 
 #### Core User Needs
 1. **Development Productivity**: Accelerate coding tasks through AI assistance
@@ -141,11 +142,13 @@ Development → External Services → Cloud Deployment → Monitoring
 #### Technical Requirements
 - **Local-First Execution**: Secure local processing with optional cloud integration
 - **Multi-Provider AI Support**: OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek
-- **Configuration Management**: `.tokenring/coder-config.{mjs,cjs,js}` with TypeScript schemas
+- **Configuration Management**: `.tokenring/one-config.{mjs,cjs,js}` with TypeScript schemas
 - **State Persistence**: SQLite-based checkpoint system
 - **Plugin Architecture**: Dynamic package loading and service registration
 
-### TokenRing Writer - Content Creation Platform
+### TokenRing One - Content Creation Capabilities
+
+> These capabilities (formerly TokenRing Writer) are integrated directly into TokenRing One alongside the development tooling.
 
 #### Core User Needs
 1. **Content Creation**: Streamline article and blog post writing
@@ -211,7 +214,7 @@ Content Preparation → Multi-Platform Publishing → Distribution
 - **Research Capabilities**: Web search, Wikipedia, and content scraping
 - **Publishing Pipeline**: Multi-platform publishing with format conversion
 - **State Persistence**: SQLite-based content history and session management
-- **Configuration Management**: `.tokenring/writer-config.{mjs,cjs,js}` with content-specific settings
+- **Configuration Management**: `.tokenring/one-config.{mjs,cjs,js}` with content-specific settings
 
 ## Shared Product Design Patterns
 
@@ -415,7 +418,7 @@ export default {
 
 ## Conclusion
 
-The TokenRing AI monorepo demonstrates a sophisticated product design approach that effectively serves both development and content creation markets through a cohesive ecosystem. The dual-application architecture, combined with the 45-package modular system, provides a flexible and extensible foundation for AI-powered productivity tools.
+The TokenRing AI monorepo demonstrates a sophisticated product design approach that effectively serves both development and content creation markets through a single, cohesive application — TokenRing One. The unified architecture, combined with the 50+-package modular system, provides a flexible and extensible foundation for AI-powered productivity tools.
 
 Key success factors include the comprehensive agent specialization, plugin-based extensibility, and the focus on local-first execution with optional cloud integrations. The configuration-driven setup and persistent state management provide both simplicity for basic usage and power for advanced scenarios.
 

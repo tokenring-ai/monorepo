@@ -3,7 +3,7 @@
 This file maintains knowledge about full-stack features, integrations, and end-to-end functionality in the TokenRing project.
 
 ## Project Overview
-TokenRing AI - A comprehensive AI development platform with 45 specialized packages under @tokenring-ai/* scope, featuring two main applications (app/coder for coding, app/writer for content creation) with modular, agent-centric architecture.
+TokenRing AI - A comprehensive AI development platform with 45 specialized packages under @tokenring-ai/* scope, centered on **TokenRing One** (app/one), a single unified agent for coding, content creation, research, and automation, with modular, agent-centric architecture. TokenRing One unified the former TokenRing Coder (development) and TokenRing Writer (content creation) apps into one product.
 
 ## Core Architecture Patterns
 

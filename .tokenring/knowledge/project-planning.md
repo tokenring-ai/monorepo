@@ -12,9 +12,7 @@ The TokenRing AI project employs a sophisticated monorepo structure with clear o
 ```
 tokenring-ai/
 ├── apps/                          # Entry point applications
-│   ├── coder/                     # TokenRing Coder application
-│   ├── writer/                    # TokenRing Writer application
-│   └── webterminal/               # Web terminal interface
+│   └── one/                       # TokenRing One application (unified)
 ├── pkg/                          # Core package ecosystem (45+ packages)
 │   ├── @tokenring-ai/agent/      # Central orchestrator
 │   ├── @tokenring-ai/ai-client/  # AI communication layer
@@ -32,22 +30,20 @@ tokenring-ai/
 │   └── ideas/vetted/             # Approved architectural approaches
 ├── scripts/                      # Build and maintenance scripts
 └── .tokenring/                   # Configuration management
-    ├── coder-config.mjs          # Application configurations
-    └── writer-config.mjs
+    └── one-config.mjs            # Application configuration
 ```
 
 #### 2. Package Scoping Strategy
 - **@tokenring-ai/***: Internal ecosystem packages (45 total)
 - **Custom prefixed packages**: External dependencies with TokenRing integration
-- **Application-specific**: Direct dependencies for specific apps (coder/writer)
-- **Shared utilities**: Cross-application packages for common functionality
+- **Application-specific**: Direct dependencies for the app (one)
+- **Shared utilities**: Cross-cutting packages for common functionality
 
 #### 3. Workspace Configuration
 **Root package.json** defines:
 - **Workspaces**: ["pkg/*", "app/*", "deps/*"]
 - **Scripts**: 
-  - `coder`: Launch TokenRing Coder
-  - `writer`: Launch TokenRing Writer
+  - `tokenring`: Launch TokenRing One
   - `test`: Cross-package testing
 - **DevDependencies**: TypeScript, Husky, TruffleHog
 
@@ -62,9 +58,9 @@ Requirements are organized around AI agent capabilities:
 - **State Persistence**: Session management and checkpoint preservation
 - **Tool Integration**: Seamless tool and service integration
 
-**Application-Specific Requirements:**
-- **Coder Requirements**: Development workflow automation, code intelligence
-- **Writer Requirements**: Content creation, editorial process, publishing
+**Application Requirements (unified in TokenRing One):**
+- **Development Requirements**: Development workflow automation, code intelligence
+- **Content Requirements**: Content creation, editorial process, publishing
 
 #### 2. Context-Driven Analysis
 Three architectural approaches for requirement gathering:
@@ -128,8 +124,7 @@ Features are organized into logical package groups:
 - @tokenring-ai/feedback - User feedback systems
 
 **Application Layer:**
-- TokenRing Coder - Development workflow
-- TokenRing Writer - Content creation workflow
+- TokenRing One - Unified development and content creation workflow (merged from former Coder/Writer)
 - WebTerminal - Web-based interface
 
 #### 2. Cross-Package Interaction Planning
@@ -173,8 +168,8 @@ AgentTeam (agent)
 - Performance optimizations
 
 **Phase 4: Application Specialization**
-- Domain-specific features for Coder
-- Publishing workflows for Writer
+- Unified development and content workflows in TokenRing One
+- Domain-specific features and publishing workflows
 - Team collaboration features
 
 ### Project Coordination Strategies

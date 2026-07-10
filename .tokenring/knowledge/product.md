@@ -5,11 +5,10 @@ This file maintains knowledge about product requirements, features, and enhancem
 ## Discovered Product Information
 
 ### Project Overview
-TokenRing AI is a monorepo hosting two main applications:
-1. **TokenRing Coder** - AI-powered coding assistant with 45-package ecosystem
-2. **TokenRing Writer** - Unified platform for writing and managing news articles & blog posts
+TokenRing AI is a monorepo centered on a single unified application:
+1. **TokenRing One** - Unified AI assistant (merging the former TokenRing Coder coding assistant and TokenRing Writer content platform) for coding, content creation, research, publishing, and automation, built on a 50+-package ecosystem
 
-Both applications share the core @tokenring-ai/* package ecosystem with modular, pluggable architecture.
+The application shares the core @tokenring-ai/* package ecosystem with modular, pluggable architecture.
 
 ### Product Architecture Patterns
 
@@ -32,9 +31,9 @@ AgentTeam (agent)
 ```
 
 #### Application Entry Points
-Both applications follow similar patterns:
-- Entry point: `tr-{app}.ts` with Commander CLI interface
-- Configuration: `.tokenring/{app}-config.{mjs,cjs,js}`
+The application follows a standard pattern:
+- Entry point: `tokenring.ts` (run via `bun run tokenring`) with Commander CLI interface
+- Configuration: `.tokenring/one-config.{mjs,cjs,js}`
 - Service Registration: PluginManager installs packages dynamically
 - UI Options: Support both Inquirer (CLI) and Ink (modern terminal) interfaces
 
@@ -107,7 +106,7 @@ Features are organized around specialized AI agents:
 
 ### User Workflows
 
-#### 1. TokenRing Coder Workflows
+#### 1. TokenRing One - Development Workflows
 - **Development Tasks**: Code editing, refactoring, testing
 - **Multi-Agent Projects**: Team coordination with specialized agents
 - **Integration Work**: External service connections
@@ -123,7 +122,7 @@ Features are organized around specialized AI agents:
 - **Memory Management**: Session-scoped memory storage for context retention via Memory package
 - **Queue Management**: Work item queuing with state preservation via Queue package
 
-#### 2. TokenRing Writer Workflows
+#### 2. TokenRing One - Content Creation Workflows
 - **Content Creation**: Article writing with research integration
 - **Editorial Process**: Managing editor coordinates assignments
 - **Publishing**: Direct integration with content directories and Ghost.io
@@ -1113,13 +1112,13 @@ const commitTool: GitTool<z.ObjectSchema> = {
         messages.splice(0, messages.length - 2);
         const client = await chatModelRegistry.getClient(model);
         const [output] = await client.textChat({ messages, tools: {} }, agent);
-        gitCommitMessage = output || "TokenRing Coder Automatic Checkin";
+        gitCommitMessage = output || "TokenRing One Automatic Checkin";
       }
     }
     
     // Execute git commands
     await terminal.executeCommand("git", ["add", "."], {}, agent);
-    await terminal.executeCommand("git", ["-c", "user.name=TokenRing Coder", "-c", "user.email=coder@tokenring.ai", "commit", "-m", gitCommitMessage], {}, agent);
+    await terminal.executeCommand("git", ["-c", "user.name=TokenRing One", "-c", "user.email=one@tokenring.ai", "commit", "-m", gitCommitMessage], {}, agent);
     
     fileSystem.setDirty(false, agent);
     return "Changes successfully committed to git";

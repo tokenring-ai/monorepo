@@ -2,7 +2,7 @@
 
 ## Overview
 
-The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+ packages organized around a modular, agent-centric architecture. It hosts two flagship applications: **TokenRing Coder** (AI-powered development assistant) and **TokenRing Writer** (content creation platform). Built as a monorepo using Bun, it provides pluggable packages under the `@tokenring-ai/*` scope for modular AI agent functionality.
+The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+ packages organized around a modular, agent-centric architecture. It is centered on a single application, **TokenRing One** (app/one) — a unified AI assistant that brings coding, content creation, research, publishing, and workflow automation together. TokenRing One merged the former **TokenRing Coder** (AI-powered development assistant) and **TokenRing Writer** (content creation platform) into one product. Built as a monorepo using Bun, it provides pluggable packages under the `@tokenring-ai/*` scope for modular AI agent functionality.
 
 ## Table of Contents
 
@@ -25,8 +25,7 @@ The TokenRing AI monorepo is a comprehensive TypeScript ecosystem containing 50+
 ```
 tokenring/
 ├── app/                    # Applications
-│   ├── coder/             # TokenRing Coder (AI-powered development assistant)
-│   └── writer/            # TokenRing Writer (content creation platform)
+│   └── one/               # TokenRing One (unified AI assistant: coding, content, research, automation)
 ├── pkg/                   # Packages (50+ specialized packages)
 │   ├── agent/            # Core agent system
 │   ├── ai-client/        # AI integration with multi-provider support
@@ -205,7 +204,7 @@ agent.sendHumanResponse(sequence, response);
 
 ### Overview
 
-TokenRing Coder supports custom agents defined in the `.tokenring/agents/` directory. These agents are loaded dynamically and made available alongside the built-in agents under the `agents.user` configuration key.
+TokenRing One supports custom agents defined in the `.tokenring/agents/` directory. These agents are loaded dynamically and made available alongside the built-in agents under the `agents.user` configuration key.
 
 ### Directory Structure
 
@@ -263,7 +262,7 @@ export default [
 
 3. **Automatic Loading**
 
-The `tr-coder.ts` application automatically loads custom agents from `.tokenring/agents/index.ts` and adds them to the configuration under `agents.user`.
+The TokenRing One application automatically loads custom agents from `.tokenring/agents/index.ts` and adds them to the configuration under `agents.user`.
 
 ### Package Builder Agent
 
@@ -288,7 +287,7 @@ Call this agent to build TokenRing AI packages. Provide package requirements, fu
 
 ### Built-in Agents
 
-Built-in agents are defined in `app/coder/src/agents/` and include:
+Built-in agents are defined in `app/one/src/agents/` and include:
 
 **Interactive Agents:**
 - `code` - Interactive coding assistant
