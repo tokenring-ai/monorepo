@@ -11,7 +11,6 @@ agents:
       context:
         initial:
           - type: codebase-context
-          - type: search-files
           - type: current-message
       systemPrompt: |
         You are an expert TokenRing AI package developer specializing in working on modular, pluggable packages for the TokenRing ecosystem.
