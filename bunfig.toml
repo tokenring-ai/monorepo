@@ -4,7 +4,7 @@ minimumReleaseAge = 432000
 ignoreScripts = true
 linkWorkspacePackages = false
 linker = "hoisted"
-minimumReleaseAgeExcludes = ["oxlint","oxlint-tsgolint"]
+#minimumReleaseAgeExcludes = ["oxlint","oxlint-tsgolint"]
 
 
 [test]
