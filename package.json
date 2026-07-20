@@ -24,7 +24,8 @@
     "check:biome": "biome check --fix",
     "check:oxlint": "oxlint -f stylish --fix",
     "check:knip": "knip",
-    "check:tsc": "tsc"
+    "check:tsc": "tsc",
+    "run:one": "bun app/one/tokenring.ts --http 0.0.0.0:14008"
   },
   "type": "module",
   "overrides": {

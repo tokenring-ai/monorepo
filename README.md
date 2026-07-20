@@ -8,7 +8,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)](https://typescriptlang.org)
 [![Bun](https://img.shields.io/badge/Bun-1.3+-black?logo=bun)](https://bun.sh)
 
-<img src="assets/logo.png" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
+<img src="assets/tokenring-one-logo.webp" alt="TokenRing Logo" style="max-width: 350px; margin: 0 auto;">
 
 **A comprehensive AI-powered development, content creation, and workflow automation ecosystem**
 

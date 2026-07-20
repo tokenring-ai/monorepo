@@ -80,7 +80,7 @@ tokenring [options] [prompt]
 | `--http [host:port]` | HTTP server + web UI (default host `127.0.0.1`, random port if omitted) |
 | `--auth` | Require auth for the web UI (`TR_AUTH_PASSWORD` or `TR_AUTH_BEARER`) |
 | `--acp` | ACP mode over stdin/stdout |
-| `--vault [path]` | Secrets vault (password via prompt or `TR_VAULT_PASSWORD`; default `~/.tokenring/secrets.vault`) |
+| `--vaultFile <path>` | Path to the secrets vault file (password from system secrets manager or `TR_VAULT_PASSWORD`; default `~/.config/tokenring/secrets.vault`) |
 | `-p` | Exit when the agent finishes |
 | `-h, --help` | Show help |
 | `-V, --version` | Show version |
