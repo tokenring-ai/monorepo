@@ -10,6 +10,7 @@ function getSubdirectories(srcPath: string) {
   return fs
   .readdirSync(filePath)
   .filter((f) => fs.statSync(path.join(filePath, f)).isDirectory())
+  .sort()
   .map((f) => f);
 }
 

@@ -14,7 +14,7 @@ chmod 755 /dist/tokenring
 rm -f /dist/tokenring-linux-*
 
 apt update
-apt install -y git python3 libportaudio2 build-essential
+apt install -y git python3 build-essential
 apt remove -y build-essential
 apt autoremove -y
 rm -rf /var/cache/apt /var/lib/apt/lists/*

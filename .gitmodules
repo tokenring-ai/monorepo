@@ -18,10 +18,6 @@
 	path = pkg/chrome
 	url = ../chrome.git
 	branch = main
-[submodule "pkg/cli"]
-	path = pkg/cli
-	url = ../cli.git
-	branch = main
 [submodule "pkg/cloudquote"]
 	path = pkg/cloudquote
 	url = ../cloudquote.git
@@ -146,14 +142,6 @@
 	path = pkg/vault
 	url = ../vault.git
 	branch = main
-[submodule "pkg/linux-audio"]
-	path = pkg/linux-audio
-	url = ../linux-audio.git
-	branch = main
-[submodule "deps/naudiodon3"]
-	path = deps/naudiodon3
-	url = ../naudiodon3.git
-	branch = main
 [submodule "pkg/mcp"]
 	path = pkg/mcp
 	url = ../mcp.git
@@ -230,10 +218,6 @@
 	path = pkg/image
 	url = ../image.git
 	branch = main
-[submodule "frontend/electron"]
-	path = frontend/electron
-	url = ../electron-frontend.git
-	branch = main
 [submodule "pkg/polymarket"]
 	path = pkg/polymarket
 	url = ../polymarket.git
@@ -294,10 +278,6 @@
 	path = pkg/lifecycle
 	url = ../lifecycle.git
 	branch = main
-[submodule "pkg/acp"]
-	path = pkg/acp
-	url = ../acp.git
-	branch = main
 [submodule "pkg/social"]
 	path = pkg/social
 	url = ../social.git
@@ -325,4 +305,8 @@
 [submodule "pkg/bun-storage"]
 	path = pkg/bun-storage
 	url = ../bun-storage.git
+	branch = main
+[submodule "crates/cli-rs"]
+	path = crates/cli-rs
+	url = git@github.com:tokenring-ai/cli-rs.git
 	branch = main

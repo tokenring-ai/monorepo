@@ -25,7 +25,8 @@
     "check:oxlint": "oxlint -f stylish --fix",
     "check:knip": "knip",
     "check:tsc": "tsc",
-    "run:one": "bun app/one/tokenring.ts --http 0.0.0.0:14008"
+    "run:one": "bun app/one/tokenring.ts --port 14008",
+    "frontend:watch-build": "bun run --cwd frontend/one watch:build"
   },
   "type": "module",
   "overrides": {

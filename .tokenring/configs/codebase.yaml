@@ -1,11 +1,5 @@
 codebase: 
   resources: 
-    repoMap/pkg/acp: 
-      type: repoMap
-      description: pkg/acp Repo Map
-      items: 
-        - path: ./pkg/acp
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/agent: 
       type: repoMap
       description: pkg/agent Repo Map
@@ -42,17 +36,11 @@ codebase:
       items: 
         - path: ./pkg/blog
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/browser-file-system: 
+    repoMap/pkg/bun-storage: 
       type: repoMap
-      description: pkg/browser-file-system Repo Map
+      description: pkg/bun-storage Repo Map
       items: 
-        - path: ./pkg/browser-file-system
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/browser-storage: 
-      type: repoMap
-      description: pkg/browser-storage Repo Map
-      items: 
-        - path: ./pkg/browser-storage
+        - path: ./pkg/bun-storage
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/calendar: 
       type: repoMap
@@ -83,12 +71,6 @@ codebase:
       description: pkg/chrome Repo Map
       items: 
         - path: ./pkg/chrome
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/cli: 
-      type: repoMap
-      description: pkg/cli Repo Map
-      items: 
-        - path: ./pkg/cli
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/cloudquote: 
       type: repoMap
@@ -125,12 +107,6 @@ codebase:
       description: pkg/docker Repo Map
       items: 
         - path: ./pkg/docker
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/drizzle-storage: 
-      type: repoMap
-      description: pkg/drizzle-storage Repo Map
-      items: 
-        - path: ./pkg/drizzle-storage
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/email: 
       type: repoMap
@@ -186,11 +162,11 @@ codebase:
       items: 
         - path: ./pkg/google
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/iterables: 
+    repoMap/pkg/image: 
       type: repoMap
-      description: pkg/iterables Repo Map
+      description: pkg/image Repo Map
       items: 
-        - path: ./pkg/iterables
+        - path: ./pkg/image
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/javascript: 
       type: repoMap
@@ -216,12 +192,6 @@ codebase:
       items: 
         - path: ./pkg/lifecycle
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/linux-audio: 
-      type: repoMap
-      description: pkg/linux-audio Repo Map
-      items: 
-        - path: ./pkg/linux-audio
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/markdown: 
       type: repoMap
       description: pkg/markdown Repo Map
@@ -233,6 +203,12 @@ codebase:
       description: pkg/mcp Repo Map
       items: 
         - path: ./pkg/mcp
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/media-library: 
+      type: repoMap
+      description: pkg/media-library Repo Map
+      items: 
+        - path: ./pkg/media-library
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/memory: 
       type: repoMap
@@ -378,12 +354,6 @@ codebase:
       items: 
         - path: ./pkg/testing
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/thinking: 
-      type: repoMap
-      description: pkg/thinking Repo Map
-      items: 
-        - path: ./pkg/thinking
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/todo: 
       type: repoMap
       description: pkg/todo Repo Map
@@ -407,6 +377,12 @@ codebase:
       description: pkg/vault Repo Map
       items: 
         - path: ./pkg/vault
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    repoMap/pkg/video: 
+      type: repoMap
+      description: pkg/video Repo Map
+      items: 
+        - path: ./pkg/video
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/pkg/web-host: 
       type: repoMap
@@ -444,67 +420,24 @@ codebase:
       items: 
         - path: ./pkg/x
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/video: 
-      type: repoMap
-      description: pkg/video Repo Map
-      items: 
-        - path: ./pkg/video
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/media-library: 
-      type: repoMap
-      description: pkg/media-library Repo Map
-      items: 
-        - path: ./pkg/media-library
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/pkg/image: 
-      type: repoMap
-      description: pkg/image Repo Map
-      items: 
-        - path: ./pkg/image
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     repoMap/app/one: 
       type: repoMap
       description: app/one Repo Map
       items: 
         - path: ./app/one
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/frontend/chat: 
+    repoMap/frontend/one: 
       type: repoMap
-      description: frontend/chat Repo Map
+      description: frontend/one Repo Map
       items: 
-        - path: ./frontend/chat
+        - path: ./frontend/one
           include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/frontend/electron: 
-      type: repoMap
-      description: frontend/electron Repo Map
-      items: 
-        - path: ./frontend/electron
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    repoMap/frontend/webterminal: 
-      type: repoMap
-      description: frontend/webterminal Repo Map
-      items: 
-        - path: ./frontend/webterminal
-          include: \.(txt|tsx?|jsx?|md|json|yaml)$
-    fileTree/pkg/acp: 
-      type: fileTree
-      description: pkg/acp File Tree
-      items: 
-        - path: ./pkg/acp
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/acp: 
-      type: wholeFile
-      description: pkg/acp Source Files
-      items: 
-        - path: ./pkg/acp
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/pkg/agent: 
       type: fileTree
       description: pkg/agent File Tree
       items: 
         - path: ./pkg/agent
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/agent: 
       type: wholeFile
       description: pkg/agent Source Files
@@ -517,7 +450,7 @@ codebase:
       description: pkg/ai-client File Tree
       items: 
         - path: ./pkg/ai-client
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/ai-client: 
       type: wholeFile
       description: pkg/ai-client Source Files
@@ -530,7 +463,7 @@ codebase:
       description: pkg/app File Tree
       items: 
         - path: ./pkg/app
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/app: 
       type: wholeFile
       description: pkg/app Source Files
@@ -543,7 +476,7 @@ codebase:
       description: pkg/audio File Tree
       items: 
         - path: ./pkg/audio
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/audio: 
       type: wholeFile
       description: pkg/audio Source Files
@@ -556,7 +489,7 @@ codebase:
       description: pkg/aws File Tree
       items: 
         - path: ./pkg/aws
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/aws: 
       type: wholeFile
       description: pkg/aws Source Files
@@ -569,7 +502,7 @@ codebase:
       description: pkg/blog File Tree
       items: 
         - path: ./pkg/blog
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/blog: 
       type: wholeFile
       description: pkg/blog Source Files
@@ -577,30 +510,17 @@ codebase:
         - path: ./pkg/blog
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/browser-file-system: 
+    fileTree/pkg/bun-storage: 
       type: fileTree
-      description: pkg/browser-file-system File Tree
+      description: pkg/bun-storage File Tree
       items: 
-        - path: ./pkg/browser-file-system
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/browser-file-system: 
+        - path: ./pkg/bun-storage
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/bun-storage: 
       type: wholeFile
-      description: pkg/browser-file-system Source Files
+      description: pkg/bun-storage Source Files
       items: 
-        - path: ./pkg/browser-file-system
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/pkg/browser-storage: 
-      type: fileTree
-      description: pkg/browser-storage File Tree
-      items: 
-        - path: ./pkg/browser-storage
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/browser-storage: 
-      type: wholeFile
-      description: pkg/browser-storage Source Files
-      items: 
-        - path: ./pkg/browser-storage
+        - path: ./pkg/bun-storage
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
     fileTree/pkg/calendar: 
@@ -608,7 +528,7 @@ codebase:
       description: pkg/calendar File Tree
       items: 
         - path: ./pkg/calendar
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/calendar: 
       type: wholeFile
       description: pkg/calendar Source Files
@@ -621,7 +541,7 @@ codebase:
       description: pkg/cdn File Tree
       items: 
         - path: ./pkg/cdn
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/cdn: 
       type: wholeFile
       description: pkg/cdn Source Files
@@ -634,7 +554,7 @@ codebase:
       description: pkg/chat File Tree
       items: 
         - path: ./pkg/chat
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/chat: 
       type: wholeFile
       description: pkg/chat Source Files
@@ -647,7 +567,7 @@ codebase:
       description: pkg/checkpoint File Tree
       items: 
         - path: ./pkg/checkpoint
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/checkpoint: 
       type: wholeFile
       description: pkg/checkpoint Source Files
@@ -660,7 +580,7 @@ codebase:
       description: pkg/chrome File Tree
       items: 
         - path: ./pkg/chrome
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/chrome: 
       type: wholeFile
       description: pkg/chrome Source Files
@@ -668,25 +588,12 @@ codebase:
         - path: ./pkg/chrome
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/cli: 
-      type: fileTree
-      description: pkg/cli File Tree
-      items: 
-        - path: ./pkg/cli
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/cli: 
-      type: wholeFile
-      description: pkg/cli Source Files
-      items: 
-        - path: ./pkg/cli
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/pkg/cloudquote: 
       type: fileTree
       description: pkg/cloudquote File Tree
       items: 
         - path: ./pkg/cloudquote
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/cloudquote: 
       type: wholeFile
       description: pkg/cloudquote Source Files
@@ -699,7 +606,7 @@ codebase:
       description: pkg/code-watch File Tree
       items: 
         - path: ./pkg/code-watch
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/code-watch: 
       type: wholeFile
       description: pkg/code-watch Source Files
@@ -712,7 +619,7 @@ codebase:
       description: pkg/codebase File Tree
       items: 
         - path: ./pkg/codebase
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/codebase: 
       type: wholeFile
       description: pkg/codebase Source Files
@@ -725,7 +632,7 @@ codebase:
       description: pkg/database File Tree
       items: 
         - path: ./pkg/database
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/database: 
       type: wholeFile
       description: pkg/database Source Files
@@ -738,7 +645,7 @@ codebase:
       description: pkg/discord File Tree
       items: 
         - path: ./pkg/discord
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/discord: 
       type: wholeFile
       description: pkg/discord Source Files
@@ -751,7 +658,7 @@ codebase:
       description: pkg/docker File Tree
       items: 
         - path: ./pkg/docker
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/docker: 
       type: wholeFile
       description: pkg/docker Source Files
@@ -759,25 +666,12 @@ codebase:
         - path: ./pkg/docker
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/drizzle-storage: 
-      type: fileTree
-      description: pkg/drizzle-storage File Tree
-      items: 
-        - path: ./pkg/drizzle-storage
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/drizzle-storage: 
-      type: wholeFile
-      description: pkg/drizzle-storage Source Files
-      items: 
-        - path: ./pkg/drizzle-storage
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/pkg/email: 
       type: fileTree
       description: pkg/email File Tree
       items: 
         - path: ./pkg/email
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/email: 
       type: wholeFile
       description: pkg/email Source Files
@@ -790,7 +684,7 @@ codebase:
       description: pkg/escalation File Tree
       items: 
         - path: ./pkg/escalation
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/escalation: 
       type: wholeFile
       description: pkg/escalation Source Files
@@ -803,7 +697,7 @@ codebase:
       description: pkg/feedback File Tree
       items: 
         - path: ./pkg/feedback
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/feedback: 
       type: wholeFile
       description: pkg/feedback Source Files
@@ -816,7 +710,7 @@ codebase:
       description: pkg/file-index File Tree
       items: 
         - path: ./pkg/file-index
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/file-index: 
       type: wholeFile
       description: pkg/file-index Source Files
@@ -829,7 +723,7 @@ codebase:
       description: pkg/filesystem File Tree
       items: 
         - path: ./pkg/filesystem
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/filesystem: 
       type: wholeFile
       description: pkg/filesystem Source Files
@@ -842,7 +736,7 @@ codebase:
       description: pkg/ghost-io File Tree
       items: 
         - path: ./pkg/ghost-io
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/ghost-io: 
       type: wholeFile
       description: pkg/ghost-io Source Files
@@ -855,7 +749,7 @@ codebase:
       description: pkg/git File Tree
       items: 
         - path: ./pkg/git
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/git: 
       type: wholeFile
       description: pkg/git Source Files
@@ -868,7 +762,7 @@ codebase:
       description: pkg/github File Tree
       items: 
         - path: ./pkg/github
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/github: 
       type: wholeFile
       description: pkg/github Source Files
@@ -881,7 +775,7 @@ codebase:
       description: pkg/google File Tree
       items: 
         - path: ./pkg/google
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/google: 
       type: wholeFile
       description: pkg/google Source Files
@@ -889,17 +783,17 @@ codebase:
         - path: ./pkg/google
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/iterables: 
+    fileTree/pkg/image: 
       type: fileTree
-      description: pkg/iterables File Tree
+      description: pkg/image File Tree
       items: 
-        - path: ./pkg/iterables
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/iterables: 
+        - path: ./pkg/image
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/image: 
       type: wholeFile
-      description: pkg/iterables Source Files
+      description: pkg/image Source Files
       items: 
-        - path: ./pkg/iterables
+        - path: ./pkg/image
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
     fileTree/pkg/javascript: 
@@ -907,7 +801,7 @@ codebase:
       description: pkg/javascript File Tree
       items: 
         - path: ./pkg/javascript
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/javascript: 
       type: wholeFile
       description: pkg/javascript Source Files
@@ -920,7 +814,7 @@ codebase:
       description: pkg/kalshi File Tree
       items: 
         - path: ./pkg/kalshi
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/kalshi: 
       type: wholeFile
       description: pkg/kalshi Source Files
@@ -933,7 +827,7 @@ codebase:
       description: pkg/kubernetes File Tree
       items: 
         - path: ./pkg/kubernetes
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/kubernetes: 
       type: wholeFile
       description: pkg/kubernetes Source Files
@@ -946,7 +840,7 @@ codebase:
       description: pkg/lifecycle File Tree
       items: 
         - path: ./pkg/lifecycle
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/lifecycle: 
       type: wholeFile
       description: pkg/lifecycle Source Files
@@ -954,25 +848,12 @@ codebase:
         - path: ./pkg/lifecycle
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/linux-audio: 
-      type: fileTree
-      description: pkg/linux-audio File Tree
-      items: 
-        - path: ./pkg/linux-audio
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/linux-audio: 
-      type: wholeFile
-      description: pkg/linux-audio Source Files
-      items: 
-        - path: ./pkg/linux-audio
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/pkg/markdown: 
       type: fileTree
       description: pkg/markdown File Tree
       items: 
         - path: ./pkg/markdown
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/markdown: 
       type: wholeFile
       description: pkg/markdown Source Files
@@ -985,7 +866,7 @@ codebase:
       description: pkg/mcp File Tree
       items: 
         - path: ./pkg/mcp
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/mcp: 
       type: wholeFile
       description: pkg/mcp Source Files
@@ -993,12 +874,25 @@ codebase:
         - path: ./pkg/mcp
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
+    fileTree/pkg/media-library: 
+      type: fileTree
+      description: pkg/media-library File Tree
+      items: 
+        - path: ./pkg/media-library
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/media-library: 
+      type: wholeFile
+      description: pkg/media-library Source Files
+      items: 
+        - path: ./pkg/media-library
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
     fileTree/pkg/memory: 
       type: fileTree
       description: pkg/memory File Tree
       items: 
         - path: ./pkg/memory
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/memory: 
       type: wholeFile
       description: pkg/memory Source Files
@@ -1011,7 +905,7 @@ codebase:
       description: pkg/metrics File Tree
       items: 
         - path: ./pkg/metrics
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/metrics: 
       type: wholeFile
       description: pkg/metrics Source Files
@@ -1024,7 +918,7 @@ codebase:
       description: pkg/mysql File Tree
       items: 
         - path: ./pkg/mysql
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/mysql: 
       type: wholeFile
       description: pkg/mysql Source Files
@@ -1037,7 +931,7 @@ codebase:
       description: pkg/newsrpm File Tree
       items: 
         - path: ./pkg/newsrpm
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/newsrpm: 
       type: wholeFile
       description: pkg/newsrpm Source Files
@@ -1050,7 +944,7 @@ codebase:
       description: pkg/polymarket File Tree
       items: 
         - path: ./pkg/polymarket
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/polymarket: 
       type: wholeFile
       description: pkg/polymarket Source Files
@@ -1063,7 +957,7 @@ codebase:
       description: pkg/posix-system File Tree
       items: 
         - path: ./pkg/posix-system
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/posix-system: 
       type: wholeFile
       description: pkg/posix-system Source Files
@@ -1076,7 +970,7 @@ codebase:
       description: pkg/queue File Tree
       items: 
         - path: ./pkg/queue
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/queue: 
       type: wholeFile
       description: pkg/queue Source Files
@@ -1089,7 +983,7 @@ codebase:
       description: pkg/reddit File Tree
       items: 
         - path: ./pkg/reddit
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/reddit: 
       type: wholeFile
       description: pkg/reddit Source Files
@@ -1102,7 +996,7 @@ codebase:
       description: pkg/research File Tree
       items: 
         - path: ./pkg/research
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/research: 
       type: wholeFile
       description: pkg/research Source Files
@@ -1115,7 +1009,7 @@ codebase:
       description: pkg/rpc File Tree
       items: 
         - path: ./pkg/rpc
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/rpc: 
       type: wholeFile
       description: pkg/rpc Source Files
@@ -1128,7 +1022,7 @@ codebase:
       description: pkg/s3 File Tree
       items: 
         - path: ./pkg/s3
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/s3: 
       type: wholeFile
       description: pkg/s3 Source Files
@@ -1141,7 +1035,7 @@ codebase:
       description: pkg/sandbox File Tree
       items: 
         - path: ./pkg/sandbox
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/sandbox: 
       type: wholeFile
       description: pkg/sandbox Source Files
@@ -1154,7 +1048,7 @@ codebase:
       description: pkg/scheduler File Tree
       items: 
         - path: ./pkg/scheduler
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/scheduler: 
       type: wholeFile
       description: pkg/scheduler Source Files
@@ -1167,7 +1061,7 @@ codebase:
       description: pkg/scraperapi File Tree
       items: 
         - path: ./pkg/scraperapi
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/scraperapi: 
       type: wholeFile
       description: pkg/scraperapi Source Files
@@ -1180,7 +1074,7 @@ codebase:
       description: pkg/scripting File Tree
       items: 
         - path: ./pkg/scripting
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/scripting: 
       type: wholeFile
       description: pkg/scripting Source Files
@@ -1193,7 +1087,7 @@ codebase:
       description: pkg/serper File Tree
       items: 
         - path: ./pkg/serper
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/serper: 
       type: wholeFile
       description: pkg/serper Source Files
@@ -1206,7 +1100,7 @@ codebase:
       description: pkg/skills File Tree
       items: 
         - path: ./pkg/skills
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/skills: 
       type: wholeFile
       description: pkg/skills Source Files
@@ -1219,7 +1113,7 @@ codebase:
       description: pkg/slack File Tree
       items: 
         - path: ./pkg/slack
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/slack: 
       type: wholeFile
       description: pkg/slack Source Files
@@ -1232,7 +1126,7 @@ codebase:
       description: pkg/social File Tree
       items: 
         - path: ./pkg/social
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/social: 
       type: wholeFile
       description: pkg/social Source Files
@@ -1245,7 +1139,7 @@ codebase:
       description: pkg/tasks File Tree
       items: 
         - path: ./pkg/tasks
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/tasks: 
       type: wholeFile
       description: pkg/tasks Source Files
@@ -1258,7 +1152,7 @@ codebase:
       description: pkg/telegram File Tree
       items: 
         - path: ./pkg/telegram
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/telegram: 
       type: wholeFile
       description: pkg/telegram Source Files
@@ -1271,7 +1165,7 @@ codebase:
       description: pkg/template File Tree
       items: 
         - path: ./pkg/template
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/template: 
       type: wholeFile
       description: pkg/template Source Files
@@ -1284,7 +1178,7 @@ codebase:
       description: pkg/terminal File Tree
       items: 
         - path: ./pkg/terminal
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/terminal: 
       type: wholeFile
       description: pkg/terminal Source Files
@@ -1297,7 +1191,7 @@ codebase:
       description: pkg/testing File Tree
       items: 
         - path: ./pkg/testing
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/testing: 
       type: wholeFile
       description: pkg/testing Source Files
@@ -1305,25 +1199,12 @@ codebase:
         - path: ./pkg/testing
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/thinking: 
-      type: fileTree
-      description: pkg/thinking File Tree
-      items: 
-        - path: ./pkg/thinking
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/thinking: 
-      type: wholeFile
-      description: pkg/thinking Source Files
-      items: 
-        - path: ./pkg/thinking
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/pkg/todo: 
       type: fileTree
       description: pkg/todo File Tree
       items: 
         - path: ./pkg/todo
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/todo: 
       type: wholeFile
       description: pkg/todo Source Files
@@ -1336,7 +1217,7 @@ codebase:
       description: pkg/typescript File Tree
       items: 
         - path: ./pkg/typescript
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/typescript: 
       type: wholeFile
       description: pkg/typescript Source Files
@@ -1349,7 +1230,7 @@ codebase:
       description: pkg/utility File Tree
       items: 
         - path: ./pkg/utility
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/utility: 
       type: wholeFile
       description: pkg/utility Source Files
@@ -1362,7 +1243,7 @@ codebase:
       description: pkg/vault File Tree
       items: 
         - path: ./pkg/vault
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/vault: 
       type: wholeFile
       description: pkg/vault Source Files
@@ -1370,12 +1251,25 @@ codebase:
         - path: ./pkg/vault
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
+    fileTree/pkg/video: 
+      type: fileTree
+      description: pkg/video File Tree
+      items: 
+        - path: ./pkg/video
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/pkg/video: 
+      type: wholeFile
+      description: pkg/video Source Files
+      items: 
+        - path: ./pkg/video
+          include: \.(txt|tsx?|jsx?|md|json)$
+          exclude: /test/|\.test\.
     fileTree/pkg/web-host: 
       type: fileTree
       description: pkg/web-host File Tree
       items: 
         - path: ./pkg/web-host
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/web-host: 
       type: wholeFile
       description: pkg/web-host Source Files
@@ -1388,7 +1282,7 @@ codebase:
       description: pkg/websearch File Tree
       items: 
         - path: ./pkg/websearch
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/websearch: 
       type: wholeFile
       description: pkg/websearch Source Files
@@ -1401,7 +1295,7 @@ codebase:
       description: pkg/wikipedia File Tree
       items: 
         - path: ./pkg/wikipedia
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/wikipedia: 
       type: wholeFile
       description: pkg/wikipedia Source Files
@@ -1414,7 +1308,7 @@ codebase:
       description: pkg/wordpress File Tree
       items: 
         - path: ./pkg/wordpress
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/wordpress: 
       type: wholeFile
       description: pkg/wordpress Source Files
@@ -1427,7 +1321,7 @@ codebase:
       description: pkg/workflow File Tree
       items: 
         - path: ./pkg/workflow
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/workflow: 
       type: wholeFile
       description: pkg/workflow Source Files
@@ -1440,7 +1334,7 @@ codebase:
       description: pkg/x File Tree
       items: 
         - path: ./pkg/x
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/pkg/x: 
       type: wholeFile
       description: pkg/x Source Files
@@ -1448,51 +1342,12 @@ codebase:
         - path: ./pkg/x
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/pkg/video: 
-      type: fileTree
-      description: pkg/video File Tree
-      items: 
-        - path: ./pkg/video
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/video: 
-      type: wholeFile
-      description: pkg/video Source Files
-      items: 
-        - path: ./pkg/video
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/pkg/media-library: 
-      type: fileTree
-      description: pkg/media-library File Tree
-      items: 
-        - path: ./pkg/media-library
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/media-library: 
-      type: wholeFile
-      description: pkg/media-library Source Files
-      items: 
-        - path: ./pkg/media-library
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/pkg/image: 
-      type: fileTree
-      description: pkg/image File Tree
-      items: 
-        - path: ./pkg/image
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/pkg/image: 
-      type: wholeFile
-      description: pkg/image Source Files
-      items: 
-        - path: ./pkg/image
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
     fileTree/app/one: 
       type: fileTree
       description: app/one File Tree
       items: 
         - path: ./app/one
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
     wholeFile/app/one: 
       type: wholeFile
       description: app/one Source Files
@@ -1500,42 +1355,16 @@ codebase:
         - path: ./app/one
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.
-    fileTree/frontend/chat: 
+    fileTree/frontend/one: 
       type: fileTree
-      description: frontend/chat File Tree
+      description: frontend/one File Tree
       items: 
-        - path: ./frontend/chat
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/frontend/chat: 
+        - path: ./frontend/one
+          include: \.(txt|tsx?|jsx?|md|json|yaml)$
+    wholeFile/frontend/one: 
       type: wholeFile
-      description: frontend/chat Source Files
+      description: frontend/one Source Files
       items: 
-        - path: ./frontend/chat
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/frontend/electron: 
-      type: fileTree
-      description: frontend/electron File Tree
-      items: 
-        - path: ./frontend/electron
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/frontend/electron: 
-      type: wholeFile
-      description: frontend/electron Source Files
-      items: 
-        - path: ./frontend/electron
-          include: \.(txt|tsx?|jsx?|md|json)$
-          exclude: /test/|\.test\.
-    fileTree/frontend/webterminal: 
-      type: fileTree
-      description: frontend/webterminal File Tree
-      items: 
-        - path: ./frontend/webterminal
-          include: .(txt|tsx?|jsx?|md|json|yaml)$
-    wholeFile/frontend/webterminal: 
-      type: wholeFile
-      description: frontend/webterminal Source Files
-      items: 
-        - path: ./frontend/webterminal
+        - path: ./frontend/one
           include: \.(txt|tsx?|jsx?|md|json)$
           exclude: /test/|\.test\.

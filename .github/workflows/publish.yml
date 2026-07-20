@@ -52,20 +52,8 @@ jobs:
         with:
           bun-version: ${{ env.BUN_VERSION }}
 
-      # linux-arm64 links against system PortAudio (no aarch64 prebuilt in naudiodon3).
-      # linux-x64 uses the vendored .so; headers are still useful for a consistent toolchain.
-      - name: Install PortAudio (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libportaudio2 portaudio19-dev
-
       - name: Install dependencies
         run: bun install
-
-      - name: Build naudiodon3
-        run: bun run install
-        working-directory: ./deps/naudiodon3
 
       - name: Build TokenRing One web frontend
         if: matrix.build_frontend
@@ -83,30 +71,6 @@ jobs:
         run: bun build --compile --target=${{ matrix.bun_target }} ./tokenring.ts --outfile ${{ matrix.binary }}
         working-directory: ./app/one
 
-      - name: Configure macOS rpath and PortAudio
-        if: runner.os == 'macOS'
-        run: |
-          cp ./deps/naudiodon3/portaudio/bin/libportaudio.dylib ./app/one
-          cd app/one
-          install_name_tool -add_rpath "@loader_path" ${{ matrix.binary }}
-
-      # linux-arm64 has no vendored aarch64 PortAudio in-repo; copy the system .so used at
-      # link time so the npm package can ship it (tokenring.js sets LD_LIBRARY_PATH).
-      - name: Bundle PortAudio shared library (linux-arm64)
-        if: matrix.platform == 'linux-arm64'
-        run: |
-          # Debian ships libportaudio.so.2 as a symlink; resolve to the real object.
-          so="$(ldconfig -p | awk '/libportaudio\.so\.2/ { print $NF; exit }')"
-          if [ -z "$so" ] || [ ! -e "$so" ]; then
-            so="$(find /usr/lib /lib -name 'libportaudio.so.2' 2>/dev/null | head -n1)"
-          fi
-          if [ -z "$so" ] || [ ! -e "$so" ]; then
-            echo "Could not locate libportaudio.so.2 on the runner" >&2
-            exit 1
-          fi
-          echo "Bundling $so ($(file -b "$so"))"
-          cp -L "$so" ./app/one/libportaudio.so.2
-
       - name: Check that One can start
         run: ./${{ matrix.binary }} -h
         working-directory: ./app/one
@@ -116,15 +80,6 @@ jobs:
         with:
           name: ${{ matrix.artifact }}
           path: ./app/one/${{ matrix.binary }}
-
-      # Separate artifact so publish packaging can pick the aarch64 .so without
-      # colliding with other platforms under merge-multiple.
-      - name: Upload linux-arm64 PortAudio
-        if: matrix.platform == 'linux-arm64'
-        uses: actions/upload-artifact@v7
-        with:
-          name: libportaudio-linux-arm64
-          path: ./app/one/libportaudio.so.2
 
   publish-one-npm:
     runs-on: ubuntu-latest
@@ -168,12 +123,6 @@ jobs:
           path: ./artifacts
           merge-multiple: true
 
-      - name: Download linux-arm64 PortAudio
-        uses: actions/download-artifact@v7
-        with:
-          name: libportaudio-linux-arm64
-          path: ./artifacts/libportaudio-linux-arm64
-
       - name: Prepare One platform package
         run: |
           mkdir -p \
@@ -182,21 +131,16 @@ jobs:
             packaging/npm/one/bin/linux-x64 \
             packaging/npm/one/bin/linux-arm64
           cp artifacts/tokenring-macos-arm64 packaging/npm/one/bin/darwin-arm64/tokenring
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib packaging/npm/one/bin/darwin-arm64/
           cp artifacts/tokenring-macos-x64 packaging/npm/one/bin/darwin-x64/tokenring
-          cp deps/naudiodon3/portaudio/bin/libportaudio.dylib packaging/npm/one/bin/darwin-x64/
           cp artifacts/tokenring-linux-x64 packaging/npm/one/bin/linux-x64/tokenring
-          cp deps/naudiodon3/portaudio/bin/libportaudio.so.2 packaging/npm/one/bin/linux-x64/
           cp artifacts/tokenring-linux-arm64 packaging/npm/one/bin/linux-arm64/tokenring
-          # Use aarch64 .so from the arm64 build runner (bin_armhf is 32-bit ARM, not arm64).
-          cp artifacts/libportaudio-linux-arm64/libportaudio.so.2 packaging/npm/one/bin/linux-arm64/
           chmod +x packaging/npm/one/bin/*/tokenring
           mkdir -p packaging/npm/one/frontend/one
           cp -r artifacts/one-frontend/* packaging/npm/one/frontend/one
 
       - name: Publish One to NPM
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm stage publish --provenance --access public
+        run: npm stage publish --provenance --access public --tag next
         working-directory: ./packaging/npm/one
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

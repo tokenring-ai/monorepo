@@ -128,7 +128,6 @@ License:        MIT
 URL:            https://github.com/tokenring-ai/monorepo
 BuildArch:      ${ARCH}
 AutoReqProv:    no
-Requires:       portaudio
 Recommends:     git
 
 %description

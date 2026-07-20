@@ -22,12 +22,6 @@ const binaryDir = path.join(__dirname, 'bin', platformArch);
 const binaryPath = path.join(binaryDir, 'tokenring');
 const env = { ...process.env };
 
-if (platform === 'linux') {
-  env.LD_LIBRARY_PATH = env.LD_LIBRARY_PATH
-    ? `${binaryDir}:${env.LD_LIBRARY_PATH}`
-    : binaryDir;
-}
-
 env['FRONTEND_DIRECTORY'] = path.join(__dirname, 'frontend');
 
 const child = spawn(binaryPath, process.argv.slice(2), { stdio: 'inherit', env });

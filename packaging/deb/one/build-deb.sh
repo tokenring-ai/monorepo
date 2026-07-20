@@ -116,7 +116,6 @@ Priority: optional
 Architecture: $ARCH
 Maintainer: TokenRing AI <support@tokenring.ai>
 Installed-Size: $INSTALLED_SIZE
-Depends: libportaudio2
 Recommends: git
 Homepage: https://github.com/tokenring-ai/monorepo
 Description: TokenRing One local AI workspace
