@@ -1,22 +1,23 @@
-# @tokenring-ai/one
+# @tokenring/one
 
 **TokenRing One** — a local-first, multi-agent AI workspace for coding, research, documents, media, and automation.
 
-This package installs the `tokenring` command and runs a prebuilt native binary for your platform (no Bun install required at runtime).
+This package installs the `tokenring-one` backend and its web frontend. The
+interactive terminal client is published separately as `@tokenring/cli`.
 
 ## Install
 
 Run without installing:
 
 ```bash
-npx @tokenring-ai/one
+npx @tokenring/one
 ```
 
 Or install globally:
 
 ```bash
-npm install -g @tokenring-ai/one
-tokenring
+npm install -g @tokenring/one
+tokenring-one
 ```
 
 ## Requirements
@@ -49,57 +50,42 @@ export SERPER_API_KEY=...
 ## Quick start
 
 ```bash
-# Interactive CLI in the current directory
-tokenring
+# Backend and web UI in the current directory
+tokenring-one
 
 # Work on a specific project
-tokenring --projectDirectory ./my-project
+tokenring-one --projectDirectory ./my-project
 
-# One-shot prompt, then exit
-tokenring -p "Fix the failing tests"
-
-# Web UI
-tokenring --http 127.0.0.1:3000
-
-# Start with a specific agent
-tokenring --agent leader "Plan a React component for the settings page"
+tokenring-one --listen 127.0.0.1 --port 3000
 ```
 
 ## Command line
 
 ```text
-tokenring [options] [prompt]
+tokenring-one [options]
 ```
 
 | Option | Description |
 |--------|-------------|
-| `--ui <cli\|none>` | UI mode (default: `cli`) |
 | `--projectDirectory <path>` | Working directory (default: cwd) |
 | `--dataDirectory <path>` | Data dir for knowledge, sessions, etc. (default: `<projectDirectory>/.tokenring`) |
-| `--agent <type>` | Agent to start with (default: `code`) |
-| `--http [host:port]` | HTTP server + web UI (default host `127.0.0.1`, random port if omitted) |
-| `--auth` | Require auth for the web UI (`TR_AUTH_PASSWORD` or `TR_AUTH_BEARER`) |
-| `--acp` | ACP mode over stdin/stdout |
+| `--listen <host>` | HTTP server bind address (default: `127.0.0.1`) |
+| `--port <port>` | HTTP server port (`0` chooses a free port) |
 | `--vaultFile <path>` | Path to the secrets vault file (password from system secrets manager or `TR_VAULT_PASSWORD`; default `~/.config/tokenring/secrets.vault`) |
-| `-p` | Exit when the agent finishes |
 | `-h, --help` | Show help |
 | `-V, --version` | Show version |
 
 ### Examples
 
 ```bash
-tokenring --projectDirectory ./my-app --dataDirectory ./my-data
-tokenring --agent leader "Create a new React component"
-tokenring -p "Fix the bug in app.ts"
-tokenring --acp --projectDirectory ./my-app
-tokenring --ui none
+tokenring-one --projectDirectory ./my-app --dataDirectory ./my-data
+tokenring-one --listen 0.0.0.0 --port 3000
 ```
 
 ### Web UI authentication
 
 ```bash
-TR_AUTH_PASSWORD=user:secure-password tokenring --http 127.0.0.1:3000 --auth
-TR_AUTH_BEARER=user:secure-token tokenring --http 127.0.0.1:3000 --auth
+TR_ADMIN_USER=user TR_ADMIN_PASSWORD=secure-password tokenring-one --port 3000
 ```
 
 ## Supported platforms
@@ -115,10 +101,9 @@ Other platforms exit with an unsupported-platform error.
 
 ## What this package contains
 
-- `tokenring.js` — launcher (npm `bin` entry); sets `LD_LIBRARY_PATH` on Linux and points at the bundled frontend
-- `bin/<platform>/tokenring` — prebuilt TokenRing One binary
-- Platform native libraries (e.g. PortAudio) next to the binary where needed
-- `frontend/` — web UI assets for `--http`
+- `tokenring-one.js` — npm launcher that points the backend at the bundled frontend
+- `bin/<platform>/tokenring-one` — prebuilt TokenRing One binary
+- `frontend/` — web UI assets
 
 ## Other install options
 
@@ -128,6 +113,7 @@ Other platforms exit with an unsupported-platform error.
 docker pull ghcr.io/tokenring-ai/one:latest
 
 docker run -ti --rm \
+  -p 8080:80 \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
   ghcr.io/tokenring-ai/one:latest
@@ -140,7 +126,7 @@ git clone https://github.com/tokenring-ai/monorepo.git
 cd monorepo
 git submodule update --init --recursive
 bun install
-bun run tokenring
+bun run run:one
 ```
 
 ## Links
@@ -148,7 +134,7 @@ bun run tokenring
 - [Monorepo](https://github.com/tokenring-ai/monorepo)
 - [Documentation](https://github.com/tokenring-ai/monorepo/tree/main/docs)
 - [Container image](https://ghcr.io/tokenring-ai/one)
-- [npm package](https://www.npmjs.com/package/@tokenring-ai/one)
+- [npm package](https://www.npmjs.com/package/@tokenring/one)
 
 ## License
 

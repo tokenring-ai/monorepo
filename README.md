@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/github/package-json/v/tokenring-ai/monorepo)](https://github.com/tokenring-ai/monorepo)
-[![Downloads](https://img.shields.io/npm/dy/%40tokenring-ai%2Fone)](https://www.npmjs.com/package/@tokenring-ai/one)
+[![Downloads](https://img.shields.io/npm/dy/%40tokenring%2Fcli)](https://www.npmjs.com/package/@tokenring/cli)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/tokenring-ai/monorepo/publish.yml)](https://github.com/tokenring-ai/tokenring/actions)
 [![Open Issues](https://img.shields.io/github/issues/tokenring-ai/monorepo)](https://github.com/tokenring-ai/tokenring/issues)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0-blue?logo=typescript)](https://typescriptlang.org)
@@ -58,18 +58,19 @@ export OPENROUTER_API_KEY=...
 export SERPER_API_KEY=...
 ```
 
-### Running TokenRing One
+### Running TokenRing
 
 ```bash
-# Run with npx
-npx @tokenring-ai/one
+# Run the native CLI and launch TokenRing One from its startup menu
+npx @tokenring/cli
 
-# Run locally
-bun run tokenring
+# Run the backend directly
+npx @tokenring/one
 
 # Run with Docker
 docker pull ghcr.io/tokenring-ai/one:latest
 docker run -ti --rm \
+  -p 8080:80 \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
   ghcr.io/tokenring-ai/one:latest
@@ -352,6 +353,7 @@ TokenRing One is available as a Docker image:
 ```bash
 docker pull ghcr.io/tokenring-ai/one:latest
 docker run -ti --rm \
+  -p 8080:80 \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
   ghcr.io/tokenring-ai/one:latest
@@ -371,7 +373,7 @@ services:
       - ANTHROPIC_API_KEY
     ports:
       - "3000:3000"
-    command: ["--http", "0.0.0.0:3000"]
+    command: ["--listen", "0.0.0.0", "--port", "3000"]
 ```
 
 ---

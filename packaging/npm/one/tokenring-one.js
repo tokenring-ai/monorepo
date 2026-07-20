@@ -19,10 +19,14 @@ if (!supportedPlatforms.has(platformArch)) {
 }
 
 const binaryDir = path.join(__dirname, 'bin', platformArch);
-const binaryPath = path.join(binaryDir, 'tokenring');
+const binaryPath = path.join(binaryDir, 'tokenring-one');
 const env = { ...process.env };
 
 env['FRONTEND_DIRECTORY'] = path.join(__dirname, 'frontend');
 
 const child = spawn(binaryPath, process.argv.slice(2), { stdio: 'inherit', env });
-child.on('exit', (code) => process.exit(code));
+child.on('error', (error) => {
+  console.error(`Failed to start TokenRing One: ${error.message}`);
+  process.exit(1);
+});
+child.on('exit', (code) => process.exit(code ?? 1));

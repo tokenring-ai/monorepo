@@ -1,14 +1,14 @@
 {
-  "name": "@tokenring-ai/one",
+  "name": "@tokenring/one",
   "version": "0.2.51",
   "description": "TokenRing One — local-first multi-agent AI workspace for coding, research, and automation",
   "license": "MIT",
   "bin": {
-    "tokenring": "tokenring.js"
+    "tokenring-one": "tokenring-one.js"
   },
   "files": [
     "README.md",
-    "tokenring.js",
+    "tokenring-one.js",
     "bin",
     "frontend"
   ],

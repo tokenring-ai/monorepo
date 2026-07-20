@@ -3,14 +3,13 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: build-deb.sh --version VERSION --arch ARCH --binary PATH --frontend PATH --outdir PATH
+Usage: build-deb.sh --version VERSION --arch ARCH --binary PATH --outdir PATH
 
-Build a TokenRing One .deb package for Linux.
+Build the TokenRing Rust CLI .deb package for Linux.
 
   --version VERSION   Package version (no leading v)
   --arch ARCH         Debian architecture: amd64 or arm64
-  --binary PATH       Path to the prebuilt tokenring-one binary
-  --frontend PATH     Path to the built frontend/one dist directory
+  --binary PATH       Path to the prebuilt tokenring CLI binary
   --outdir PATH       Directory to write the .deb into
 EOF
   exit 1
@@ -19,7 +18,6 @@ EOF
 VERSION=""
 ARCH=""
 BINARY=""
-FRONTEND=""
 OUTDIR=""
 
 while [[ $# -gt 0 ]]; do
@@ -27,7 +25,6 @@ while [[ $# -gt 0 ]]; do
     --version) VERSION="${2:-}"; shift 2 ;;
     --arch) ARCH="${2:-}"; shift 2 ;;
     --binary) BINARY="${2:-}"; shift 2 ;;
-    --frontend) FRONTEND="${2:-}"; shift 2 ;;
     --outdir) OUTDIR="${2:-}"; shift 2 ;;
     -h|--help) usage ;;
     *)
@@ -37,7 +34,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$VERSION" || -z "$ARCH" || -z "$BINARY" || -z "$FRONTEND" || -z "$OUTDIR" ]]; then
+if [[ -z "$VERSION" || -z "$ARCH" || -z "$BINARY" || -z "$OUTDIR" ]]; then
   echo "Missing required arguments" >&2
   usage
 fi
@@ -55,41 +52,25 @@ if [[ ! -f "$BINARY" ]]; then
   exit 1
 fi
 
-if [[ ! -d "$FRONTEND" ]]; then
-  echo "Frontend directory not found: $FRONTEND" >&2
-  exit 1
-fi
-
 if ! command -v dpkg-deb >/dev/null 2>&1; then
   echo "dpkg-deb is required to build .deb packages" >&2
   exit 1
 fi
 
-PKG_NAME="tokenring-one"
+PKG_NAME="tokenring-cli"
 PKG_ROOT="$(mktemp -d)"
 trap 'rm -rf "$PKG_ROOT"' EXIT
 
-LIB_DIR="$PKG_ROOT/usr/lib/tokenring-ai/one"
 BIN_DIR="$PKG_ROOT/usr/bin"
 DOC_DIR="$PKG_ROOT/usr/share/doc/$PKG_NAME"
 DEBIAN_DIR="$PKG_ROOT/DEBIAN"
+mkdir -p "$BIN_DIR" "$DOC_DIR" "$DEBIAN_DIR"
 
-mkdir -p "$LIB_DIR" "$BIN_DIR" "$DOC_DIR" "$DEBIAN_DIR"
-
-install -m 755 "$BINARY" "$LIB_DIR/tokenring-one"
-mkdir -p "$LIB_DIR/frontend/one"
-cp -a "$FRONTEND"/. "$LIB_DIR/frontend/one/"
-
-cat > "$BIN_DIR/tokenring-one" <<'EOF'
-#!/bin/sh
-export FRONTEND_DIRECTORY=/usr/lib/tokenring-ai/one/frontend
-exec /usr/lib/tokenring-ai/one/tokenring-one "$@"
-EOF
-chmod 755 "$BIN_DIR/tokenring-one"
+install -m 755 "$BINARY" "$BIN_DIR/tokenring"
 
 cat > "$DOC_DIR/copyright" <<'EOF'
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: tokenring-one
+Upstream-Name: tokenring-cli
 Source: https://github.com/tokenring-ai/monorepo
 
 Files: *
@@ -116,12 +97,12 @@ Priority: optional
 Architecture: $ARCH
 Maintainer: TokenRing AI <support@tokenring.ai>
 Installed-Size: $INSTALLED_SIZE
-Recommends: git
+Depends: tokenring-one (= $VERSION)
 Homepage: https://github.com/tokenring-ai/monorepo
-Description: TokenRing One local AI workspace
- TokenRing One is the local-first multi-agent backend for coding, research,
- documents, media, and automation. This package installs the tokenring-one
- server and its web frontend.
+Description: TokenRing native terminal client
+ TokenRing CLI is the native terminal interface for TokenRing. It can connect
+ to an existing backend or launch the tokenring-one dependency while capturing
+ backend output so it does not interfere with the TUI.
 EOF
 
 mkdir -p "$OUTDIR"

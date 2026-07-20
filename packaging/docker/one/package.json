@@ -1,5 +1,5 @@
 {
-  "name": "@tokenring-ai/one-docker",
+  "name": "tokenring-one-docker-build",
   "private": true,
   "description": "Docker packaging for TokenRing One",
   "scripts": {

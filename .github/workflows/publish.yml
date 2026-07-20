@@ -1,10 +1,10 @@
-name: Publish to NPM
+name: Publish TokenRing
 
 on:
   push:
 
 permissions:
-  id-token: write  # Required for OIDC
+  id-token: write
   contents: read
 
 env:
@@ -20,26 +20,34 @@ jobs:
           - os: macos-latest
             platform: darwin-arm64
             bun_target: bun-darwin-arm64
-            artifact: tokenring-macos-arm64
-            binary: tokenring-macos-arm64
+            one_artifact: tokenring-one-macos-arm64
+            one_binary: tokenring-one-macos-arm64
+            cli_artifact: tokenring-cli-macos-arm64
+            cli_binary: tokenring-cli-macos-arm64
             build_frontend: false
           - os: macos-15-intel
             platform: darwin-x64
             bun_target: bun-darwin-x64
-            artifact: tokenring-macos-x64
-            binary: tokenring-macos-x64
+            one_artifact: tokenring-one-macos-x64
+            one_binary: tokenring-one-macos-x64
+            cli_artifact: tokenring-cli-macos-x64
+            cli_binary: tokenring-cli-macos-x64
             build_frontend: false
           - os: ubuntu-latest
             platform: linux-x64
             bun_target: bun-linux-x64
-            artifact: tokenring-linux-x64
-            binary: tokenring-linux-x64
+            one_artifact: tokenring-one-linux-x64
+            one_binary: tokenring-one-linux-x64
+            cli_artifact: tokenring-cli-linux-x64
+            cli_binary: tokenring-cli-linux-x64
             build_frontend: true
           - os: ubuntu-24.04-arm
             platform: linux-arm64
             bun_target: bun-linux-arm64
-            artifact: tokenring-linux-arm64
-            binary: tokenring-linux-arm64
+            one_artifact: tokenring-one-linux-arm64
+            one_binary: tokenring-one-linux-arm64
+            cli_artifact: tokenring-cli-linux-arm64
+            cli_binary: tokenring-cli-linux-arm64
             build_frontend: false
     runs-on: ${{ matrix.os }}
     steps:
@@ -51,6 +59,9 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: ${{ env.BUN_VERSION }}
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install dependencies
         run: bun install
@@ -67,19 +78,33 @@ jobs:
           name: one-frontend
           path: ./frontend/one/dist
 
-      - name: Build One binary
-        run: bun build --compile --target=${{ matrix.bun_target }} ./tokenring.ts --outfile ${{ matrix.binary }}
+      - name: Build TokenRing One
+        run: bun build --compile --target=${{ matrix.bun_target }} ./tokenring.ts --outfile ${{ matrix.one_binary }}
         working-directory: ./app/one
 
-      - name: Check that One can start
-        run: ./${{ matrix.binary }} -h
+      - name: Check that TokenRing One can start
+        run: ./${{ matrix.one_binary }} -h
         working-directory: ./app/one
 
-      - name: Upload One binary
+      - name: Build TokenRing CLI
+        run: |
+          cargo build --release --locked --manifest-path crates/cli-rs/Cargo.toml
+          cp crates/cli-rs/target/release/tokenring "${{ matrix.cli_binary }}"
+
+      - name: Check that TokenRing CLI can start
+        run: ./${{ matrix.cli_binary }} -h
+
+      - name: Upload TokenRing One binary
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.artifact }}
-          path: ./app/one/${{ matrix.binary }}
+          name: ${{ matrix.one_artifact }}
+          path: ./app/one/${{ matrix.one_binary }}
+
+      - name: Upload TokenRing CLI binary
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.cli_artifact }}
+          path: ./${{ matrix.cli_binary }}
 
   publish-one-npm:
     runs-on: ubuntu-latest
@@ -106,42 +131,90 @@ jobs:
           name: one-frontend
           path: ./artifacts/one-frontend
 
-      # Do not use pattern tokenring-*: it also matches package artifacts
-      # (tokenring-one-deb-*) and Docker Buildx GHA cache blobs
-      # (tokenring-ai~monorepo~*.dockerbuild), which can fail to extract.
-      - name: Download One binaries
+      - name: Download TokenRing One Linux binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-linux-*
+          pattern: tokenring-one-linux-*
           path: ./artifacts
           merge-multiple: true
 
-      - name: Download One binaries (macOS)
+      - name: Download TokenRing One macOS binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-macos-*
+          pattern: tokenring-one-macos-*
           path: ./artifacts
           merge-multiple: true
 
-      - name: Prepare One platform package
+      - name: Prepare TokenRing One npm package
         run: |
           mkdir -p \
             packaging/npm/one/bin/darwin-arm64 \
             packaging/npm/one/bin/darwin-x64 \
             packaging/npm/one/bin/linux-x64 \
             packaging/npm/one/bin/linux-arm64
-          cp artifacts/tokenring-macos-arm64 packaging/npm/one/bin/darwin-arm64/tokenring
-          cp artifacts/tokenring-macos-x64 packaging/npm/one/bin/darwin-x64/tokenring
-          cp artifacts/tokenring-linux-x64 packaging/npm/one/bin/linux-x64/tokenring
-          cp artifacts/tokenring-linux-arm64 packaging/npm/one/bin/linux-arm64/tokenring
-          chmod +x packaging/npm/one/bin/*/tokenring
+          cp artifacts/tokenring-one-macos-arm64 packaging/npm/one/bin/darwin-arm64/tokenring-one
+          cp artifacts/tokenring-one-macos-x64 packaging/npm/one/bin/darwin-x64/tokenring-one
+          cp artifacts/tokenring-one-linux-x64 packaging/npm/one/bin/linux-x64/tokenring-one
+          cp artifacts/tokenring-one-linux-arm64 packaging/npm/one/bin/linux-arm64/tokenring-one
+          chmod +x packaging/npm/one/bin/*/tokenring-one
           mkdir -p packaging/npm/one/frontend/one
           cp -r artifacts/one-frontend/* packaging/npm/one/frontend/one
 
-      - name: Publish One to NPM
+      - name: Publish @tokenring/one
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm stage publish --provenance --access public --tag next
+        run: npm publish --provenance --access public --tag next
         working-directory: ./packaging/npm/one
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-cli-npm:
+    runs-on: ubuntu-latest
+    needs: [build, publish-one-npm]
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js for npm publishing
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Download TokenRing CLI Linux binaries
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-cli-linux-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Download TokenRing CLI macOS binaries
+        uses: actions/download-artifact@v7
+        with:
+          pattern: tokenring-cli-macos-*
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Prepare TokenRing CLI npm package
+        run: |
+          mkdir -p \
+            packaging/npm/cli/bin/darwin-arm64 \
+            packaging/npm/cli/bin/darwin-x64 \
+            packaging/npm/cli/bin/linux-x64 \
+            packaging/npm/cli/bin/linux-arm64
+          cp artifacts/tokenring-cli-macos-arm64 packaging/npm/cli/bin/darwin-arm64/tokenring
+          cp artifacts/tokenring-cli-macos-x64 packaging/npm/cli/bin/darwin-x64/tokenring
+          cp artifacts/tokenring-cli-linux-x64 packaging/npm/cli/bin/linux-x64/tokenring
+          cp artifacts/tokenring-cli-linux-arm64 packaging/npm/cli/bin/linux-arm64/tokenring
+          chmod +x packaging/npm/cli/bin/*/tokenring
+
+      - name: Publish @tokenring/cli
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: npm publish --provenance --access public --tag next
+        working-directory: ./packaging/npm/cli
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -153,9 +226,11 @@ jobs:
       matrix:
         include:
           - arch: amd64
-            binary: tokenring-linux-x64
+            one_binary: tokenring-one-linux-x64
+            cli_binary: tokenring-cli-linux-x64
           - arch: arm64
-            binary: tokenring-linux-arm64
+            one_binary: tokenring-one-linux-arm64
+            cli_binary: tokenring-cli-linux-arm64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -169,10 +244,16 @@ jobs:
             echo "version=$(jq -r .version packaging/npm/one/package.json)" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Download One binary
+      - name: Download TokenRing One binary
         uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.binary }}
+          name: ${{ matrix.one_binary }}
+          path: ./artifacts
+
+      - name: Download TokenRing CLI binary
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ matrix.cli_binary }}
           path: ./artifacts
 
       - name: Download TokenRing One web frontend
@@ -181,24 +262,29 @@ jobs:
           name: one-frontend
           path: ./artifacts/one-frontend
 
-      - name: Build .deb package
+      - name: Build TokenRing One .deb
         run: |
           ./packaging/deb/one/build-deb.sh \
             --version "${{ steps.version.outputs.version }}" \
             --arch "${{ matrix.arch }}" \
-            --binary "./artifacts/${{ matrix.binary }}" \
+            --binary "./artifacts/${{ matrix.one_binary }}" \
             --frontend "./artifacts/one-frontend" \
             --outdir ./artifacts/deb
 
-      - name: Upload .deb package
+      - name: Build TokenRing CLI .deb
+        run: |
+          ./packaging/deb/cli/build-deb.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --arch "${{ matrix.arch }}" \
+            --binary "./artifacts/${{ matrix.cli_binary }}" \
+            --outdir ./artifacts/deb
+
+      - name: Upload .deb packages
         uses: actions/upload-artifact@v7
         with:
-          name: tokenring-one-deb-${{ matrix.arch }}
-          path: ./artifacts/deb/tokenring-one_${{ steps.version.outputs.version }}_${{ matrix.arch }}.deb
+          name: tokenring-deb-${{ matrix.arch }}
+          path: ./artifacts/deb/*.deb
 
-  # rpmbuild refuses foreign-arch packages ("No compatible architectures found
-  # for build"), unlike dpkg-deb. Build each RPM on a runner that matches the
-  # package arch (x86_64 on ubuntu-latest, aarch64 on ubuntu-24.04-arm).
   package-rpm:
     needs: [build]
     strategy:
@@ -206,10 +292,12 @@ jobs:
       matrix:
         include:
           - arch: x86_64
-            binary: tokenring-linux-x64
+            one_binary: tokenring-one-linux-x64
+            cli_binary: tokenring-cli-linux-x64
             runner: ubuntu-latest
           - arch: aarch64
-            binary: tokenring-linux-arm64
+            one_binary: tokenring-one-linux-arm64
+            cli_binary: tokenring-cli-linux-arm64
             runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
@@ -228,10 +316,16 @@ jobs:
             echo "version=$(jq -r .version packaging/npm/one/package.json)" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Download One binary
+      - name: Download TokenRing One binary
         uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.binary }}
+          name: ${{ matrix.one_binary }}
+          path: ./artifacts
+
+      - name: Download TokenRing CLI binary
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ matrix.cli_binary }}
           path: ./artifacts
 
       - name: Download TokenRing One web frontend
@@ -240,55 +334,61 @@ jobs:
           name: one-frontend
           path: ./artifacts/one-frontend
 
-      - name: Build .rpm package
+      - name: Build TokenRing One .rpm
         run: |
           ./packaging/rpm/one/build-rpm.sh \
             --version "${{ steps.version.outputs.version }}" \
             --arch "${{ matrix.arch }}" \
-            --binary "./artifacts/${{ matrix.binary }}" \
+            --binary "./artifacts/${{ matrix.one_binary }}" \
             --frontend "./artifacts/one-frontend" \
             --outdir ./artifacts/rpm
 
-      - name: Upload .rpm package
+      - name: Build TokenRing CLI .rpm
+        run: |
+          ./packaging/rpm/cli/build-rpm.sh \
+            --version "${{ steps.version.outputs.version }}" \
+            --arch "${{ matrix.arch }}" \
+            --binary "./artifacts/${{ matrix.cli_binary }}" \
+            --outdir ./artifacts/rpm
+
+      - name: Upload .rpm packages
         uses: actions/upload-artifact@v7
         with:
-          name: tokenring-one-rpm-${{ matrix.arch }}
-          path: ./artifacts/rpm/tokenring-one_${{ steps.version.outputs.version }}_${{ matrix.arch }}.rpm
+          name: tokenring-rpm-${{ matrix.arch }}
+          path: ./artifacts/rpm/*.rpm
 
   create-release:
     runs-on: ubuntu-latest
-    needs: [publish-one-npm, package-deb, package-rpm]
+    needs: [publish-cli-npm, package-deb, package-rpm]
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
     steps:
-      # Narrow patterns: avoid Docker Buildx GHA cache artifacts named
-      # tokenring-ai~monorepo~*.dockerbuild (match tokenring-* and often fail download).
-      - name: Download Linux binaries
+      - name: Download TokenRing One binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-linux-*
+          pattern: tokenring-one-*
           path: ./artifacts
           merge-multiple: true
 
-      - name: Download macOS binaries
+      - name: Download TokenRing CLI binaries
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-macos-*
+          pattern: tokenring-cli-*
           path: ./artifacts
           merge-multiple: true
 
       - name: Download deb packages
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-one-deb-*
+          pattern: tokenring-deb-*
           path: ./artifacts
           merge-multiple: true
 
       - name: Download rpm packages
         uses: actions/download-artifact@v7
         with:
-          pattern: tokenring-one-rpm-*
+          pattern: tokenring-rpm-*
           path: ./artifacts
           merge-multiple: true
 
@@ -300,29 +400,33 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            artifacts/tokenring-macos-arm64
-            artifacts/tokenring-macos-x64
-            artifacts/tokenring-linux-x64
-            artifacts/tokenring-linux-arm64
+            artifacts/tokenring-one-macos-arm64
+            artifacts/tokenring-one-macos-x64
+            artifacts/tokenring-one-linux-x64
+            artifacts/tokenring-one-linux-arm64
+            artifacts/tokenring-cli-macos-arm64
+            artifacts/tokenring-cli-macos-x64
+            artifacts/tokenring-cli-linux-x64
+            artifacts/tokenring-cli-linux-arm64
             artifacts/tokenring-one_*_amd64.deb
             artifacts/tokenring-one_*_arm64.deb
+            artifacts/tokenring-cli_*_amd64.deb
+            artifacts/tokenring-cli_*_arm64.deb
             artifacts/tokenring-one_*_x86_64.rpm
             artifacts/tokenring-one_*_aarch64.rpm
+            artifacts/tokenring-cli_*_x86_64.rpm
+            artifacts/tokenring-cli_*_aarch64.rpm
 
   verify-npm-publish:
-    needs: [publish-one-npm]
+    needs: [publish-cli-npm]
     if: startsWith(github.ref, 'refs/tags/v')
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
-            arch: linux-x64
           - os: ubuntu-24.04-arm
-            arch: linux-arm64
           - os: macos-latest
-            arch: darwin-arm64
           - os: macos-15-intel
-            arch: darwin-x64
     runs-on: ${{ matrix.os }}
     steps:
       - name: Setup Node.js
@@ -333,13 +437,16 @@ jobs:
 
       - name: Extract version from tag
         id: version
-        run: echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
 
       - name: Wait for npm registry propagation
         run: sleep 30
 
-      - name: Test One package
-        run: npx @tokenring-ai/one@${{ steps.version.outputs.version }} -h
+      - name: Test @tokenring/one
+        run: npx @tokenring/one@${{ steps.version.outputs.version }} -h
+
+      - name: Test @tokenring/cli
+        run: npx @tokenring/cli@${{ steps.version.outputs.version }} -h
 
   publish-docker:
     needs: [build]
@@ -354,11 +461,11 @@ jobs:
           - runner: ubuntu-latest
             platform: linux/amd64
             docker_arch: amd64
-            binary: tokenring-linux-x64
+            binary: tokenring-one-linux-x64
           - runner: ubuntu-24.04-arm
             platform: linux/arm64
             docker_arch: arm64
-            binary: tokenring-linux-arm64
+            binary: tokenring-one-linux-arm64
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Checkout repository
@@ -375,7 +482,7 @@ jobs:
           name: one-frontend
           path: ./artifacts/one-frontend
 
-      - name: Download One binary
+      - name: Download TokenRing One binary
         uses: actions/download-artifact@v7
         with:
           name: ${{ matrix.binary }}
@@ -384,9 +491,9 @@ jobs:
       - name: Prepare Docker build context
         run: |
           mkdir -p packaging/docker/one/dist/frontend
-          cp "artifacts/${{ matrix.binary }}" "packaging/docker/one/dist/tokenring-linux-${{ matrix.docker_arch }}"
+          cp "artifacts/${{ matrix.binary }}" "packaging/docker/one/dist/tokenring-one-linux-${{ matrix.docker_arch }}"
           cp -r artifacts/one-frontend packaging/docker/one/dist/frontend/one
-          chmod +x "packaging/docker/one/dist/tokenring-linux-${{ matrix.docker_arch }}"
+          chmod +x "packaging/docker/one/dist/tokenring-one-linux-${{ matrix.docker_arch }}"
 
       - name: Log in to the Container registry
         uses: docker/login-action@v4
@@ -398,7 +505,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Extract metadata for One
+      - name: Extract metadata for TokenRing One
         id: meta-one
         uses: docker/metadata-action@v6
         with:
@@ -462,7 +569,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Extract metadata for One
+      - name: Extract metadata for TokenRing One
         id: meta-one
         uses: docker/metadata-action@v6
         with:

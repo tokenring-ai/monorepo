@@ -19,6 +19,7 @@
     "docs:build": "cd docs && bun run build",
     "deps:update": "bun update --latest",
     "deps:build": "cd deps/naudiodon3 && bun run install",
+    "package:cli": "cargo build --release --locked --manifest-path crates/cli-rs/Cargo.toml",
     "package:one:frontend": "bun run --cwd packaging/npm/one stage:frontend",
     "package:one:docker": "bun run --cwd packaging/docker/one build",
     "check:biome": "biome check --fix",
@@ -49,6 +50,9 @@
     "request": "npm:@cypress/request@^3.0.10",
     "basic-ftp": "^5.2.2",
     "typescript": "7.0.2"
+  },
+  "bin": {
+    "tokenring-one": "app/one/tokenring.ts"
   },
   "workspaces": {
     "packages": [

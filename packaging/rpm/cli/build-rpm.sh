@@ -3,14 +3,13 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: build-rpm.sh --version VERSION --arch ARCH --binary PATH --frontend PATH --outdir PATH
+Usage: build-rpm.sh --version VERSION --arch ARCH --binary PATH --outdir PATH
 
-Build a TokenRing One .rpm package for Linux.
+Build the TokenRing Rust CLI .rpm package for Linux.
 
   --version VERSION   Package version (no leading v)
   --arch ARCH         RPM architecture: x86_64 or aarch64
-  --binary PATH       Path to the prebuilt tokenring binary
-  --frontend PATH     Path to the built frontend/one dist directory
+  --binary PATH       Path to the prebuilt tokenring CLI binary
   --outdir PATH       Directory to write the .rpm into
 EOF
   exit 1
@@ -19,7 +18,6 @@ EOF
 VERSION=""
 ARCH=""
 BINARY=""
-FRONTEND=""
 OUTDIR=""
 
 while [[ $# -gt 0 ]]; do
@@ -27,7 +25,6 @@ while [[ $# -gt 0 ]]; do
     --version) VERSION="${2:-}"; shift 2 ;;
     --arch) ARCH="${2:-}"; shift 2 ;;
     --binary) BINARY="${2:-}"; shift 2 ;;
-    --frontend) FRONTEND="${2:-}"; shift 2 ;;
     --outdir) OUTDIR="${2:-}"; shift 2 ;;
     -h|--help) usage ;;
     *)
@@ -37,7 +34,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$VERSION" || -z "$ARCH" || -z "$BINARY" || -z "$FRONTEND" || -z "$OUTDIR" ]]; then
+if [[ -z "$VERSION" || -z "$ARCH" || -z "$BINARY" || -z "$OUTDIR" ]]; then
   echo "Missing required arguments" >&2
   usage
 fi
@@ -55,19 +52,13 @@ if [[ ! -f "$BINARY" ]]; then
   exit 1
 fi
 
-if [[ ! -d "$FRONTEND" ]]; then
-  echo "Frontend directory not found: $FRONTEND" >&2
-  exit 1
-fi
-
 if ! command -v rpmbuild >/dev/null 2>&1; then
   echo "rpmbuild is required to build .rpm packages" >&2
   exit 1
 fi
 
-# RPM Version cannot contain hyphens; map them to tildes.
 RPM_VERSION="${VERSION//-/\~}"
-PKG_NAME="tokenring-one"
+PKG_NAME="tokenring-cli"
 RELEASE="1"
 TOPDIR="$(mktemp -d)"
 trap 'rm -rf "$TOPDIR"' EXIT
@@ -75,19 +66,9 @@ trap 'rm -rf "$TOPDIR"' EXIT
 mkdir -p "$TOPDIR"/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
 
 PAYLOAD="$TOPDIR/SOURCES/payload"
-mkdir -p "$PAYLOAD/usr/lib/tokenring-ai/one/frontend/one"
 mkdir -p "$PAYLOAD/usr/bin"
 mkdir -p "$PAYLOAD/usr/share/doc/${PKG_NAME}"
-
-install -m 755 "$BINARY" "$PAYLOAD/usr/lib/tokenring-ai/one/tokenring-one"
-cp -a "$FRONTEND"/. "$PAYLOAD/usr/lib/tokenring-ai/one/frontend/one/"
-
-cat > "$PAYLOAD/usr/bin/tokenring-one" <<'EOF'
-#!/bin/sh
-export FRONTEND_DIRECTORY=/usr/lib/tokenring-ai/one/frontend
-exec /usr/lib/tokenring-ai/one/tokenring-one "$@"
-EOF
-chmod 755 "$PAYLOAD/usr/bin/tokenring-one"
+install -m 755 "$BINARY" "$PAYLOAD/usr/bin/tokenring"
 
 cat > "$PAYLOAD/usr/share/doc/${PKG_NAME}/LICENSE" <<'EOF'
 MIT License
@@ -123,17 +104,17 @@ cat > "$TOPDIR/SPECS/${PKG_NAME}.spec" <<EOF
 Name:           ${PKG_NAME}
 Version:        ${RPM_VERSION}
 Release:        ${RELEASE}%{?dist}
-Summary:        TokenRing One local AI workspace
+Summary:        TokenRing native terminal client
 License:        MIT
 URL:            https://github.com/tokenring-ai/monorepo
 BuildArch:      ${ARCH}
 AutoReqProv:    no
-Recommends:     git
+Requires:       tokenring-one = ${RPM_VERSION}
 
 %description
-TokenRing One is the local-first multi-agent backend for coding, research,
-documents, media, and automation. This package installs the tokenring-one
-server and its web frontend.
+TokenRing CLI is the native terminal interface for TokenRing. It can connect
+to an existing backend or launch the tokenring-one dependency while capturing
+backend output so it does not interfere with the TUI.
 
 %install
 rm -rf %{buildroot}
@@ -142,8 +123,7 @@ cp -a %{_sourcedir}/payload/. %{buildroot}/
 
 %files
 %license /usr/share/doc/%{name}/LICENSE
-/usr/bin/tokenring-one
-/usr/lib/tokenring-ai/one
+/usr/bin/tokenring
 
 %changelog
 * ${CHANGELOG_DATE} TokenRing AI <support@tokenring.ai> - ${RPM_VERSION}-${RELEASE}
@@ -163,7 +143,6 @@ if [[ ${#BUILT_RPMS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-# Normalize to tokenring-one_<version>_<arch>.rpm for release asset naming parity with deb.
 RPM_OUT="${OUTDIR}/${PKG_NAME}_${VERSION}_${ARCH}.rpm"
 cp "${BUILT_RPMS[0]}" "$RPM_OUT"
 echo "Built $RPM_OUT"
